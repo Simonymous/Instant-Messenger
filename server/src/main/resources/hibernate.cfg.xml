@@ -11,6 +11,9 @@
         <property name="hbm2dll.auto">validate</property>
 
         <mapping class="hibernate.model.classes.UserHibernateImpl" />
+        <mapping class="hibernate.model.classes.GroupHibernateImpl" />
+        <mapping class="hibernate.model.classes.Group_UserHibernateImpl" />
+        <mapping class="hibernate.model.classes.MessageHibernateImpl" />
 
     </session-factory>
 </hibernate-configuration>
