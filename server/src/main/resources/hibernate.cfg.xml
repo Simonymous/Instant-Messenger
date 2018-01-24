@@ -1,0 +1,13 @@
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/hibernate-configuration">
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:Datenbank.db.sqbpro</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+        
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.formate_sql">true</property>
+        <property name="hbm2dll.auto">validate</property>
+    </session-factory>
+</hibernate-configuration>
