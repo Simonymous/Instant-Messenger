@@ -1,10 +1,13 @@
 package dao.interfaces;
 
+import model.interfaces.Group;
 import model.interfaces.User;
 
+import java.util.ArrayList;
+
 public interface GroupDao {
-    public void changeName(String name);
-    public String getName();
-    public void addUser(User user);
-    public void removeUser(User user);
+    public void save(Group group);
+    public void delete(Group group);
+    public Group getGroup(int groupId);
+    public ArrayList<Group> getGroupsForUser(int userId);
 }
