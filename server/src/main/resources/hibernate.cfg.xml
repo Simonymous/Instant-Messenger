@@ -1,19 +1,21 @@
-<hibernate-configuration xmlns="http://www.hibernate.org/xsd/hibernate-configuration">
+<?xml version = "1.0" encoding = "utf-8"?>
+
+<hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
         <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
         <property name="hibernate.connection.url">jdbc:sqlite:Datenbank.db</property>
-        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.username">SA</property>
         <property name="hibernate.connection.password"></property>
-        
+
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.formate_sql">true</property>
         <property name="hbm2dll.auto">validate</property>
 
-        <mapping class="model.classes.UserHibernateImpl" />
-        <mapping class="model.classes.GroupHibernateImpl" />
-        <mapping class="model.classes.Group_UserHibernateImpl" />
-        <mapping class="model.classes.MessageHibernateImpl" />
+        <mapping class="model.classes.UserImpl"/>
+        <mapping class="model.classes.GroupImpl"/>
+        <mapping class="model.classes.Group_UserImpl"/>
+        <mapping class="model.classes.MessageImpl"/>
 
     </session-factory>
 </hibernate-configuration>

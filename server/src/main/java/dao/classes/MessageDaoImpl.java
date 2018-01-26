@@ -5,8 +5,8 @@ import model.interfaces.Message;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
-public class MessageDaoHibernateImpl implements MessageDao{
-    @Override
+//TODO Implements hinzufügen
+public class MessageDaoImpl {
     public void save(Message message) {
         Session session = null;
 
@@ -51,7 +51,7 @@ public class MessageDaoHibernateImpl implements MessageDao{
         try{
             session = HibernateUtil.getSession();
             session.beginTransaction();
-            Message message = (Message) session.get(UserDaoHibernateImpl.class, Id);
+            Message message = (Message) session.get(UserDaoImpl.class, Id);
             session.getTransaction().commit();
             return message;
         }

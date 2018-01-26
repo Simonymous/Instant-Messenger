@@ -8,6 +8,6 @@ public interface UserDao {
     public void save(User user);
     public void delete(User user);
     public User getUser(int id);
-    public User getUserByName(String name);
+    public User getUser(String Name);
     public ArrayList<User> getList();
 }

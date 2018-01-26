@@ -5,8 +5,8 @@ import model.interfaces.Group_User;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
-public class Group_UserDaoHibernateImpl implements Group_UserDao {
-    @Override
+//TODO Implements hinzufügen
+public class Group_UserDaoImpl {
     public void save(Group_User group_user) {
         Session session = null;
 
