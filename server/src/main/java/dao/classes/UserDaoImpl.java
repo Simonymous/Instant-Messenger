@@ -3,111 +3,40 @@ package dao.classes;
 import dao.interfaces.UserDao;
 import model.classes.UserImpl;
 import model.interfaces.User;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import utils.HibernateUtil;
 
-import java.util.ArrayList;
+import java.sql.*;
 
 public class UserDaoImpl implements UserDao{
-    public void save(User user) {
-        Session session = null;
+    // JDBC driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql/localhost:3306/dbim";
 
-        try{
-            session = HibernateUtil.getSession();
-            session.beginTransaction();
-            session.saveOrUpdate(user);
-            session.flush();
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            HibernateUtil.closeSession(session);
-        }
-    }
+    //  Database credentials
+    static final String USER = "root";
+    static final String PASS = "test";
 
-    public void delete(User user){
-        Session session = null;
-
-        try{
-            session = HibernateUtil.getSession();
-            session.beginTransaction();
-            if(user != null){
-                session.delete(user);
-                session.flush();
+    public UserImpl getUser(int id) {
+        Connection conn = null;
+        Statement stmt = null;
+        UserImpl usr = new UserImpl();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM user WHERE id = "+id;
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                //Retrieve by column name
+                usr.setUserId(rs.getInt("id"));
+                usr.setUsername(rs.getString("Name" ));
+                usr.setPassword(rs.getString("Password" ));
+                usr.setActive(rs.getBoolean("active"));
             }
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
+
+        } catch (SQLException se) {
+            se.printStackTrace();;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            HibernateUtil.closeSession(session);
-        }
-    }
-
-    public User getUser(int Id){
-        Session session = null;
-
-        try{
-            session = HibernateUtil.getSession();
-            session.beginTransaction();
-            User user = (User) session.get(UserImpl.class, Id);
-            session.getTransaction().commit();
-            return user;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        finally {
-            HibernateUtil.closeSession(session);
-        }
-    }
-
-    public User getUser(String name){
-        Session session = null;
-        User user = null;
-        String queryString = "SELECT object FROM model.classes.UserImpl WHERE name = " + name;
-
-        try{
-            session = HibernateUtil.getSession();
-            session.beginTransaction();
-            Query q = session.createQuery(queryString);
-            user = (User) q.uniqueResult();
-            session.getTransaction().commit();
-            return user;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        finally {
-            HibernateUtil.closeSession(session);
-        }
-    }
-
-    public ArrayList<User> getList(){
-        Session session = null;
-        ArrayList<User> resultList;
-        String queryString = "SELECT a FROM model.classes.UserImpl a";
-
-        try{
-            session = HibernateUtil.getSession();
-            session.beginTransaction();
-            Query q = session.createQuery(queryString);
-            resultList = (ArrayList<User>) q.list();
-            session.getTransaction().commit();
-            return resultList;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        finally {
-            HibernateUtil.closeSession(session);
-        }
+        return usr;
     }
 }

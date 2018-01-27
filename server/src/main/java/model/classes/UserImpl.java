@@ -11,7 +11,7 @@ public class UserImpl implements User {
     private int userId;
     private String username;
     private String password;
-    private char active;
+    private boolean active;
 
 
     @Id
@@ -40,11 +40,11 @@ public class UserImpl implements User {
         this.password = password;
     }
 
-    public char getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(char active) {
-        this.active = active;
+    public void setActive(boolean b) {
+        this.active = b;
     }
 }
