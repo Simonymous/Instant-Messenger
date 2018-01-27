@@ -2,14 +2,11 @@ package model.classes;
 
 import model.interfaces.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 //TODO Annotationen hinzufügen
 @Entity
-@javax.persistence.Table(name = "User")
+@Table(name = "User")
 public class UserImpl implements User {
     private int userId;
     private String username;

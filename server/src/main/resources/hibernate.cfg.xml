@@ -2,20 +2,21 @@
 
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
-        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
-        <property name="hibernate.connection.url">jdbc:sqlite:Datenbank.db</property>
-        <property name="hibernate.connection.username">SA</property>
-        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dbim</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">test</property>
 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.formate_sql">true</property>
         <property name="hbm2dll.auto">validate</property>
+        <property name="connection.pool.size">1</property>
 
         <mapping class="model.classes.UserImpl"/>
-        <mapping class="model.classes.GroupImpl"/>
-        <mapping class="model.classes.Group_UserImpl"/>
-        <mapping class="model.classes.MessageImpl"/>
+        <!--<mapping class="model.classes.GroupImpl"/>-->
+        <!--<mapping class="model.classes.Group_UserImpl"/>-->
+        <!--<mapping class="model.classes.MessageImpl"/>-->
 
     </session-factory>
 </hibernate-configuration>
