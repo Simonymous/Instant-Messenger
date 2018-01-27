@@ -207,7 +207,7 @@ public class UserDaoImpl implements UserDao{
 
         return aNewUser;
     }
-    public User getUserByName( User aUser){
+    public User getUserByName( User aUser ){
         User aNewUser = ModelObjectBuilder.getUserObject();
         ResultSet rs;
 
