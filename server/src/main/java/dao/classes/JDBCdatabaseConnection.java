@@ -18,7 +18,7 @@ public class JDBCdatabaseConnection {
     private Properties properties;
 
     /**
-     * Hier wird die Properties Datei db_config.properties geoeffnet und eine Referenz dafuer angelegt
+     * Opens db_config.properties and creates a reference
      */
     public JDBCdatabaseConnection() {
         properties = new Properties();
@@ -39,9 +39,9 @@ public class JDBCdatabaseConnection {
     }
 
     /**
-     * Methode um ein Verbindungsobjekt, mit den Verbindungsdaten zur SQLite DB, zurueckzugeben
+     * Returns a Connection-Object
      *
-     * @return Connection Connection Objekt, mit dem man Abfragen auf der DB machen kann
+     * @return Connection Connection Objekt
      */
     protected Connection getConnection() {
         Connection con = null;

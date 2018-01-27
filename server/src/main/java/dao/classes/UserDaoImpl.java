@@ -100,9 +100,9 @@ public class UserDaoImpl implements UserDao{
     }
 
     /**
-     * Methode um ein Attribut in der author Tabelle zu aendern
-     * @param colName moegliche Spaltennamen sind Name, Vorname
-     * @param value Wert des zu aendernden Attribut
+     * Method to change atribute in tabel
+     * @param colName name of the colume
+     * @param value value of the colume
      */
     private void changeAttribut(ColNameUser colName, User aAuthor, String value) {
         int id = aAuthor.getUserId();
@@ -122,9 +122,9 @@ public class UserDaoImpl implements UserDao{
     }
 
     /**
-     * Methode um ein Attribut in der author Tabelle zu aendern
-     * @param colName moegliche Spaltennamen sind Name, Vorname
-     * @param value Wert des zu aendernden Attribut
+     * Method to change atribute in tabel
+     * @param colName name of the colume
+     * @param value value of the colume
      */
     private void changeAttribut(ColNameUser colName, User aAuthor, Boolean value) {
         int id = aAuthor.getUserId();
