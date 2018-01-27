@@ -15,10 +15,10 @@ public class userDaoTest {
         user.setUsername("TestUser");
         user.setPassword("");
 
-        Session session = null;
-        session = HibernateUtil.getSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.saveOrUpdate(user);
+        session.getTransaction().commit();
 
         UserImpl userR = session.get(UserImpl.class,1 );
 
