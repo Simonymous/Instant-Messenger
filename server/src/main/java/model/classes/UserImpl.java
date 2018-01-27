@@ -2,9 +2,6 @@ package model.classes;
 
 import model.interfaces.User;
 
-import javax.persistence.*;
-
-
 public class UserImpl implements User {
     private int userId;
     private String username;

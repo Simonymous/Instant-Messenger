@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import static dao.constants.JdbcDataBaseConnectionConstants.*;
 
+//TODO Kommentare auf englisch übersetzen
 /**
  * Class to create JDBC database connection
  *
