@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 //TODO Annotationen hinzufügen
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class UserImpl implements User {
     private int userId;
     private String username;
