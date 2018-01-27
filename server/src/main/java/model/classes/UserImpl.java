@@ -4,18 +4,22 @@ import model.interfaces.User;
 
 import javax.persistence.*;
 
-//TODO Annotationen hinzufügen
-@Entity
-@Table(name = "user")
+
 public class UserImpl implements User {
     private int userId;
     private String username;
     private String password;
     private boolean active;
 
+    public UserImpl(){
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    }
+
+    public UserImpl(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
+
     public int getUserId(){
         return userId;
     }
