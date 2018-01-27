@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
     <session-factory>
@@ -15,12 +15,10 @@
         <property name="hibernate.formate_sql">true</property>
         <property name="hbm2dll.auto">validate</property>
         <property name="connection.pool.size">1</property>
-        <property name="hibernate.current_session_context_class">thread</property>>
 
         <mapping class="model.classes.UserImpl"/>
-        <!--<mapping class="model.classes.GroupImpl"/>-->
-        <!--<mapping class="model.classes.Group_UserImpl"/>-->
-        <!--<mapping class="model.classes.MessageImpl"/>-->
+
+
 
     </session-factory>
 </hibernate-configuration>
