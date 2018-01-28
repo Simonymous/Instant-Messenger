@@ -1,5 +1,6 @@
 package model.classes;
 
+import model.exceptiones.UserDoesNotExistException;
 import model.interfaces.Group;
 import model.interfaces.User;
 
@@ -38,7 +39,7 @@ public class GroupImpl implements Group{
     @Override
     public void removeUser(User aUser){
         if(users.isEmpty()){
-
+            throw new UserDoesNotExistException("ERR_USER_DOES_NOT_EXIST");
         }else {
             users.remove(aUser);
         }
