@@ -1,15 +1,42 @@
 package service.classes;
 
+import builder.DaoObjectBuilder;
+import dao.interfaces.UserDao;
 import model.interfaces.Group;
+import model.interfaces.User;
+import service.interfaces.UserService;
 
 import java.util.ArrayList;
 
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
+    private UserDao userDao;
+
+    public UserServiceImpl() {
+        userDao = DaoObjectBuilder.getUserDaoObject();
+    }
+
     public boolean doesUserExist(String username) {
-        return true;
+        for (User user :userDao.getUsersFromDB()) {
+            if(user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
     public boolean doesUserExist(int id) {
         return true;
+    }
+    public void changeUserName(String username) {
+
+    }
+    public void changeUserName(int id) {
+
+    }
+    public void changeUserPassword(String username) {
+
+    }
+    public void changeUserPassword(int id) {
+
     }
     public boolean validCredentials(String username, String password) {
         return true;
@@ -17,25 +44,31 @@ public class UserServiceImpl {
     public int getUserId(String username) {
         return 0;
     }
-    public void add(String username, String password) {
+    public void addUser(String username, String password) {
 
     }
-    public void remove(String username) {
+    public void removeUser(String username) {
 
     }
-    public void remove(int id) {
+    public void removeUser(int id) {
 
     }
-    public boolean getStatus(String username) {
+    public boolean getStatusForUser(String username) {
         return true;
     }
-    public boolean getStatus(int id) {
+    public boolean getStatusForUser(int id) {
         return true;
     }
-    public ArrayList<Group> getGroups(String username) {
+    public void setStatusForUser(String username) {
+
+    }
+    public void setStatusForUser(int id) {
+
+    }
+    public ArrayList<Group> getGroupsForUser(String username) {
         return null;
     }
-    public ArrayList<Group> getGroups(int id) {
+    public ArrayList<Group> getGroupsForUser(int id) {
         return null;
     }
 }
