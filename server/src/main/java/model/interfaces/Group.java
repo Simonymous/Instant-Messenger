@@ -3,5 +3,11 @@ package model.interfaces;
 import java.util.ArrayList;
 
 public interface Group {
-    public ArrayList<User> getParticipants();
+    int getGroupId();
+
+    void setGroupId(int groupId);
+
+    String getGroupName();
+
+    void setGroupName(String groupName);
 }
