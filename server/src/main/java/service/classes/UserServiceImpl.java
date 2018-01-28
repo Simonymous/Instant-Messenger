@@ -100,9 +100,7 @@ public class UserServiceImpl implements UserService {
         if(!doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
-        User user = ModelObjectBuilder.getUserObject();
-        user.setUsername(username);
-        user.setPassword(password);
+        User user = ModelObjectBuilder.getUserObject(username, password);
         userDao.addNewUser(user);
     }
 
@@ -162,6 +160,24 @@ public class UserServiceImpl implements UserService {
     }
 
     public ArrayList<Group> getGroupsForUser(int id) {
+        if(!doesUserExist(id)) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+        }
+        User user = getUserDao(id);
+        //TODO: Implentierung
+        return null;
+    }
+
+    public ArrayList<Integer> getGroupIdsForUser(String username) {
+        if(!doesUserExist(username)) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+        }
+        User user = getUserDao(username);
+        //TODO: Implentierung
+        return null;
+    }
+
+    public ArrayList<Integer>getGroupIdsForUser(int id) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }

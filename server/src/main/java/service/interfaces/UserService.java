@@ -22,6 +22,7 @@ public interface UserService {
     void setStatusForUser(int id, boolean b);
     ArrayList<Group> getGroupsForUser(String username);
     ArrayList<Group> getGroupsForUser(int id);
-
+    ArrayList<Integer> getGroupIdsForUser(String username);
+    ArrayList<Integer> getGroupIdsForUser(int id);
     //TODO Nice to have: getCountOfMesssages(), getAllMessagesFromUser()
 }
