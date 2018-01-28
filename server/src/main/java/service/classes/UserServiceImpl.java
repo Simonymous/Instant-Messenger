@@ -3,7 +3,6 @@ package service.classes;
 import builder.DaoObjectBuilder;
 import builder.ModelObjectBuilder;
 import dao.interfaces.UserDao;
-import model.classes.UserImpl;
 import model.interfaces.Group;
 import model.interfaces.User;
 import service.exceptions.UserAlreadyExistsException;
@@ -11,6 +10,7 @@ import service.exceptions.UserDoesNotExistException;
 import service.interfaces.UserService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static service.constants.UserServiceConstants.ERR_MSG_USER_ALREADY_EXISTS;
 import static service.constants.UserServiceConstants.ERR_MSG_USER_DOES_NOT_EXIST;
@@ -67,11 +67,10 @@ public class UserServiceImpl implements UserService {
         User user = getUserDao(username);
         user.setPassword(password);
         userDao.changePasword(user);
-
     }
     public void changeUserPassword(int id,String password) {
         if(!doesUserExist(id)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST;
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(id);
         user.setPassword(password);
@@ -81,47 +80,46 @@ public class UserServiceImpl implements UserService {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
-        //TODO: Implentierung
-        return true;
+        return getUserDao(username).getPassword().equals(password);
     }
     public int getUserId(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
-        User user = getUserDao(username);
-        return user.getUserId();
+        return getUserDao(username).getUserId();
     }
     public void addUser(String username, String password) {
         if(!doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
-        //TODO: Implentierung
+        User user = ModelObjectBuilder.getUserObject();
+        user.setUsername(username);
+        user.setPassword(password);
+        userDao.addNewUser(user);
     }
     public void removeUser(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
-        //TODO: Implentierung
+        userDao.removeUser(getUserDao(username));
     }
     public void removeUser(int id) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
-        //TODO: Implentierung
+        userDao.removeUser(getUserDao(id));
     }
     public boolean getStatusForUser(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
-        User user = getUserDao(username);
-        return user.getActive();
+        return getUserDao(username).getActive();
     }
     public boolean getStatusForUser(int id) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
-        User user = getUserDao(id);
-        return user.getActive();
+        return getUserDao(id).getActive();
     }
     public void setStatusForUser(String username, boolean b) {
         if(!doesUserExist(username)) {
@@ -143,6 +141,7 @@ public class UserServiceImpl implements UserService {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
+        User user = getUserDao(username);
         //TODO: Implentierung
         return null;
     }
@@ -150,6 +149,7 @@ public class UserServiceImpl implements UserService {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
+        User user = getUserDao(id);
         //TODO: Implentierung
         return null;
     }
