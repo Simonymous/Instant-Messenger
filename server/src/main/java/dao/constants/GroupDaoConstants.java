@@ -10,6 +10,9 @@ public class GroupDaoConstants {
 
     public static final String ERR_MSG_ADD_NEW_GROUP =     "Error: New Group can not be created!\n";
     public static final String ERR_MSG_REMOVE_GROUP =      "Error: Group can not be removed!\n";
-    public static final String ERR_MSG_CHANGE_ATTRIBUT =    "Error: An atribute of the table User coudlnt be changed!\n";
-    public static final String ERR_MSG_GET_GROUPS_FROM_DB = "Error: Coudnt read all Groups from DB!\n";
+    public static final String ERR_MSG_CHANGE_ATTRIBUT =    "Error: An attribute of the table User couldn't be changed!\n";
+    public static final String ERR_MSG_GET_GROUPS_FROM_DB = "Error: Couldn't read all Groups from DB!\n";
+    public static final String ERR_MSG_ADD_USER_TO_GROUP = "Error: Couldn't add User to Group!\n";
+    public static final String ERR_REMOVE_USER_FROM_GROUP = "Error: Couldn't remove User from Group!\n";
+    public static final String ERR_MSG_GET_GROUP_FROM_DB = "Error: Group not found!\n";
 }

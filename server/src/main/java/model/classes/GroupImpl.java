@@ -11,6 +11,13 @@ public class GroupImpl implements Group{
     private String groupName;
     private ArrayList<User> users;
 
+    public GroupImpl(){
+    }
+
+    public GroupImpl(String groupName){
+        this.groupName = groupName;
+    }
+
     @Override
     public int getGroupId() {
         return groupId;
