@@ -1,6 +1,6 @@
 package model.classes;
 
-import model.exceptiones.UserDoesNotExistException;
+import model.exceptions.UserDoesNotExistException;
 import model.interfaces.Group;
 import model.interfaces.User;
 

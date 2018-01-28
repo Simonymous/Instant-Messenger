@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public interface UserService {
     boolean doesUserExist(String username);
     boolean doesUserExist(int id);
-    void changeUserName(String username);
-    void changeUserName(int id);
-    void changeUserPassword(String username);
-    void changeUserPassword(int id);
+    void changeUserName(String NewUsername, String OldUsername);
+    void changeUserName(String NewUsername, int id);
+    void changeUserPassword(String username, String password);
+    void changeUserPassword(int id, String password);
     boolean validCredentials(String username, String password);
     int getUserId(String username);
     void addUser(String username, String password);
