@@ -18,8 +18,8 @@ public interface UserService {
     void removeUser(int id);
     boolean getStatusForUser(String username);
     boolean getStatusForUser(int id);
-    void setStatusForUser(String username);
-    void setStatusForUser(int id);
+    void setStatusForUser(String username, boolean b);
+    void setStatusForUser(int id, boolean b);
     ArrayList<Group> getGroupsForUser(String username);
     ArrayList<Group> getGroupsForUser(int id);
 
