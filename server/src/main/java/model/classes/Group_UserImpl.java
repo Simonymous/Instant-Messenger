@@ -2,6 +2,27 @@ package model.classes;
 
 import model.interfaces.Group_User;
 
-//TODO Annotationen hinzufügen
 public class Group_UserImpl implements Group_User {
+    int userId;
+    int groupId;
+
+    @Override
+    public int getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public int getGroupId() {
+        return groupId;
+    }
+
+    @Override
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 }

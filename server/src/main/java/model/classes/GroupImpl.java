@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class GroupImpl implements Group{
     private int groupId;
     private String groupName;
+    private ArrayList<User> users;
 
     @Override
     public int getGroupId() {
@@ -27,5 +28,20 @@ public class GroupImpl implements Group{
     @Override
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    @Override
+    public void addUser(User aUser){
+        users.add(aUser);
+    }
+
+    @Override
+    public void removeUser(User aUser){
+        users.remove(aUser);
+    }
+
+    @Override
+    public ArrayList<User> getUsers(){
+        return users;
     }
 }
