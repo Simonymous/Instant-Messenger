@@ -1,7 +1,12 @@
 package model.interfaces;
 
 public interface Message {
-    public String getContent();
-    public Group getGroup();
-    public User getUser();
+    long getMessageId();
+    void setMessageId(long messageId);
+    Group getGroup();
+    void setGroup(Group aGroup);
+    String getContent();
+    void setContent(String content);
+    User getUser();
+    void setUser(User aUser);
 }
