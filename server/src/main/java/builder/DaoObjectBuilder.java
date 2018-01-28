@@ -11,11 +11,11 @@ public class DaoObjectBuilder {
         return new UserDaoImpl();
     }
 
+
+    public static GroupDao getGroupDaoObject() {
+        return new GroupDaoImpl();
+    }
     //TODO Sobald die Implementierungen fertig sind einkommentieren
-//    public static GroupDao getGroupDaoObject() {
-//        return new GroupDaoImpl();
-//    }
-//
 //    public static Group_UserDao getGroup_UserDaoObject() {
 //        return new Group_UserDaoImpl();
 //    }

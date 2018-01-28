@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
     public boolean doesUserExist(int id) {
         for (User user : userDao.getUsersFromDB()) {
             if(user.getUserId() == id) {
@@ -38,6 +39,7 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
     public void changeUserName(String newUsername, String oldUsername) {
       if(!doesUserExist(newUsername)) {
           throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService {
       user.setUsername(newUsername);
       userDao.changeUsername(user);
     }
+
     public void changeUserName(String newUsername, int id) {
         if(!doesUserExist(newUsername)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
@@ -60,6 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(newUsername);
         userDao.changeUsername(user);
     }
+
     public void changeUserPassword(String username, String password) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
@@ -68,6 +72,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         userDao.changePasword(user);
     }
+
     public void changeUserPassword(int id,String password) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
@@ -76,18 +81,21 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         userDao.changePasword(user);
     }
+
     public boolean validCredentials(String username, String password) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         return getUserDao(username).getPassword().equals(password);
     }
+
     public int getUserId(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         return getUserDao(username).getUserId();
     }
+
     public void addUser(String username, String password) {
         if(!doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
@@ -97,30 +105,35 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         userDao.addNewUser(user);
     }
+
     public void removeUser(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         userDao.removeUser(getUserDao(username));
     }
+
     public void removeUser(int id) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         userDao.removeUser(getUserDao(id));
     }
+
     public boolean getStatusForUser(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         return getUserDao(username).getActive();
     }
+
     public boolean getStatusForUser(int id) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         return getUserDao(id).getActive();
     }
+
     public void setStatusForUser(String username, boolean b) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
@@ -129,6 +142,7 @@ public class UserServiceImpl implements UserService {
         user.setActive(b);
         userDao.changeActive(user);
     }
+
     public void setStatusForUser(int id, boolean b) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
@@ -137,6 +151,7 @@ public class UserServiceImpl implements UserService {
         user.setActive(b);
         userDao.changeActive(user);
     }
+
     public ArrayList<Group> getGroupsForUser(String username) {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
@@ -145,6 +160,7 @@ public class UserServiceImpl implements UserService {
         //TODO: Implentierung
         return null;
     }
+
     public ArrayList<Group> getGroupsForUser(int id) {
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
