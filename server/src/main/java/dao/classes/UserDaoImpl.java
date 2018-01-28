@@ -103,8 +103,8 @@ public class UserDaoImpl implements UserDao{
      * @param colName name of the colume
      * @param value value of the colume
      */
-    private void changeAttribut(ColNameUser colName, User aAuthor, String value) {
-        int id = aAuthor.getUserId();
+    private void changeAttribut(ColNameUser colName, User aUser, String value) {
+        int id = aUser.getUserId();
         String preparedStatement = PS_CHANGE_ATTRIBUT.replace("$attribut", colName.getColumnName());
 
         try (Connection connection = getConnection();

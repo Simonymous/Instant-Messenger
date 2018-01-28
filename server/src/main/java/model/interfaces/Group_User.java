@@ -7,6 +7,4 @@ public interface Group_User {
     void setGroupId(int groupId);
     int getUserId();
     void setUserId(int userId);
-
-
 }

@@ -2,6 +2,8 @@ package dao.classes;
 
 
 import builder.ModelObjectBuilder;
+import dao.enums.ColNameGroup;
+import dao.enums.ColNameUser;
 import dao.interfaces.GroupDao;
 import model.interfaces.Group;
 import model.interfaces.User;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static dao.constants.GlobalConstants.*;
+import static dao.constants.GroupDaoConstants.*;
 import static dao.constants.GroupDaoConstants.*;
 
 public class GroupDaoImpl implements GroupDao{
@@ -94,6 +97,33 @@ public class GroupDaoImpl implements GroupDao{
         }
 
         return aNewGroup;
+    }
+
+    @Override
+    public void changeGroupName(Group aGroup) {
+        changeAttribut(ColNameGroup.GroupName, aGroup, aGroup.getGroupName());
+    }
+
+    /**
+     * Method to change atribute in tabel
+     * @param colName name of the colume
+     * @param value value of the colume
+     */
+    private void changeAttribut(ColNameGroup colName, Group aGroup, String value) {
+        int id = aGroup.getGroupId();
+        String preparedStatement = PS_CHANGE_ATTRIBUT.replace("$attribut", colName.getColumnName());
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(preparedStatement)) {
+
+            statement.setString(PARAMETER_1, value);
+            statement.setInt(PARAMETER_2, id);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println(ERR_MSG_CHANGE_ATTRIBUT);
+            e.printStackTrace();
+        }
     }
 
     /**

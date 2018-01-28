@@ -10,4 +10,6 @@ public interface GroupDao {
     void removeGroup(Group aGroup);
 
     Group getGroupById(Group aGroup);
+
+    void changeGroupName(Group aGroup);
 }
