@@ -6,6 +6,14 @@ public class Group_UserImpl implements Group_User {
     int userId;
     int groupId;
 
+    public Group_UserImpl() {
+    }
+
+    public Group_UserImpl(int userId, int groupId) {
+        this.userId = userId;
+        this.groupId = groupId;
+    }
+
     @Override
     public int getUserId() {
         return userId;

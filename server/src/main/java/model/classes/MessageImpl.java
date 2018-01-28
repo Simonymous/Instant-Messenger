@@ -11,6 +11,9 @@ public class MessageImpl implements Message {
     private User user;
     private String content;
 
+    public MessageImpl() {
+    }
+
     public MessageImpl(Group aGroup, User aUser, String content){
         this.group = group;
         this.user = user;

@@ -43,15 +43,15 @@ public class Group_UserDaoImpl implements Group_UserDao{
      *SELECT * FROM Group_User
      * WHERE uderId = ?
      */
-    private static final String PS_GET_GROUPS_BY_USER = "SELECT " + "*" + "FROM" + TABLE_GROUP_USERS + "WHERE" + COL_USER_USER_ID
-            + "=?";
+    private static final String PS_GET_GROUPS_BY_USER = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " WHERE " + COL_USER_USER_ID
+            + " = ? ";
 
     /**
      *SELECT * FROM Group_User
      * WHERE groupId = ?
      */
-    private static final String PS_GET_USERS_BY_GROUP = "SELECT " + "*" + "FROM" + TABLE_GROUP_USERS + "WHERE" + COL_GROUP_GROUP_ID
-            + "=?";
+    private static final String PS_GET_USERS_BY_GROUP = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " WHERE " + COL_GROUP_GROUP_ID
+            + " = ? ";
 
 //----------------------------------------------------------------------------------------------------------------------
 // Prepared Statement End

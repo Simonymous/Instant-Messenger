@@ -25,6 +25,19 @@ public class ModelObjectBuilder {
         return new GroupImpl(groupname);
     }
 
-    //TODO Modelbuilder Group_User erstellen
-    //TODO Modelbuilder Message erstellen
+    public static Group_User getGroup_UserObject(){
+        return new Group_UserImpl();
+    }
+
+    public static Group_User getGroup_UserObject(int userId, int groupId){
+        return new Group_UserImpl(userId, groupId);
+    }
+
+    public static Message getMessageObject(){
+        return new MessageImpl();
+    }
+
+    public static Message getMessageObject(Group aGroup, User aUser, String content){
+        return new MessageImpl(aGroup, aUser, content);
+    }
 }
