@@ -37,7 +37,11 @@ public class GroupImpl implements Group{
 
     @Override
     public void removeUser(User aUser){
-        users.remove(aUser);
+        if(users.isEmpty()){
+
+        }else {
+            users.remove(aUser);
+        }
     }
 
     @Override

@@ -3,10 +3,9 @@ package dao.classes;
 import builder.ModelObjectBuilder;
 import dao.enums.ColNameUser;
 import dao.interfaces.UserDao;
-import model.classes.UserImpl;
 import model.interfaces.User;
 
-import static dao.constants.AuthorDaoConstants.*;
+import static dao.constants.UserDaoConstants.*;
 import static dao.constants.GlobalConstants.*;
 
 import java.sql.Connection;

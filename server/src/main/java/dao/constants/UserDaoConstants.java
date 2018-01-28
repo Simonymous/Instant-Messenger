@@ -3,7 +3,7 @@ package dao.constants;
 import dao.enums.ColNameUser;
 import dao.enums.TableName;
 
-public class AuthorDaoConstants {
+public class UserDaoConstants {
     public static final String TABLE_USER = TableName.User.getTableName();
     public static final String COL_USER_USERNAME = ColNameUser.Username.getColumnName();
     public static final String COL_USER_PASSWORD = ColNameUser.Password.getColumnName();
