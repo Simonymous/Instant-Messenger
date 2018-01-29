@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void changeUserName(String newUsername, String oldUsername) {
-      if(!doesUserExist(newUsername)) {
+      if(doesUserExist(newUsername)) {
           throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
       }
       if(!doesUserExist(oldUsername)) {
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void changeUserName(String newUsername, int id) {
-        if(!doesUserExist(newUsername)) {
+        if(doesUserExist(newUsername)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         if(!doesUserExist(id)) {
