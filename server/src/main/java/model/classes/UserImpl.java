@@ -51,8 +51,7 @@ public class UserImpl implements User {
 
     @Override
     public void setPassword(String password) {
-        String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-        this.password = hashedPassword;
+        this.password = password;
     }
 
     @Override

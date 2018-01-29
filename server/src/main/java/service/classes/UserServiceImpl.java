@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(username);
-        user.setPassword(password);
+        user.setPassword(getHash(password));
         userDao.changePasword(user);
     }
 
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(id);
-        user.setPassword(password);
+        user.setPassword(getHash(password));
         userDao.changePasword(user);
     }
 
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         if(doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
-        User user = ModelObjectBuilder.getUserObject(username, password);
+        User user = ModelObjectBuilder.getUserObject(username, getHash(password));
         userDao.addNewUser(user);
     }
 

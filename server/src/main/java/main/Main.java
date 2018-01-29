@@ -16,7 +16,15 @@ public class Main {
 //        userDao.changePasword(user);
 //        userDao.removeUser(user);
 
-        UserService user = new UserServiceImpl();
-        user.changeUserName("Simon", "Test");
+//        UserService user = new UserServiceImpl();
+//        user.addUser("Christian", "absolutSicher");
+//        boolean test = user.validCredentials("Christian2", "sicher");
+//        if(test){
+//            System.out.println("Hat geklappt.");
+//        } else {
+//            System.out.println("Hat NICHT geklappt.");
+//        }
+//        user.changeUserPassword("Christian", "sicher");
+
     }
 }
