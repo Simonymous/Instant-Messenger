@@ -15,9 +15,9 @@ public class MessageImpl implements Message {
     }
 
     public MessageImpl(Group aGroup, User aUser, String content){
-        this.group = group;
-        this.user = user;
-        this.content = content;
+        this.setGroup(aGroup);
+        this.setUser(aUser);
+        this.setContent(content);
     }
 
     @Override

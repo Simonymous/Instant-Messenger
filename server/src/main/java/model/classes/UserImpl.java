@@ -1,6 +1,9 @@
 package model.classes;
 
+import com.google.common.hash.Hashing;
 import model.interfaces.User;
+
+import java.nio.charset.StandardCharsets;
 
 public class UserImpl implements User {
     private int userId;
@@ -13,8 +16,8 @@ public class UserImpl implements User {
     }
 
     public UserImpl(String username, String password){
-        this.username = username;
-        this.password = password;
+        this.setUsername(username);
+        this.setPassword(password);
     }
 
     @Override
@@ -44,7 +47,8 @@ public class UserImpl implements User {
 
     @Override
     public void setPassword(String password) {
-        this.password = password;
+        String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        this.password = hashedPassword;
     }
 
     @Override

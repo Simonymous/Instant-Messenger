@@ -10,8 +10,8 @@ public class Group_UserImpl implements Group_User {
     }
 
     public Group_UserImpl(int userId, int groupId) {
-        this.userId = userId;
-        this.groupId = groupId;
+        this.setUserId(userId);
+        this.setGroupId(groupId);
     }
 
     @Override
