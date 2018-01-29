@@ -2,6 +2,7 @@ package service.classes;
 
 import builder.DaoObjectBuilder;
 import builder.ModelObjectBuilder;
+import dao.interfaces.Group_UserDao;
 import dao.interfaces.UserDao;
 import model.interfaces.Group;
 import model.interfaces.User;
@@ -12,14 +13,16 @@ import service.interfaces.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static service.constants.UserServiceConstants.ERR_MSG_USER_ALREADY_EXISTS;
-import static service.constants.UserServiceConstants.ERR_MSG_USER_DOES_NOT_EXIST;
+import static service.constants.ServiceConstants.ERR_MSG_USER_ALREADY_EXISTS;
+import static service.constants.ServiceConstants.ERR_MSG_USER_DOES_NOT_EXIST;
 
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+    private Group_UserDao group_userDao;
 
     public UserServiceImpl() {
         userDao = DaoObjectBuilder.getUserDaoObject();
+        group_userDao = DaoObjectBuilder.getGroup_UserDaoObject();
     }
 
     public boolean doesUserExist(String username) {
@@ -155,8 +158,7 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = getUserDao(username);
-        //TODO: Implentierung
-        return null;
+        return group_userDao.getGroupsByUser(user);
     }
 
     public ArrayList<Group> getGroupsForUser(int id) {
@@ -164,8 +166,7 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = getUserDao(id);
-        //TODO: Implentierung
-        return null;
+        return group_userDao.getGroupsByUser(user);
     }
 
     public ArrayList<Integer> getGroupIdsForUser(String username) {
@@ -173,8 +174,12 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = getUserDao(username);
-        //TODO: Implentierung
-        return null;
+        ArrayList<Group> groupsForUser = getGroupsForUser(username);
+        ArrayList<Integer> groupIds = null;
+        for (Group g : groupsForUser) {
+            groupIds.add(g.getGroupId());
+        }
+        return groupIds;
     }
 
     public ArrayList<Integer>getGroupIdsForUser(int id) {
@@ -182,8 +187,12 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = getUserDao(id);
-        //TODO: Implentierung
-        return null;
+        ArrayList<Group> groupsForUser = getGroupsForUser(id);
+        ArrayList<Integer> groupIds = null;
+        for (Group g : groupsForUser) {
+            groupIds.add(g.getGroupId());
+        }
+        return groupIds;
     }
 
     private User getUserDao(String username) {
