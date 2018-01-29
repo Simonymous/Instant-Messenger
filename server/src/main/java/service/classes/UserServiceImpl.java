@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean validCredentials(String username, String password) {
         if(!doesUserExist(username)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
+            return false;
         }
         return getUserDao(username).getPassword().equals(getHash(password));
     }
