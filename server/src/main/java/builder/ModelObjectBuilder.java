@@ -13,6 +13,10 @@ public class ModelObjectBuilder {
         return new UserImpl();
     }
 
+    public static User getUserObject(int userId){
+        return new UserImpl(userId);
+    }
+
     public static User getUserObject(String username, String password){
         return new UserImpl(username, password);
     }
@@ -43,6 +47,10 @@ public class ModelObjectBuilder {
 
     public static Message getMessageObject(){
         return new MessageImpl();
+    }
+
+    public static Message getMessageObject(long messageId){
+        return new MessageImpl(messageId);
     }
 
     public static Message getMessageObject(Group aGroup, User aUser, String content){
