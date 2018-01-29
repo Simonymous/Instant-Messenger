@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void addUser(String username, String password) {
-        if(!doesUserExist(username)) {
+        if(doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = ModelObjectBuilder.getUserObject(username, password);
