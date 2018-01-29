@@ -162,7 +162,7 @@ public class MessageDaoImpl implements MessageDao{
     }
 
     @Override
-    public ArrayList<Message> getMessegesByGroup(Group aGroup) {
+    public ArrayList<Message> getMessagesByGroup(Group aGroup) {
         Message aNewMessage = ModelObjectBuilder.getMessageObject();
         ArrayList<Message> messages = new ArrayList<Message>();
         ResultSet rs;

@@ -12,5 +12,5 @@ public interface MessageDao {
 
     Message getMessageById(Message aMessage);
     ArrayList<Message> getMessagesByUser(User aUser);
-    ArrayList<Message> getMessegesByGroup(Group aGroup);
+    ArrayList<Message> getMessagesByGroup(Group aGroup);
 }
