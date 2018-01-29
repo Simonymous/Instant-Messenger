@@ -2,6 +2,7 @@ package service.classes;
 
 import builder.DaoObjectBuilder;
 import builder.ModelObjectBuilder;
+import com.google.common.hash.Hashing;
 import dao.interfaces.Group_UserDao;
 import dao.interfaces.UserDao;
 import model.interfaces.Group;
@@ -10,6 +11,7 @@ import service.exceptions.UserAlreadyExistsException;
 import service.exceptions.UserDoesNotExistException;
 import service.interfaces.UserService;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +91,7 @@ public class UserServiceImpl implements UserService {
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
-        return getUserDao(username).getPassword().equals(password);
+        return getUserDao(username).getPassword().equals(getHash(password));
     }
 
     public int getUserId(String username) {
@@ -205,5 +207,10 @@ public class UserServiceImpl implements UserService {
         User user = ModelObjectBuilder.getUserObject();
         user.setUserId(id);
         return userDao.getUserById(user);
+    }
+
+    private String getHash(String password){
+        String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        return hashedPassword;
     }
 }
