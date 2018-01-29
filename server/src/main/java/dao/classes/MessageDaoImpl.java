@@ -49,7 +49,7 @@ public class MessageDaoImpl implements MessageDao{
     /**
      * SELECT *
      * FROM Message JOIN User
-     * WHERE Messege.userUserId = User.userId
+     * WHERE Message.userUserId = User.userId
      */
     public static final String PS_GET_MESAGES_BY_USER = "SELECT * FROM " + TABLE_MESSAGE + " JOIN " + TABLE_USER + " WHERE "
             + TABLE_MESSAGE + "." + COL_MESSAGE_USER_ID + " = " + TABLE_USER + " . " + COL_USER_ID;
@@ -162,7 +162,7 @@ public class MessageDaoImpl implements MessageDao{
     }
 
     @Override
-    public ArrayList<Message> getMessegesByGroup(Message aMessage) {
+    public ArrayList<Message> getMessagesByGroup(Message aMessage) {
         Message aNewMessage = ModelObjectBuilder.getMessageObject();
         ArrayList<Message> messages = new ArrayList<Message>();
         ResultSet rs;
