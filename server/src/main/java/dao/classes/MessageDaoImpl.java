@@ -126,28 +126,28 @@ public class MessageDaoImpl implements MessageDao{
     }
 
     @Override
-    public ArrayList<Message> getMessagesByUser(Message aMessage) {
+    public ArrayList<Message> getMessagesByUser(User aUser) {
         Message aNewMessage = ModelObjectBuilder.getMessageObject();
         ArrayList<Message> messages = new ArrayList<Message>();
         ResultSet rs;
-        Group aGroup;
-        User aUser;
+        Group aNewGroup;
+        User aNewUser;
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_GET_MESAGES_BY_USER)) {
 
-            statement.setInt(PARAMETER_1, aMessage.getUser().getUserId());
+            statement.setInt(PARAMETER_1, aUser.getUserId());
             rs = statement.executeQuery();
 
             while(rs.next()) {
-                aGroup = ModelObjectBuilder.getGroupObject();
-                aUser = ModelObjectBuilder.getUserObject();
+                aNewGroup = ModelObjectBuilder.getGroupObject();
+                aNewUser = ModelObjectBuilder.getUserObject();
 
                 aNewMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
-                aGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
-                aNewMessage.setGroup(aGroup);
-                aUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
-                aNewMessage.setUser(aUser);
+                aNewGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
+                aNewMessage.setGroup(aNewGroup);
+                aNewUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
+                aNewMessage.setUser(aNewUser);
                 aNewMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
 
                 messages.add(aNewMessage);
@@ -162,28 +162,28 @@ public class MessageDaoImpl implements MessageDao{
     }
 
     @Override
-    public ArrayList<Message> getMessegesByGroup(Message aMessage) {
+    public ArrayList<Message> getMessegesByGroup(Group aGroup) {
         Message aNewMessage = ModelObjectBuilder.getMessageObject();
         ArrayList<Message> messages = new ArrayList<Message>();
         ResultSet rs;
-        Group aGroup;
-        User aUser;
+        Group aNewGroup;
+        User aNewUser;
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_GET_MESAGES_BY_GROUP)) {
 
-            statement.setInt(PARAMETER_1, aMessage.getGroup().getGroupId());
+            statement.setInt(PARAMETER_1, aGroup.getGroupId());
             rs = statement.executeQuery();
 
             while(rs.next()) {
-                aGroup = ModelObjectBuilder.getGroupObject();
-                aUser = ModelObjectBuilder.getUserObject();
+                aNewGroup = ModelObjectBuilder.getGroupObject();
+                aNewUser = ModelObjectBuilder.getUserObject();
 
                 aNewMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
-                aGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
-                aNewMessage.setGroup(aGroup);
-                aUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
-                aNewMessage.setUser(aUser);
+                aNewGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
+                aNewMessage.setGroup(aNewGroup);
+                aNewUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
+                aNewMessage.setUser(aNewUser);
                 aNewMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
 
                 messages.add(aNewMessage);
