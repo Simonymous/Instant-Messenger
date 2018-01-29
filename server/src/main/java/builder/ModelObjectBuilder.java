@@ -25,6 +25,14 @@ public class ModelObjectBuilder {
         return new GroupImpl(groupname);
     }
 
+    public static Group getGroupObject(int id){
+        return new GroupImpl(id);
+    }
+
+    public static Group getGroupObject(int id, String name){
+        return new GroupImpl(id, name);
+    }
+
     public static Group_User getGroup_UserObject(){
         return new Group_UserImpl();
     }

@@ -14,7 +14,16 @@ public class GroupImpl implements Group{
     public GroupImpl(){
     }
 
+    public GroupImpl(int groupId) {
+        this.groupId = groupId;
+    }
+
     public GroupImpl(String groupName){
+        this.groupName = groupName;
+    }
+
+    public GroupImpl(int groupId, String groupName) {
+        this.groupId = groupId;
         this.groupName = groupName;
     }
 
