@@ -16,7 +16,6 @@ import static rest.constants.UserRestConstants.*;
 
 //TODO In mehere Klassen aufteilen die Interfaces implementieren
 //TODO Nach dem Testen Methooden bei denen das Password übertragen wird zu @Post Methode umbauen
-//TODO Eventuell JSON verwenden
 //TODO Throws in relevanten Dao und Modelklassen hinzufügen
 @Path( HelloWorldService.webContextPath )
 public class HelloWorldService
@@ -36,13 +35,13 @@ public class HelloWorldService
 //    }
 
     @GET @Path("doesUserExist")
-    public boolean doesUserExist( @QueryParam("name") String name){
+    public String doesUserExist( @QueryParam("name") String name){
         try {
-            return ServiceObjectBuilder.getUserServiceObject().doesUserExist(name);
+            return new Gson().toJson(ServiceObjectBuilder.getUserServiceObject().doesUserExist(name));
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
-            return false;
+            System.err.println(e.getMessage());
+            return e.getMessage();
         }
     }
 
@@ -83,28 +82,28 @@ public class HelloWorldService
     }
 
     @GET @Path("validCredentials")
-    public Boolean validCredentials(@QueryParam("name") String userName, @QueryParam("password") String password){
+    public String validCredentials(@QueryParam("name") String userName, @QueryParam("password") String password){
         try {
-            return ServiceObjectBuilder.getUserServiceObject().validCredentials(userName, password);
+            return new Gson().toJson(ServiceObjectBuilder.getUserServiceObject().validCredentials(userName, password));
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            return false;
+            return e.getMessage();
         }
     }
 
     @GET @Path("getUserId")
-    public int getUserId(@QueryParam("name") String userName){
+    public String getUserId(@QueryParam("name") String userName){
         try {
-            return ServiceObjectBuilder.getUserServiceObject().getUserId(userName);
+            return new Gson().toJson(ServiceObjectBuilder.getUserServiceObject().getUserId(userName));
         }
         catch(UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            return -1;
+            return ERR_USER_DOES_NOT_EXIST;
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            return -1;
+            return e.getMessage();
         }
     }
 
@@ -141,17 +140,17 @@ public class HelloWorldService
     }
 
     @GET @Path("getStatusForUser")
-    public Boolean getStatusForUser(@QueryParam("name") String userName){
+    public String getStatusForUser(@QueryParam("name") String userName){
         try{
-            return ServiceObjectBuilder.getUserServiceObject().getStatusForUser(userName);
+            return new Gson().toJson(ServiceObjectBuilder.getUserServiceObject().getStatusForUser(userName));
         }
         catch (UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            return false;
+            return ERR_USER_DOES_NOT_EXIST;
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            return false;
+            return e.getMessage();
         }
     }
 
