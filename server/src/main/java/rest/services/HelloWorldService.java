@@ -19,7 +19,7 @@ import static rest.constants.UserRestConstants.*;
 //TODO @GET @POST @DELETE richtig verwenden
 //TODO Throws in relevanten Dao und Modelklassen hinzufügen
 //TODO Übergabeparameter als Json
-//TODO Fehlermeldungen als Json (Eventuell Exceptions mit Json konvertieren)
+//TODO Fehlermeldungen als Json (Eventuell Exceptions zu Json konvertieren)
 @Path(HelloWorldService.webContextPath)
 public class HelloWorldService {
     static final String webContextPath = "/im";
