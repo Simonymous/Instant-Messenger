@@ -7,8 +7,10 @@ import service.interfaces.GroupService;
 import service.interfaces.MessageService;
 import service.interfaces.UserService;
 
+import java.sql.SQLException;
+
 public class ServiceObjectBuilder {
-    public static GroupService getGroupServiceObject(){
+    public static GroupService getGroupServiceObject() throws SQLException{
         return new GroupServiceImpl();
     }
 

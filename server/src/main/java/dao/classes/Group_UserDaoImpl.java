@@ -16,6 +16,7 @@ import static dao.constants.GlobalConstants.*;
 
 import static dao.constants.GroupDaoConstants.COL_GROUP_ID;
 import static dao.constants.GroupDaoConstants.COL_GROUP_NAME;
+import static dao.constants.GroupDaoConstants.TABLE_GROUP;
 import static dao.constants.Group_UserDaoConstants.*;
 import static dao.constants.UserDaoConstants.*;
 
@@ -36,22 +37,24 @@ public class Group_UserDaoImpl implements Group_UserDao{
      * WHERE user_id = ?
      * AND group_id = ?
      */
-    private static final String PS_REMOVE_USER_FROM_GROUP = "DELETE FROM " + TABLE_GROUP_USERS + " WHERE " + COL_USER_USER_ID + " = ?"
-            + "AND" + COL_GROUP_GROUP_ID + "=?";
+    private static final String PS_REMOVE_USER_FROM_GROUP = "DELETE FROM " + TABLE_GROUP_USERS + " WHERE " +
+            COL_USER_USER_ID + " = ?" + "AND" + COL_GROUP_GROUP_ID + "=?";
 
     /**
-     *SELECT * FROM Group_User
-     * WHERE uderId = ?
+     *SELECT * FROM Group_User JOIN chatGroup
+     *WHERE Group_User.userUserId = ?
+     *AND chatGroup.groupId = Group_User.groupGroupId
      */
-    private static final String PS_GET_GROUPS_BY_USER = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " WHERE " + COL_USER_USER_ID
-            + " = ? ";
+    private static final String PS_GET_GROUPS_BY_USER = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " JOIN "
+            + TABLE_GROUP + " WHERE " + TABLE_GROUP_USERS + "." + COL_USER_USER_ID + " = ?" + " AND "
+            + TABLE_GROUP + "." + COL_GROUP_ID + " = " + TABLE_GROUP_USERS + "." + COL_GROUP_GROUP_ID;
 
     /**
      *SELECT * FROM Group_User
      * WHERE groupId = ?
      */
-    private static final String PS_GET_USERS_BY_GROUP = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " WHERE " + COL_GROUP_GROUP_ID
-            + " = ? ";
+    private static final String PS_GET_USERS_BY_GROUP = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " WHERE "
+            + COL_GROUP_GROUP_ID + " = ? ";
 
 //----------------------------------------------------------------------------------------------------------------------
 // Prepared Statement End

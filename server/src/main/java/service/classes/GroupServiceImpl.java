@@ -11,24 +11,26 @@ import service.interfaces.GroupService;
 
 import static service.constants.ServiceConstants.ERR_MSG_GROUP_DOES_NOT_EXIST;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+//TODO Throws Klausel zu Methoden hinzufügen die Exceptions werfen können
 public class GroupServiceImpl implements GroupService {
 
     private GroupDao groupDao;
     private Group_UserDao group_userDao;
 
-    public GroupServiceImpl() {
+    public GroupServiceImpl() throws SQLException {
         groupDao = DaoObjectBuilder.getGroupDaoObject();
         group_userDao = DaoObjectBuilder.getGroup_UserDaoObject();
     }
 
-    public void addNewGroup(String name) {
+    public void addNewGroup(String name) throws SQLException{
         Group group = ModelObjectBuilder.getGroupObject(name);
         groupDao.addNewGroup(group);
     }
 
-    public void addUserToGroup(int id, int userId) {
+    public void addUserToGroup(int id, int userId) throws SQLException, GroupDoesNotExistException{
         User user = ModelObjectBuilder.getUserObject();
         user.setUserId(userId);
         if(!doesGroupExist(id)) {
@@ -39,7 +41,7 @@ public class GroupServiceImpl implements GroupService {
         group_userDao.addNewUser(user, group);
     }
 
-    public void addUserToGroup(int id, User user) {
+    public void addUserToGroup(int id, User user) throws SQLException, GroupDoesNotExistException{
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
         if(!doesGroupExist(id)) {
@@ -48,7 +50,7 @@ public class GroupServiceImpl implements GroupService {
         group_userDao.addNewUser(user, group);
     }
 
-    public void removeUserFromGroup(int id, int userId) {
+    public void removeUserFromGroup(int id, int userId) throws SQLException, GroupDoesNotExistException{
         User user = ModelObjectBuilder.getUserObject();
         user.setUserId(userId);
         Group group = ModelObjectBuilder.getGroupObject();
@@ -59,21 +61,21 @@ public class GroupServiceImpl implements GroupService {
         group_userDao.removeUser(user, group);
     }
 
-    public void removeGroup(int id) {
+    public void removeGroup(int id) throws SQLException, GroupDoesNotExistException{
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
         groupDao.removeGroup(getGroupDao(id));
     }
 
-    public Group getGroupById(int id) {
+    public Group getGroupById(int id) throws SQLException, GroupDoesNotExistException{
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
         return getGroupDao(id);
     }
 
-    public void changeGroupName(int id, String newName) {
+    public void changeGroupName(int id, String newName) throws SQLException, GroupDoesNotExistException{
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
@@ -82,13 +84,13 @@ public class GroupServiceImpl implements GroupService {
         groupDao.changeGroupName(group);
     }
 
-   public ArrayList<User> getUsersForGroup(int id) {
+   public ArrayList<User> getUsersForGroup(int id) throws SQLException, GroupDoesNotExistException{
        if(!doesGroupExist(id)) {
            throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
        }
         return group_userDao.getUsersByGroup(getGroupDao(id));
     }
-    public ArrayList<Integer> getUserIdsForGroup(int id) {
+    public ArrayList<Integer> getUserIdsForGroup(int id) throws SQLException, GroupDoesNotExistException{
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
@@ -99,7 +101,7 @@ public class GroupServiceImpl implements GroupService {
         }
         return userIds;
     }
-    public ArrayList<String> getUserNamesForGroup(int id) {
+    public ArrayList<String> getUserNamesForGroup(int id) throws SQLException, GroupDoesNotExistException{
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
@@ -111,11 +113,11 @@ public class GroupServiceImpl implements GroupService {
         return userNames;
     }
 
-    public boolean doesGroupExist(int id) {
+    public boolean doesGroupExist(int id) throws SQLException{
         return getGroupDao(id).equals(ModelObjectBuilder.getGroupObject());
     }
 
-    private Group getGroupDao(int id) {
+    private Group getGroupDao(int id) throws SQLException{
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
         return groupDao.getGroupById(group);

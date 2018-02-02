@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import static service.constants.ServiceConstants.ERR_MSG_MESSAGE_DOES_NOT_EXIST;
 
+//TODO Throws Klausel zu Methoden hinzufügen die Exceptions werfen können
 public class MessageServiceImpl implements MessageService{
     private MessageDao messageDao;
 

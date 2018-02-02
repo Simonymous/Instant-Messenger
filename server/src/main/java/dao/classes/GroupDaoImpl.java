@@ -50,33 +50,28 @@ public class GroupDaoImpl implements GroupDao{
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addNewGroup(Group aGroup) {
+    public void addNewGroup(Group aGroup) throws SQLException{
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_ADD_NEW_GROUP)) {
 
             statement.setString(PARAMETER_1, aGroup.getGroupName());
 
             statement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(ERR_MSG_ADD_NEW_GROUP);
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void removeGroup(Group aGroup) {
+    public void removeGroup(Group aGroup) throws SQLException{
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_REMOVE_GROUP)) {
             statement.setInt(PARAMETER_1, aGroup.getGroupId() );
             statement.executeUpdate();
-        } catch (SQLException e){
-            System.err.println(ERR_MSG_REMOVE_GROUP);
         }
     }
 
 
     @Override
-    public Group getGroupById(Group aGroup) {
+    public Group getGroupById(Group aGroup) throws SQLException{
         Group aNewGroup = ModelObjectBuilder.getGroupObject();
         ResultSet rs;
 
@@ -91,16 +86,13 @@ public class GroupDaoImpl implements GroupDao{
                 aNewGroup.setGroupId(rs.getInt(COL_GROUP_ID));
             }
 
-        } catch (SQLException e) {
-            System.err.println(ERR_MSG_GET_GROUP_FROM_DB);
-            e.printStackTrace();
         }
 
         return aNewGroup;
     }
 
     @Override
-    public void changeGroupName(Group aGroup) {
+    public void changeGroupName(Group aGroup) throws SQLException{
         changeAttribut(ColNameGroup.GroupName, aGroup, aGroup.getGroupName());
     }
 
@@ -109,7 +101,7 @@ public class GroupDaoImpl implements GroupDao{
      * @param colName name of the colume
      * @param value value of the colume
      */
-    private void changeAttribut(ColNameGroup colName, Group aGroup, String value) {
+    private void changeAttribut(ColNameGroup colName, Group aGroup, String value) throws SQLException{
         int id = aGroup.getGroupId();
         String preparedStatement = PS_CHANGE_ATTRIBUT.replace("$attribut", colName.getColumnName());
 
@@ -120,9 +112,6 @@ public class GroupDaoImpl implements GroupDao{
             statement.setInt(PARAMETER_2, id);
             statement.executeUpdate();
 
-        } catch (SQLException e) {
-            System.err.println(ERR_MSG_CHANGE_ATTRIBUT);
-            e.printStackTrace();
         }
     }
 
