@@ -1,7 +1,9 @@
 package dao.classes;
 
 
+import builder.DaoObjectBuilder;
 import builder.ModelObjectBuilder;
+import dao.interfaces.GroupDao;
 import dao.interfaces.Group_UserDao;
 import model.interfaces.Group;
 import model.interfaces.User;
@@ -38,7 +40,7 @@ public class Group_UserDaoImpl implements Group_UserDao{
      * AND group_id = ?
      */
     private static final String PS_REMOVE_USER_FROM_GROUP = "DELETE FROM " + TABLE_GROUP_USERS + " WHERE " +
-            COL_USER_USER_ID + " = ?" + "AND" + COL_GROUP_GROUP_ID + "=?";
+            COL_USER_USER_ID + " = ?" + " AND " + COL_GROUP_GROUP_ID + " = ? ";
 
     /**
      *SELECT * FROM Group_User JOIN chatGroup
@@ -50,42 +52,41 @@ public class Group_UserDaoImpl implements Group_UserDao{
             + TABLE_GROUP + "." + COL_GROUP_ID + " = " + TABLE_GROUP_USERS + "." + COL_GROUP_GROUP_ID;
 
     /**
-     *SELECT * FROM Group_User
-     * WHERE groupId = ?
+     *SELECT * FROM Group_User JOIN User
+     *WHERE Group_User.groupGroupId = ?
+     *AND User.userId = Group_User.userUserId
      */
-    private static final String PS_GET_USERS_BY_GROUP = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " WHERE "
-            + COL_GROUP_GROUP_ID + " = ? ";
+    private static final String PS_GET_USERS_BY_GROUP = "SELECT " + "*" + " FROM " + TABLE_GROUP_USERS + " JOIN "
+            + TABLE_USER + " WHERE " + TABLE_GROUP_USERS + "." + COL_GROUP_GROUP_ID + " = ? " + " AND "
+            + TABLE_USER + "." + COL_USER_ID + " = " + TABLE_GROUP_USERS + "." + COL_USER_USER_ID;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Prepared Statement End
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addNewUser(User aUser, Group aGroup) {
+    public void addNewUser(User aUser, Group aGroup) throws SQLException{
         try (Connection connection = getConnection();
+
              PreparedStatement statement = connection.prepareStatement(PS_ADD_NEW_USER_TO_GROUP)) {
             statement.setInt(PARAMETER_1, aUser.getUserId());
             statement.setInt(PARAMETER_2, aGroup.getGroupId() );
             statement.executeUpdate();
-        } catch (SQLException e){
-            System.err.println(ERR_MSG_ADD_USER_TO_GROUP);
         }
     }
 
     @Override
-    public void removeUser(User aUser, Group aGroup) {
+    public void removeUser(User aUser, Group aGroup) throws SQLException{
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_REMOVE_USER_FROM_GROUP)) {
             statement.setInt(PARAMETER_1, aUser.getUserId());
             statement.setInt(PARAMETER_2, aGroup.getGroupId() );
             statement.executeUpdate();
-        } catch (SQLException e){
-            System.err.println(ERR_REMOVE_USER_FROM_GROUP);
         }
     }
 
     @Override
-    public ArrayList<Group> getGroupsByUser(User aUser) {
+    public ArrayList<Group> getGroupsByUser(User aUser) throws SQLException{
         ArrayList<Group> groupList = new ArrayList<>();
         int id = aUser.getUserId();
         ResultSet rs;
@@ -104,16 +105,13 @@ public class Group_UserDaoImpl implements Group_UserDao{
                 groupList.add(aGroup);
             }
 
-        } catch (SQLException e) {
-            System.err.println(ERR_MSG_GET_GROUP_FROM_DB);
-            e.printStackTrace();
         }
 
         return groupList;
     }
 
     @Override
-    public ArrayList<User> getUsersByGroup(Group aGroup) {
+    public ArrayList<User> getUsersByGroup(Group aGroup) throws SQLException{
         ArrayList<User> userList = new ArrayList<>();
         int id = aGroup.getGroupId();
         ResultSet rs;
@@ -134,13 +132,22 @@ public class Group_UserDaoImpl implements Group_UserDao{
                 userList.add(aUser);
             }
 
-        } catch (SQLException e) {
-            System.err.println(ERR_MSG_GET_USERS_FROM_DB);
-            e.printStackTrace();
         }
 
         return userList;
     }
+
+    public boolean doesGroupExist(int id) throws SQLException{
+        GroupDao groupDao = DaoObjectBuilder.getGroupDaoObject();
+        Group aNewGroup = ModelObjectBuilder.getGroupObject(id);
+        for (Group group : groupDao.getAllGroups()) {
+            if(group.getGroupId() == aNewGroup.getGroupId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Method to connect to DB

@@ -11,6 +11,7 @@ public interface GroupDao {
     void removeGroup(Group aGroup) throws SQLException;
 
     Group getGroupById(Group aGroup) throws SQLException;
+    ArrayList<Group> getAllGroups() throws SQLException;
 
     void changeGroupName(Group aGroup) throws SQLException;
 }

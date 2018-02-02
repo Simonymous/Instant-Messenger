@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface GroupService {
     void addNewGroup(String name) throws SQLException;
     void addUserToGroup(int id, int userId) throws SQLException;
+    void addUserToGroup(int id, String userName) throws SQLException;
     void addUserToGroup(int id, User user) throws SQLException;
     void removeUserFromGroup(int id, int userId) throws SQLException;
     void removeGroup(int id) throws SQLException;

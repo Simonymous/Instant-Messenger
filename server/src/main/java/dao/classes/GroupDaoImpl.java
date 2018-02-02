@@ -45,6 +45,20 @@ public class GroupDaoImpl implements GroupDao{
     private static final String PS_GET_GROUP_BY_ID = "SELECT * FROM " + TABLE_GROUP + " WHERE "
             + COL_GROUP_ID + " = ?";
 
+    /**
+     * SELECT *
+     * FROM group
+     */
+    private static final String PS_GET_ALL_GROUPS = "SELECT * FROM " + TABLE_GROUP;
+
+    /**
+     * UPDATE group
+     * SET $attribut = ?
+     * WHERE id = ?
+     */
+    private static final String PS_CHANGE_ATTRIBUT = "UPDATE " + TABLE_GROUP + " SET $attribut = ? WHERE "
+            + COL_GROUP_ID + " = ?";
+
 //----------------------------------------------------------------------------------------------------------------------
 // Prepared Statement End
 //----------------------------------------------------------------------------------------------------------------------
@@ -89,6 +103,28 @@ public class GroupDaoImpl implements GroupDao{
         }
 
         return aNewGroup;
+    }
+
+    @Override
+    public ArrayList<Group> getAllGroups() throws SQLException{
+        Group aNewGroup = ModelObjectBuilder.getGroupObject();
+        ArrayList<Group> groups = new ArrayList<Group>();
+        ResultSet rs;
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(PS_GET_ALL_GROUPS)) {
+
+            rs = statement.executeQuery();
+
+            while(rs.next()) {
+                aNewGroup.setGroupName(rs.getString(COL_GROUP_NAME));
+                aNewGroup.setGroupId(rs.getInt(COL_GROUP_ID));
+                groups.add(aNewGroup);
+            }
+
+        }
+
+        return groups;
     }
 
     @Override

@@ -4,6 +4,7 @@ import builder.DaoObjectBuilder;
 import builder.ModelObjectBuilder;
 import dao.interfaces.GroupDao;
 import dao.interfaces.Group_UserDao;
+import dao.interfaces.UserDao;
 import model.interfaces.Group;
 import model.interfaces.User;
 import service.exceptions.GroupDoesNotExistException;
@@ -38,6 +39,19 @@ public class GroupServiceImpl implements GroupService {
         }
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
+        group_userDao.addNewUser(user, group);
+    }
+
+    public void addUserToGroup(int id, String userName) throws SQLException, GroupDoesNotExistException{
+        Group group = ModelObjectBuilder.getGroupObject();
+        group.setGroupId(id);
+        if(!doesGroupExist(id)) {
+            throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
+        }
+        UserDao userDao = DaoObjectBuilder.getUserDaoObject();
+        User user = ModelObjectBuilder.getUserObject();
+        user.setUsername(userName);
+        user = userDao.getUserByName(user);
         group_userDao.addNewUser(user, group);
     }
 
@@ -114,7 +128,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     public boolean doesGroupExist(int id) throws SQLException{
-        return getGroupDao(id).equals(ModelObjectBuilder.getGroupObject());
+        for (Group group : groupDao.getAllGroups()) {
+            if(group.getGroupId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Group getGroupDao(int id) throws SQLException{
