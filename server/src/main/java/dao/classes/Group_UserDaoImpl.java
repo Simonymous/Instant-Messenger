@@ -65,7 +65,7 @@ public class Group_UserDaoImpl implements Group_UserDao{
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addNewUser(User aUser, Group aGroup) throws SQLException{
+    public void addNewUser(User aUser, Group aGroup) {
         try (Connection connection = getConnection();
 
              PreparedStatement statement = connection.prepareStatement(PS_ADD_NEW_USER_TO_GROUP)) {
@@ -73,20 +73,26 @@ public class Group_UserDaoImpl implements Group_UserDao{
             statement.setInt(PARAMETER_2, aGroup.getGroupId() );
             statement.executeUpdate();
         }
+        catch (SQLException e){
+            System.err.println(ERR_MSG_ADD_USER_TO_GROUP);
+        }
     }
 
     @Override
-    public void removeUser(User aUser, Group aGroup) throws SQLException{
+    public void removeUser(User aUser, Group aGroup) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_REMOVE_USER_FROM_GROUP)) {
             statement.setInt(PARAMETER_1, aUser.getUserId());
             statement.setInt(PARAMETER_2, aGroup.getGroupId() );
             statement.executeUpdate();
         }
+        catch (SQLException e){
+            System.err.println(ERR_REMOVE_USER_FROM_GROUP);
+        }
     }
 
     @Override
-    public ArrayList<Group> getGroupsByUser(User aUser) throws SQLException{
+    public ArrayList<Group> getGroupsByUser(User aUser) {
         ArrayList<Group> groupList = new ArrayList<>();
         int id = aUser.getUserId();
         ResultSet rs;
@@ -105,13 +111,18 @@ public class Group_UserDaoImpl implements Group_UserDao{
                 groupList.add(aGroup);
             }
 
+
+        }
+        catch (SQLException e) {
+            System.err.println(ERR_MSG_GET_GROUP_FROM_DB);
+            e.printStackTrace();
         }
 
         return groupList;
     }
 
     @Override
-    public ArrayList<User> getUsersByGroup(Group aGroup) throws SQLException{
+    public ArrayList<User> getUsersByGroup(Group aGroup) {
         ArrayList<User> userList = new ArrayList<>();
         int id = aGroup.getGroupId();
         ResultSet rs;
@@ -132,6 +143,10 @@ public class Group_UserDaoImpl implements Group_UserDao{
                 userList.add(aUser);
             }
 
+        }
+        catch (SQLException e) {
+            System.err.println(ERR_MSG_GET_USERS_FROM_DB);
+            e.printStackTrace();
         }
 
         return userList;

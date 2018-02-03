@@ -8,9 +8,13 @@ import service.exceptions.*;
 import javax.annotation.Generated;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import java.net.HttpURLConnection;
 
 import static rest.constants.GroupRestConstants.*;
 import static rest.constants.UserRestConstants.*;
@@ -23,7 +27,7 @@ import static rest.constants.UserRestConstants.*;
 @Path(HelloWorldService.webContextPath)
 public class HelloWorldService {
     static final String webContextPath = "/im";
-    static final Gson gSon = new Gson();
+    private static final Gson gSon = new Gson();
 
 //    @GET @Path("hallo") @Produces( MediaType.TEXT_PLAIN )
 //    public String halloPlainText( @QueryParam("name") String name )
@@ -48,42 +52,42 @@ public class HelloWorldService {
             return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().doesUserExist(name));
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            return gSon.toJson(e.getMessage());
         }
     }
 
-    @GET
+    @POST
     @Path("changeUserName")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String changeUserName(@QueryParam("newName") String newName, @QueryParam("oldName") String oldName) {
+    @Consumes("application/json")
+    @Produces("text/plain")
+    public Response changeUserName(@QueryParam("newName") String newName, @QueryParam("oldName") String oldName) {
         try {
             ServiceObjectBuilder.getUserServiceObject().changeUserName(newName, oldName);
-            return USER_NAME_CHANGED;
-        } catch (UserAlreadyExistsException e) {
+            return Response.status(Response.Status.OK).build();
+        }
+        catch(rest.Exceptions.UserAlreadyExistsException e){
             System.err.println(e.getMessage());
-            return ERR_USER_ALREADY_EXISTS;
-        } catch (UserDoesNotExistException e) {
+            return Response.status(Response.Status.CONFLICT).type(e.getMessage()).build();
+        }
+        catch(rest.Exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).type(e.getMessage()).build();
+        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GET
+    @POST
     @Path("changeUserPassword")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String changeUserPassword(@QueryParam("name") String userName, @QueryParam("password") String password) {
+    public void changeUserPassword(@QueryParam("name") String userName, @QueryParam("password") String password) {
         try {
             ServiceObjectBuilder.getUserServiceObject().changeUserPassword(userName, password);
-            return USER_PASSWORD_CHANGED;
-        } catch (UserDoesNotExistException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
         }
     }
 
@@ -95,7 +99,7 @@ public class HelloWorldService {
             return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().validCredentials(userName, password));
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            return gSon.toJson(e.getMessage());
         }
     }
 
@@ -105,44 +109,36 @@ public class HelloWorldService {
     public String getUserId(@QueryParam("name") String userName) {
         try {
             return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getUserId(userName));
-        } catch (UserDoesNotExistException e) {
+        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            return gSon.toJson(e);
         }
     }
 
-    @GET
+    @POST
     @Path("addUser")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String addUser(@QueryParam("name") String userName, @QueryParam("password") String password) {
+    public void addUser(@QueryParam("name") String userName, @QueryParam("password") String password) {
         try {
             ServiceObjectBuilder.getUserServiceObject().addUser(userName, password);
-            return USER_ADDED;
-        } catch (UserAlreadyExistsException e) {
+        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
-            return gSon.toJson(ERR_USER_ALREADY_EXISTS);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
         }
     }
 
-    @GET
+    @DELETE
     @Path("removeUser")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String removeUser(@QueryParam("name") String userName) {
+    public void removeUser(@QueryParam("name") String userName) {
         try {
             ServiceObjectBuilder.getUserServiceObject().removeUser(userName);
-            return USER_REMOVED;
-        } catch (UserDoesNotExistException e) {
+        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
         }
     }
 

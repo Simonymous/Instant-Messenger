@@ -1,29 +1,31 @@
 package service.interfaces;
 
 import model.interfaces.Group;
+import rest.Exceptions.UserAlreadyExistsException;
+import rest.Exceptions.UserDoesNotExistException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface UserService {
-    boolean doesUserExist(String username) throws SQLException;
-    boolean doesUserExist(int id) throws SQLException;
-    void changeUserName(String NewUsername, String OldUsername) throws SQLException;
-    void changeUserName(String NewUsername, int id) throws SQLException;
-    void changeUserPassword(String username, String password) throws SQLException;
-    void changeUserPassword(int id, String password) throws SQLException;
-    boolean validCredentials(String username, String password) throws SQLException;
-    int getUserId(String username) throws SQLException;
-    void addUser(String username, String password) throws SQLException;
-    void removeUser(String username) throws SQLException;
-    void removeUser(int id) throws SQLException;
-    boolean getStatusForUser(String username) throws SQLException;
-    boolean getStatusForUser(int id) throws SQLException;
-    void setStatusForUser(String username, boolean b) throws SQLException;
-    void setStatusForUser(int id, boolean b) throws SQLException;
-    ArrayList<Group> getGroupsForUser(String username) throws SQLException;
-    ArrayList<Group> getGroupsForUser(int id) throws SQLException;
-    ArrayList<Integer> getGroupIdsForUser(String username) throws SQLException;
-    ArrayList<Integer> getGroupIdsForUser(int id) throws SQLException;
+    boolean doesUserExist(String username);
+    boolean doesUserExist(int id);
+    void changeUserName(String NewUsername, String OldUsername) throws UserAlreadyExistsException, UserDoesNotExistException;
+    void changeUserName(String NewUsername, int id) throws UserAlreadyExistsException, UserDoesNotExistException;
+    void changeUserPassword(String username, String password) throws UserDoesNotExistException;
+    void changeUserPassword(int id, String password) throws UserDoesNotExistException;
+    boolean validCredentials(String username, String password);
+    int getUserId(String username) throws UserDoesNotExistException;
+    void addUser(String username, String password) throws UserAlreadyExistsException;
+    void removeUser(String username) throws UserDoesNotExistException;
+    void removeUser(int id) throws UserDoesNotExistException;
+    boolean getStatusForUser(String username) throws UserDoesNotExistException;
+    boolean getStatusForUser(int id) throws UserDoesNotExistException;
+    void setStatusForUser(String username, boolean b) throws UserDoesNotExistException;
+    void setStatusForUser(int id, boolean b) throws UserDoesNotExistException;
+    ArrayList<Group> getGroupsForUser(String username) throws UserDoesNotExistException;
+    ArrayList<Group> getGroupsForUser(int id) throws UserDoesNotExistException;
+    ArrayList<Integer> getGroupIdsForUser(String username) throws UserDoesNotExistException;
+    ArrayList<Integer> getGroupIdsForUser(int id) throws UserDoesNotExistException;
     //TODO Nice to have: getCountOfMesssages(), getAllMessagesFromUser()
 }
