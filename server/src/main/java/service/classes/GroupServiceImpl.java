@@ -20,10 +20,12 @@ public class GroupServiceImpl implements GroupService {
 
     private GroupDao groupDao;
     private Group_UserDao group_userDao;
+    private UserDao userDao;
 
     public GroupServiceImpl() throws SQLException {
         groupDao = DaoObjectBuilder.getGroupDaoObject();
         group_userDao = DaoObjectBuilder.getGroup_UserDaoObject();
+        userDao = DaoObjectBuilder.getUserDaoObject();
     }
 
     public void addNewGroup(String name) throws SQLException{
@@ -48,7 +50,6 @@ public class GroupServiceImpl implements GroupService {
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
-        UserDao userDao = DaoObjectBuilder.getUserDaoObject();
         User user = ModelObjectBuilder.getUserObject();
         user.setUsername(userName);
         user = userDao.getUserByName(user);
