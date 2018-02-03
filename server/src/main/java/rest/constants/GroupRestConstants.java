@@ -1,7 +1,7 @@
 package rest.constants;
 
 public class GroupRestConstants {
-
+    public static final String ERR_GROUP_ALREADY_EXISTS = "The Group already exists\n";
 
     public static final String GROUP_ADDED = "Group added successfully\n";
     public static final String GROUP_REMOVED = "Group removed successfully\n";

@@ -47,10 +47,10 @@ public class UserServiceImpl implements UserService {
 
     public void changeUserName(String newUsername, String oldUsername) throws UserAlreadyExistsException, UserDoesNotExistException {
       if(doesUserExist(newUsername)) {
-          throw new UserAlreadyExistsException();
+          throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
       }
       if(!doesUserExist(oldUsername)) {
-          throw new UserDoesNotExistException();
+          throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
       }
       User user = getUserDao(oldUsername);
       user.setUsername(newUsername);
