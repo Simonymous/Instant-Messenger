@@ -28,6 +28,7 @@ import static rest.constants.UserRestConstants.*;
 public class HelloWorldService {
     static final String webContextPath = "/im";
     private static final Gson gSon = new Gson();
+    private Response.Status status;
 
 //    @GET @Path("hallo") @Produces( MediaType.TEXT_PLAIN )
 //    public String halloPlainText( @QueryParam("name") String name )
@@ -47,66 +48,90 @@ public class HelloWorldService {
     @GET
     @Path("doesUserExist")
     @Produces(MediaType.APPLICATION_JSON)
-    public String doesUserExist(@QueryParam("name") String name) {
+    public Response doesUserExist(@QueryParam("name") String name) {
+        status = null;
+
         try {
-            return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().doesUserExist(name));
+            String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().doesUserExist(name));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return gSon.toJson(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
         }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @POST
-    @Path("changeUserName")
+    @Path("changeUserName/{newName}/{oldName}")
     @Consumes("application/json")
-    @Produces("text/plain")
-    public Response changeUserName(@QueryParam("newName") String newName, @QueryParam("oldName") String oldName) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changeUserName(@PathParam("newName") final String newName, @PathParam("oldName") final String oldName) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getUserServiceObject().changeUserName(newName, oldName);
-            return Response.status(Response.Status.OK).build();
+            status = Response.Status.OK;
         }
         catch(rest.Exceptions.UserAlreadyExistsException e){
             System.err.println(e.getMessage());
-            return Response.status(Response.Status.CONFLICT).type(e.getMessage()).build();
+            status = Response.Status.CONFLICT;
         }
         catch(rest.Exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            return Response.status(Response.Status.NOT_FOUND).type(e.getMessage()).build();
+            status = Response.Status.NOT_FOUND;
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            status = Response.Status.INTERNAL_SERVER_ERROR;
         }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @POST
-    @Path("changeUserPassword")
+    @Path("changeUserPassword/{name}/{password}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public void changeUserPassword(@QueryParam("name") String userName, @QueryParam("password") String password) {
+    public Response changeUserPassword(@PathParam("name") final String userName, @PathParam("password") final String password) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getUserServiceObject().changeUserPassword(userName, password);
-        }catch (Exception e) {
-            System.err.println(e.getMessage());
+            status = Response.Status.OK;
         }
+        catch(rest.Exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.NOT_FOUND;
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
+        }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @GET
     @Path("validCredentials")
     @Produces(MediaType.APPLICATION_JSON)
-    public String validCredentials(@QueryParam("name") String userName, @QueryParam("password") String password) {
+    public Response validCredentials(@QueryParam("name") final String userName, @QueryParam("password") final String password) {
+        status = null;
+
         try {
-            return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().validCredentials(userName, password));
+            String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().validCredentials(userName, password));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return gSon.toJson(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
         }
+
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @GET
     @Path("getUserId")
     @Produces(MediaType.APPLICATION_JSON)
     public String getUserId(@QueryParam("name") String userName) {
+        status = null;
+
         try {
             return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getUserId(userName));
         }
@@ -121,6 +146,8 @@ public class HelloWorldService {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public void addUser(@QueryParam("name") String userName, @QueryParam("password") String password) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getUserServiceObject().addUser(userName, password);
         }
@@ -134,6 +161,8 @@ public class HelloWorldService {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public void removeUser(@QueryParam("name") String userName) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getUserServiceObject().removeUser(userName);
         }
@@ -146,6 +175,8 @@ public class HelloWorldService {
     @Path("getStatusForUser")
     @Produces(MediaType.APPLICATION_JSON)
     public String getStatusForUser(@QueryParam("name") String userName) {
+        status = null;
+
         try {
             return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getStatusForUser(userName));
         } catch (UserDoesNotExistException e) {
@@ -161,6 +192,8 @@ public class HelloWorldService {
     @Path("setStatusForUser")
     @Produces(MediaType.APPLICATION_JSON)
     public String setStatusForUser(@QueryParam("name") String userName, @QueryParam("status") Boolean status) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getUserServiceObject().setStatusForUser(userName, status);
             return STATUS_CHANGED;
@@ -177,6 +210,8 @@ public class HelloWorldService {
     @Path("getGroupsForUser")
     @Produces(MediaType.APPLICATION_JSON)
     public String getGroupsForUser(@QueryParam("name") String userName) {
+        status = null;
+
         try {
             return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getGroupsForUser(userName));
         } catch (UserDoesNotExistException e) {
