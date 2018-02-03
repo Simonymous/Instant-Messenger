@@ -7,19 +7,19 @@ import javax.ws.rs.ext.Provider;
 import static rest.constants.GroupRestConstants.*;
 
 @Provider
-public class GroupDoesNotExistException extends Exception implements ExceptionMapper<GroupDoesNotExistException>{
+public class GroupAlreadyExistsException extends Exception implements ExceptionMapper<GroupAlreadyExistsException> {
     private static final long serialVersionID = 2L;
 
-    public GroupDoesNotExistException(){
-        super(ERR_GROUP_DOES_NOT_EXIST);
+    public GroupAlreadyExistsException(){
+        super(ERR_GROUP_ALREADY_EXISTS);
     }
 
-    public GroupDoesNotExistException(String string){
+    public GroupAlreadyExistsException(String string){
         super(string);
     }
 
     @Override
-    public Response toResponse(GroupDoesNotExistException exception){
+    public Response toResponse(GroupAlreadyExistsException exception){
         return Response.status(409).entity(exception.getMessage()).type("text/plain").build();
     }
 }

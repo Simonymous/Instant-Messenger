@@ -8,7 +8,7 @@ import static rest.constants.UserRestConstants.*;
 
 @Provider
 public class UserAlreadyExistsException extends Exception implements ExceptionMapper<UserAlreadyExistsException> {
-    private static final long serialVersionID = 2L;
+    private static final long serialVersionID = 4L;
 
     public UserAlreadyExistsException(){
         super(ERR_USER_ALREADY_EXISTS);

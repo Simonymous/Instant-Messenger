@@ -236,7 +236,7 @@ public class HelloWorldService {
     @GET
     @Path("getGroupsForUser")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGroupsForUser(@QueryParam("name") String userName) {
+    public Response getGroupsForUser(@QueryParam("name") final String userName) {
         status = null;
 
         try {
@@ -257,23 +257,29 @@ public class HelloWorldService {
     //Group API
     //------------------------------------------------------------------------------------------------------------------
 
-    @GET
-    @Path("addNewGroup")
+    @POST
+    @Path("addNewGroup/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String addNewGroup(@QueryParam("name") String groupName) {
+    public Response addNewGroup(@PathParam("name") final String groupName) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getGroupServiceObject().addNewGroup(groupName);
-            return GROUP_ADDED;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            status = Response.Status.OK;
         }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
+        }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @GET
     @Path("removeGroup")
     @Produces(MediaType.APPLICATION_JSON)
     public String removeGroup(@QueryParam("groupId") int groupId) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getGroupServiceObject().removeGroup(groupId);
             return GROUP_REMOVED;
@@ -287,6 +293,8 @@ public class HelloWorldService {
     @Path("addUserToGroup")
     @Produces(MediaType.APPLICATION_JSON)
     public String addUserToGroup(@QueryParam("groupId") int groupId, @QueryParam("name") String userName) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getGroupServiceObject().addUserToGroup(groupId, userName);
             return USER_ADDED_TO_GROUP;
@@ -300,6 +308,8 @@ public class HelloWorldService {
     @Path("removeUserFromGroup")
     @Produces(MediaType.APPLICATION_JSON)
     public String removeUserFromGroup(@QueryParam("userId") int userId, @QueryParam("groupId") int groupId) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getGroupServiceObject().removeUserFromGroup(groupId, userId);
             return USER_REMOVED_FROM_GROUP;
@@ -313,6 +323,8 @@ public class HelloWorldService {
     @Path("getGroupById")
     @Produces(MediaType.APPLICATION_JSON)
     public String getGroupById(@QueryParam("groupId") int groupId) {
+        status = null;
+
         try {
             return gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getGroupById(groupId));
         } catch (GroupDoesNotExistException e) {
@@ -328,6 +340,8 @@ public class HelloWorldService {
     @Path("changeGroupName")
     @Produces(MediaType.APPLICATION_JSON)
     public String changeGroupName(@QueryParam("groupId") int groupId, @QueryParam("name") String newName) {
+        status = null;
+
         try {
             ServiceObjectBuilder.getGroupServiceObject().changeGroupName(groupId, newName);
             return GROUP_NAME_CHANGED;
@@ -344,6 +358,8 @@ public class HelloWorldService {
     @Path("getUsersForGroup")
     @Produces(MediaType.APPLICATION_JSON)
     public String getUsersForGroup(@QueryParam("groupId") int groupId) {
+        status = null;
+
         try {
             return gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getUsersForGroup(groupId));
         } catch (GroupDoesNotExistException e) {

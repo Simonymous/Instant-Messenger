@@ -10,7 +10,7 @@ import model.interfaces.User;
 import rest.Exceptions.*;
 import service.interfaces.GroupService;
 
-import static service.constants.ServiceConstants.ERR_MSG_GROUP_DOES_NOT_EXIST;
+import static service.constants.ServiceConstants.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
