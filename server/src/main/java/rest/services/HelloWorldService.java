@@ -129,98 +129,129 @@ public class HelloWorldService {
     @GET
     @Path("getUserId")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getUserId(@QueryParam("name") String userName) {
+    public Response getUserId(@QueryParam("name") final String userName) {
         status = null;
 
         try {
-            return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getUserId(userName));
+            String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getUserId(userName));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        }
+        catch(rest.Exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.NOT_FOUND;
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            return gSon.toJson(e);
+            status = Response.Status.INTERNAL_SERVER_ERROR;
         }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @POST
-    @Path("addUser")
+    @Path("addUser/{name}/{password}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public void addUser(@QueryParam("name") String userName, @QueryParam("password") String password) {
+    public Response addUser(@PathParam("name") final String userName, @PathParam("password") final String password) {
         status = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().addUser(userName, password);
+            status = Response.Status.OK;
+        }
+        catch(rest.Exceptions.UserAlreadyExistsException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.CONFLICT;
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
         }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @DELETE
-    @Path("removeUser")
+    @Path("removeUser/{name}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public void removeUser(@QueryParam("name") String userName) {
+    public Response removeUser(@PathParam("name") final String userName) {
         status = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().removeUser(userName);
+            status = Response.Status.OK;
+        }
+        catch(rest.Exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.NOT_FOUND;
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
         }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @GET
     @Path("getStatusForUser")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getStatusForUser(@QueryParam("name") String userName) {
+    public Response getStatusForUser(@QueryParam("name") final String userName) {
         status = null;
 
         try {
-            return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getStatusForUser(userName));
-        } catch (UserDoesNotExistException e) {
-            System.err.println(e.getMessage());
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getStatusForUser(userName));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
+        catch(rest.Exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.NOT_FOUND;
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
+        }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
-    @GET
-    @Path("setStatusForUser")
+    @POST
+    @Path("setStatusForUser/{name}/{status}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String setStatusForUser(@QueryParam("name") String userName, @QueryParam("status") Boolean status) {
+    public Response setStatusForUser(@PathParam("name") final String userName, @PathParam("status") final Boolean userStatus) {
         status = null;
 
         try {
-            ServiceObjectBuilder.getUserServiceObject().setStatusForUser(userName, status);
-            return STATUS_CHANGED;
-        } catch (UserDoesNotExistException e) {
-            System.err.println(e.getMessage());
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            ServiceObjectBuilder.getUserServiceObject().setStatusForUser(userName, userStatus);
+            status = Response.Status.OK;
         }
+        catch(rest.Exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.NOT_FOUND;
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
+        }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     @GET
     @Path("getGroupsForUser")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getGroupsForUser(@QueryParam("name") String userName) {
+    public Response getGroupsForUser(@QueryParam("name") String userName) {
         status = null;
 
         try {
-            return gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getGroupsForUser(userName));
-        } catch (UserDoesNotExistException e) {
-            System.err.println(ERR_USER_DOES_NOT_EXIST);
-            return ERR_USER_DOES_NOT_EXIST;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            String json =  gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getGroupsForUser(userName));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
+        catch(rest.Exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            status = Response.Status.NOT_FOUND;
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            status = Response.Status.INTERNAL_SERVER_ERROR;
+        }
+        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
     }
 
     //Group API
