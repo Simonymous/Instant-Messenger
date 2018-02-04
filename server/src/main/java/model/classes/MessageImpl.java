@@ -41,7 +41,7 @@ public class MessageImpl implements Message {
 
     @Override
     public void setGroup(Group aGroup) {
-        this.group = group;
+        this.group = aGroup;
     }
 
     @Override

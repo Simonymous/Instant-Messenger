@@ -5,16 +5,15 @@ import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import rest.services.HelloWorldService;
 
-public class HelloWorldTestServer
+public class InstantMessengerServer
 {
     public static void main( String[] args ) throws IOException, InterruptedException
     {
         String baseUrl = ( args.length > 0 ) ? args[0] : "http://localhost:4434";
 
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
-                URI.create( baseUrl ), new ResourceConfig( HelloWorldService.class ), false );
+                URI.create( baseUrl ), new ResourceConfig( InstantMessengerService.class ), false );
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
             @Override
             public void run() {
@@ -25,7 +24,7 @@ public class HelloWorldTestServer
 
         System.out.println( String.format( "\nGrizzly-HTTP-Server gestartet mit der URL: %s\n"
                         + "Stoppen des Grizzly-HTTP-Servers mit:      Strg+C\n",
-                baseUrl + HelloWorldService.webContextPath ) );
+                baseUrl + InstantMessengerService.webContextPath ) );
 
         Thread.currentThread().join();
     }

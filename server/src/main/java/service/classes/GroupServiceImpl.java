@@ -45,10 +45,10 @@ public class GroupServiceImpl implements GroupService {
         group_userDao.addNewUser(user, group);
     }
 
-    public void addUserToGroup(int id, String userName) throws GroupDoesNotExistException, UserDoesNotExistException{
+    public void addUserToGroup(int groupId, String userName) throws GroupDoesNotExistException, UserDoesNotExistException{
         Group group = ModelObjectBuilder.getGroupObject();
-        group.setGroupId(id);
-        if(!doesGroupExist(id)) {
+        group.setGroupId(groupId);
+        if(!doesGroupExist(groupId)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
         if(!doesUserExist(userName)) {
@@ -140,6 +140,9 @@ public class GroupServiceImpl implements GroupService {
 
     public boolean doesUserExist(int id) {
         for (User user : userDao.getUsersFromDB()) {
+            if(user == null){
+                return false;
+            }
             if(user.getUserId() == id) {
                 return true;
             }
@@ -149,6 +152,9 @@ public class GroupServiceImpl implements GroupService {
 
     public boolean doesUserExist(String username) {
         for (User user : userDao.getUsersFromDB()) {
+            if(user == null){
+                return false;
+            }
             if(user.getUsername().equals(username)) {
                 return true;
             }
@@ -156,8 +162,12 @@ public class GroupServiceImpl implements GroupService {
         return false;
     }
 
+    //TODO Methode auslagern
     public boolean doesGroupExist(int id) {
         for (Group group : groupDao.getAllGroups()) {
+            if(group == null){
+                return false;
+            }
             if(group.getGroupId() == id) {
                 return true;
             }

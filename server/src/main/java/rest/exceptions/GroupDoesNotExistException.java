@@ -20,6 +20,6 @@ public class GroupDoesNotExistException extends Exception implements ExceptionMa
 
     @Override
     public Response toResponse(GroupDoesNotExistException exception){
-        return Response.status(409).entity(exception.getMessage()).type("text/plain").build();
+        return Response.status(404).entity(exception.getMessage()).type("text/plain").build();
     }
 }

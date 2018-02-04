@@ -27,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     public boolean doesUserExist(String username) {
         for (User user : userDao.getUsersFromDB()) {
+            if(user == null){
+                return false;
+            }
             if(user.getUsername().equals(username)) {
                 return true;
             }
@@ -36,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     public boolean doesUserExist(int id) {
         for (User user : userDao.getUsersFromDB()) {
+            if(user == null){
+                return false;
+            }
             if(user.getUserId() == id) {
                 return true;
             }

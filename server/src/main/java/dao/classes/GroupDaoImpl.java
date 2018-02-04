@@ -117,7 +117,7 @@ public class GroupDaoImpl implements GroupDao{
 
     @Override
     public ArrayList<Group> getAllGroups(){
-        Group aNewGroup = ModelObjectBuilder.getGroupObject();
+        Group aNewGroup;
         ArrayList<Group> groups = new ArrayList<Group>();
         ResultSet rs;
 
@@ -127,6 +127,7 @@ public class GroupDaoImpl implements GroupDao{
             rs = statement.executeQuery();
 
             while(rs.next()) {
+                aNewGroup = ModelObjectBuilder.getGroupObject();
                 aNewGroup.setGroupName(rs.getString(COL_GROUP_NAME));
                 aNewGroup.setGroupId(rs.getInt(COL_GROUP_ID));
                 groups.add(aNewGroup);
