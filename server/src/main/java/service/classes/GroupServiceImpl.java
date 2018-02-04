@@ -7,12 +7,11 @@ import dao.interfaces.Group_UserDao;
 import dao.interfaces.UserDao;
 import model.interfaces.Group;
 import model.interfaces.User;
-import rest.Exceptions.*;
+import rest.exceptions.*;
 import service.interfaces.GroupService;
 
 import static service.constants.ServiceConstants.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GroupServiceImpl implements GroupService {
@@ -32,22 +31,28 @@ public class GroupServiceImpl implements GroupService {
         groupDao.addNewGroup(group);
     }
 
-    public void addUserToGroup(int id, int userId) throws GroupDoesNotExistException{
+    public void addUserToGroup(int id, int userId) throws GroupDoesNotExistException, UserDoesNotExistException{
         User user = ModelObjectBuilder.getUserObject();
         user.setUserId(userId);
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
+        }
+        if(!doesUserExist(userId)) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
         group_userDao.addNewUser(user, group);
     }
 
-    public void addUserToGroup(int id, String userName) throws GroupDoesNotExistException{
+    public void addUserToGroup(int id, String userName) throws GroupDoesNotExistException, UserDoesNotExistException{
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
+        }
+        if(!doesUserExist(userName)) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = ModelObjectBuilder.getUserObject();
         user.setUsername(userName);
@@ -55,22 +60,28 @@ public class GroupServiceImpl implements GroupService {
         group_userDao.addNewUser(user, group);
     }
 
-    public void addUserToGroup(int id, User user) throws GroupDoesNotExistException{
+    public void addUserToGroup(int id, User user) throws GroupDoesNotExistException, UserDoesNotExistException{
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
+        if(!doesUserExist(user.getUserId())) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
+        }
         group_userDao.addNewUser(user, group);
     }
 
-    public void removeUserFromGroup(int id, int userId) throws GroupDoesNotExistException{
+    public void removeUserFromGroup(int id, int userId) throws GroupDoesNotExistException, UserDoesNotExistException{
         User user = ModelObjectBuilder.getUserObject();
         user.setUserId(userId);
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(id);
         if(!doesGroupExist(id)) {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
+        }
+        if(!doesUserExist(user.getUserId())) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         group_userDao.removeUser(user, group);
     }
@@ -125,6 +136,24 @@ public class GroupServiceImpl implements GroupService {
             userNames.add(u.getUsername());
         }
         return userNames;
+    }
+
+    public boolean doesUserExist(int id) {
+        for (User user : userDao.getUsersFromDB()) {
+            if(user.getUserId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean doesUserExist(String username) {
+        for (User user : userDao.getUsersFromDB()) {
+            if(user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean doesGroupExist(int id) {

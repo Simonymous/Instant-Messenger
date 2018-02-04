@@ -86,6 +86,7 @@ public class GroupDaoImpl implements GroupDao{
         }
         catch (SQLException e){
             System.err.println(ERR_MSG_REMOVE_GROUP);
+            e.printStackTrace();
         }
     }
 

@@ -6,6 +6,7 @@ import dao.interfaces.MessageDao;
 import model.interfaces.Group;
 import model.interfaces.Message;
 import model.interfaces.User;
+import rest.exceptions.MessageDoesNotExistException;
 import service.interfaces.MessageService;
 
 import java.util.ArrayList;
@@ -29,24 +30,30 @@ public class MessageServiceImpl implements MessageService{
       messageDao.createMessage(message);
     }
 
-    public void removeMessage(long id) {
-        //TODO MessageDoesNotExistException
+    public void removeMessage(long id) throws MessageDoesNotExistException{
+        if(!doesMessageExist(id)){
+            throw new MessageDoesNotExistException();
+        }
         Message message = ModelObjectBuilder.getMessageObject();
         message.setMessageId(id);
 
         messageDao.deleteMessage(message);
     }
 
-    public Message getMessageById(long id) {
-        //TODO MessageDoesNotExistException
-      Message message = ModelObjectBuilder.getMessageObject();
-      message.setMessageId(id);
-      return messageDao.getMessageById(message);
+    public Message getMessageById(long id) throws MessageDoesNotExistException{
+        if(!doesMessageExist(id)){
+            throw new MessageDoesNotExistException();
+        }
+        Message message = ModelObjectBuilder.getMessageObject();
+        message.setMessageId(id);
+        return messageDao.getMessageById(message);
 
     }
 
-    public String getMessageContentById(long id) {
-        //TODO MessageDoesNotExistException
+    public String getMessageContentById(long id) throws MessageDoesNotExistException{
+        if(!doesMessageExist(id)){
+            throw new MessageDoesNotExistException();
+        }
         Message message = ModelObjectBuilder.getMessageObject();
         message.setMessageId(id);
         return messageDao.getMessageById(message).getContent();
@@ -62,5 +69,16 @@ public class MessageServiceImpl implements MessageService{
         Group group = ModelObjectBuilder.getGroupObject();
         group.setGroupId(groupId);
         return messageDao.getMessagesByGroup(group);
+    }
+
+
+
+    public boolean doesMessageExist(long id) {
+        for (Message message : messageDao.getMessagesFromDB()) {
+            if(message.getMessageId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

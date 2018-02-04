@@ -2,63 +2,41 @@ package rest.services;
 
 import builder.ServiceObjectBuilder;
 import com.google.gson.Gson;
-import model.interfaces.Group;
 import service.exceptions.*;
 
-import javax.annotation.Generated;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import java.net.HttpURLConnection;
-
+import static rest.constants.GeneralRestConstants.*;
 import static rest.constants.GroupRestConstants.*;
 import static rest.constants.UserRestConstants.*;
 
-//TODO In mehere Klassen aufteilen die Interfaces implementieren
-//TODO @GET @POST @DELETE richtig verwenden
-//TODO Throws in relevanten Dao und Modelklassen hinzufügen
-//TODO Übergabeparameter als Json
-//TODO Fehlermeldungen als Json (Eventuell Exceptions zu Json konvertieren)
+
 @Path(HelloWorldService.webContextPath)
 public class HelloWorldService {
     static final String webContextPath = "/im";
     private static final Gson gSon = new Gson();
     private Response.Status status;
 
-//    @GET @Path("hallo") @Produces( MediaType.TEXT_PLAIN )
-//    public String halloPlainText( @QueryParam("name") String name )
-//    {
-//        return "Plain-Text: Hallo " + name;
-//    }
-//
-//    @GET @Produces( MediaType.TEXT_HTML )
-//    public String halloHtml( @QueryParam("name") String name )
-//    {
-//        return "<html><title>HelloWorld</title><body><h2>Html: Hallo " + name + "</h2></body></html>";
-//    }
-
     //User API
     //------------------------------------------------------------------------------------------------------------------
 
     @GET
     @Path("doesUserExist")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response doesUserExist(@QueryParam("name") String name) {
-        status = null;
+        Response response = null;
 
         try {
             String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().doesUserExist(name));
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @POST
@@ -66,25 +44,25 @@ public class HelloWorldService {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeUserName(@PathParam("newName") final String newName, @PathParam("oldName") final String oldName) {
-        status = null;
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().changeUserName(newName, oldName);
-            status = Response.Status.OK;
+            response = Response.status(200, USER_NAME_CHANGED).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        catch(rest.Exceptions.UserAlreadyExistsException e){
+        catch(rest.exceptions.UserAlreadyExistsException e){
             System.err.println(e.getMessage());
-            status = Response.Status.CONFLICT;
+            response = Response.status(409, ERR_USER_ALREADY_EXISTS).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @POST
@@ -92,59 +70,61 @@ public class HelloWorldService {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeUserPassword(@PathParam("name") final String userName, @PathParam("password") final String password) {
-        status = null;
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().changeUserPassword(userName, password);
-            status = Response.Status.OK;
+            response = Response.status(200, USER_PASSWORD_CHANGED).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @GET
     @Path("validCredentials")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response validCredentials(@QueryParam("name") final String userName, @QueryParam("password") final String password) {
-        status = null;
+        Response response = null;
 
         try {
             String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().validCredentials(userName, password));
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
 
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @GET
     @Path("getUserId")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserId(@QueryParam("name") final String userName) {
-        status = null;
+        Response response = null;
 
         try {
             String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getUserId(userName));
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @POST
@@ -152,21 +132,21 @@ public class HelloWorldService {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(@PathParam("name") final String userName, @PathParam("password") final String password) {
-        status = null;
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().addUser(userName, password);
-            status = Response.Status.OK;
+            response = Response.status(200, USER_ADDED).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        catch(rest.Exceptions.UserAlreadyExistsException e){
+        catch(rest.exceptions.UserAlreadyExistsException e){
             System.err.println(e.getMessage());
-            status = Response.Status.CONFLICT;
+            response = Response.status(409, ERR_USER_ALREADY_EXISTS).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @DELETE
@@ -174,84 +154,87 @@ public class HelloWorldService {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeUser(@PathParam("name") final String userName) {
-        status = null;
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().removeUser(userName);
-            status = Response.Status.OK;
+            response = Response.status(200, USER_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @GET
     @Path("getStatusForUser")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStatusForUser(@QueryParam("name") final String userName) {
-        status = null;
+        Response response = null;
 
         try {
             String json = gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getStatusForUser(userName));
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @POST
     @Path("setStatusForUser/{name}/{status}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response setStatusForUser(@PathParam("name") final String userName, @PathParam("status") final Boolean userStatus) {
-        status = null;
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getUserServiceObject().setStatusForUser(userName, userStatus);
-            status = Response.Status.OK;
+            response = Response.status(200, STATUS_CHANGED).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     @GET
     @Path("getGroupsForUser")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGroupsForUser(@QueryParam("name") final String userName) {
-        status = null;
+        Response response = null;
 
         try {
             String json =  gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getGroupsForUser(userName));
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
-        catch(rest.Exceptions.UserDoesNotExistException e){
+        catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
-            status = Response.Status.NOT_FOUND;
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
     //Group API
@@ -259,115 +242,165 @@ public class HelloWorldService {
 
     @POST
     @Path("addNewGroup/{name}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addNewGroup(@PathParam("name") final String groupName) {
-        status = null;
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getGroupServiceObject().addNewGroup(groupName);
-            status = Response.Status.OK;
+            response = Response.status(200, GROUP_ADDED).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
-            status = Response.Status.INTERNAL_SERVER_ERROR;
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
-        return Response.status(status).type(MediaType.TEXT_HTML_TYPE).build();
+        return response;
     }
 
-    @GET
-    @Path("removeGroup")
+    @DELETE
+    @Path("removeGroup/{groupId}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String removeGroup(@QueryParam("groupId") int groupId) {
-        status = null;
+    public Response removeGroup(@PathParam("groupId") int groupId) {
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getGroupServiceObject().removeGroup(groupId);
-            return GROUP_REMOVED;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(200, GROUP_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        catch(rest.exceptions.GroupDoesNotExistException e){
+            System.err.println(e.getMessage());
+            response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        return response;
     }
 
-    @GET
-    @Path("addUserToGroup")
+    @POST
+    @Path("addUserToGroup/{groupId}/{name}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String addUserToGroup(@QueryParam("groupId") int groupId, @QueryParam("name") String userName) {
-        status = null;
+    public Response addUserToGroup(@PathParam("groupId") int groupId, @PathParam("name") String userName) {
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getGroupServiceObject().addUserToGroup(groupId, userName);
-            return USER_ADDED_TO_GROUP;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(200, USER_ADDED_TO_GROUP).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        catch(rest.exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        catch(rest.exceptions.GroupDoesNotExistException e){
+            System.err.println(e.getMessage());
+            response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        return response;
     }
 
-    @GET
-    @Path("removeUserFromGroup")
+    @DELETE
+    @Path("removeUserFromGroup/{userId}/{groupId}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String removeUserFromGroup(@QueryParam("userId") int userId, @QueryParam("groupId") int groupId) {
-        status = null;
+    public Response removeUserFromGroup(@PathParam("userId") final int userId, @PathParam("groupId") final int groupId) {
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getGroupServiceObject().removeUserFromGroup(groupId, userId);
-            return USER_REMOVED_FROM_GROUP;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(200, USER_REMOVED_FROM_GROUP).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        catch(rest.exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        catch(rest.exceptions.GroupDoesNotExistException e){
+            System.err.println(e.getMessage());
+            response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        return response;
     }
 
     @GET
     @Path("getGroupById")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getGroupById(@QueryParam("groupId") int groupId) {
-        status = null;
+    public Response getGroupById(@QueryParam("groupId") final int groupId) {
+        Response response = null;
 
         try {
-            return gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getGroupById(groupId));
+            String json = gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getGroupById(groupId));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (GroupDoesNotExistException e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        return response;
     }
 
-    @GET
-    @Path("changeGroupName")
+    @POST
+    @Path("changeGroupName/{groupId}/{name}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String changeGroupName(@QueryParam("groupId") int groupId, @QueryParam("name") String newName) {
-        status = null;
+    public Response changeGroupName(@PathParam("groupId") final int groupId, @PathParam("name") final String newName) {
+        Response response = null;
 
         try {
             ServiceObjectBuilder.getGroupServiceObject().changeGroupName(groupId, newName);
-            return GROUP_NAME_CHANGED;
+            response = Response.status(200, GROUP_NAME_CHANGED).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (GroupDoesNotExistException e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        return response;
     }
 
     @GET
     @Path("getUsersForGroup")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getUsersForGroup(@QueryParam("groupId") int groupId) {
-        status = null;
+    public Response getUsersForGroup(@QueryParam("groupId") int groupId) {
+        Response response = null;
 
         try {
-            return gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getUsersForGroup(groupId));
+            String json = gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getUsersForGroup(groupId));
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (GroupDoesNotExistException e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return e.getMessage();
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        return response;
     }
+
+    //Message API
+    //------------------------------------------------------------------------------------------------------------------
+    @POST
+    @Path("addMesssage/{groupId}/{userId}/{content}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addMesssage(@PathParam("groupId") final int groupId, @PathParam("userId") final int userId, @PathParam("content") final String content){
+
+    }
+
+
 }

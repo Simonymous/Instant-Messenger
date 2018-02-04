@@ -1,10 +1,9 @@
 package service.interfaces;
 
 import model.interfaces.Group;
-import rest.Exceptions.UserAlreadyExistsException;
-import rest.Exceptions.UserDoesNotExistException;
+import rest.exceptions.UserAlreadyExistsException;
+import rest.exceptions.UserDoesNotExistException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface UserService {

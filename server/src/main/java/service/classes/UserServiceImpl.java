@@ -7,13 +7,11 @@ import dao.interfaces.Group_UserDao;
 import dao.interfaces.UserDao;
 import model.interfaces.Group;
 import model.interfaces.User;
-import rest.Exceptions.*;
+import rest.exceptions.*;
 import service.interfaces.UserService;
 
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static service.constants.ServiceConstants.ERR_MSG_USER_ALREADY_EXISTS;
 import static service.constants.ServiceConstants.ERR_MSG_USER_DOES_NOT_EXIST;
