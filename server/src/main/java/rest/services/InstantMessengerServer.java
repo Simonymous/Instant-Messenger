@@ -13,7 +13,7 @@ public class InstantMessengerServer
         String baseUrl = ( args.length > 0 ) ? args[0] : "http://localhost:4434";
 
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
-                URI.create( baseUrl ), new ResourceConfig( InstantMessengerService.class ), false );
+                URI.create( baseUrl ), new ResourceConfig( UserRestImpl.class, GroupRestImpl.class, MessageRestImpl.class ), false );
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
             @Override
             public void run() {
@@ -24,7 +24,7 @@ public class InstantMessengerServer
 
         System.out.println( String.format( "\nGrizzly-HTTP-Server gestartet mit der URL: %s\n"
                         + "Stoppen des Grizzly-HTTP-Servers mit:      Strg+C\n",
-                baseUrl + InstantMessengerService.webContextPath ) );
+                baseUrl + UserRestImpl.webContextPath ) );
 
         Thread.currentThread().join();
     }
