@@ -1,7 +1,7 @@
 package dao.enums;
 
 public enum TableName {
-    User("user"), ChatGroup("chatGroup"), Group_User("group_User"), Message("message");
+    User("user"), ChatGroup("chatGroup"), Group_User("Group_User"), Message("message");
 
     private String tableName;
 

@@ -2,6 +2,7 @@ package dao.interfaces;
 
 import model.interfaces.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

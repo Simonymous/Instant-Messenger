@@ -45,12 +45,26 @@ public class GroupDaoImpl implements GroupDao{
     private static final String PS_GET_GROUP_BY_ID = "SELECT * FROM " + TABLE_GROUP + " WHERE "
             + COL_GROUP_ID + " = ?";
 
+    /**
+     * SELECT *
+     * FROM group
+     */
+    private static final String PS_GET_ALL_GROUPS = "SELECT * FROM " + TABLE_GROUP;
+
+    /**
+     * UPDATE group
+     * SET $attribut = ?
+     * WHERE id = ?
+     */
+    private static final String PS_CHANGE_ATTRIBUT = "UPDATE " + TABLE_GROUP + " SET $attribut = ? WHERE "
+            + COL_GROUP_ID + " = ?";
+
 //----------------------------------------------------------------------------------------------------------------------
 // Prepared Statement End
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addNewGroup(Group aGroup) {
+    public void addNewGroup(Group aGroup){
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_ADD_NEW_GROUP)) {
 
@@ -69,14 +83,16 @@ public class GroupDaoImpl implements GroupDao{
              PreparedStatement statement = connection.prepareStatement(PS_REMOVE_GROUP)) {
             statement.setInt(PARAMETER_1, aGroup.getGroupId() );
             statement.executeUpdate();
-        } catch (SQLException e){
+        }
+        catch (SQLException e){
             System.err.println(ERR_MSG_REMOVE_GROUP);
+            e.printStackTrace();
         }
     }
 
 
     @Override
-    public Group getGroupById(Group aGroup) {
+    public Group getGroupById(Group aGroup){
         Group aNewGroup = ModelObjectBuilder.getGroupObject();
         ResultSet rs;
 
@@ -100,7 +116,33 @@ public class GroupDaoImpl implements GroupDao{
     }
 
     @Override
-    public void changeGroupName(Group aGroup) {
+    public ArrayList<Group> getAllGroups(){
+        Group aNewGroup;
+        ArrayList<Group> groups = new ArrayList<Group>();
+        ResultSet rs;
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(PS_GET_ALL_GROUPS)) {
+
+            rs = statement.executeQuery();
+
+            while(rs.next()) {
+                aNewGroup = ModelObjectBuilder.getGroupObject();
+                aNewGroup.setGroupName(rs.getString(COL_GROUP_NAME));
+                aNewGroup.setGroupId(rs.getInt(COL_GROUP_ID));
+                groups.add(aNewGroup);
+            }
+
+        }catch (SQLException e) {
+            System.err.println(ERR_MSG_GET_GROUP_FROM_DB);
+            e.printStackTrace();
+        }
+
+        return groups;
+    }
+
+    @Override
+    public void changeGroupName(Group aGroup){
         changeAttribut(ColNameGroup.GroupName, aGroup, aGroup.getGroupName());
     }
 
@@ -109,7 +151,7 @@ public class GroupDaoImpl implements GroupDao{
      * @param colName name of the colume
      * @param value value of the colume
      */
-    private void changeAttribut(ColNameGroup colName, Group aGroup, String value) {
+    private void changeAttribut(ColNameGroup colName, Group aGroup, String value){
         int id = aGroup.getGroupId();
         String preparedStatement = PS_CHANGE_ATTRIBUT.replace("$attribut", colName.getColumnName());
 
@@ -120,7 +162,7 @@ public class GroupDaoImpl implements GroupDao{
             statement.setInt(PARAMETER_2, id);
             statement.executeUpdate();
 
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             System.err.println(ERR_MSG_CHANGE_ATTRIBUT);
             e.printStackTrace();
         }

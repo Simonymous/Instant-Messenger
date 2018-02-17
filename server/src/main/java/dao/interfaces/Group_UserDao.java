@@ -4,6 +4,7 @@ import model.interfaces.Group;
 import model.interfaces.Group_User;
 import model.interfaces.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface Group_UserDao {

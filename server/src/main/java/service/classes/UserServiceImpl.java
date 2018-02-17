@@ -7,13 +7,11 @@ import dao.interfaces.Group_UserDao;
 import dao.interfaces.UserDao;
 import model.interfaces.Group;
 import model.interfaces.User;
-import service.exceptions.UserAlreadyExistsException;
-import service.exceptions.UserDoesNotExistException;
+import rest.exceptions.*;
 import service.interfaces.UserService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 
 import static service.constants.ServiceConstants.ERR_MSG_USER_ALREADY_EXISTS;
 import static service.constants.ServiceConstants.ERR_MSG_USER_DOES_NOT_EXIST;
@@ -29,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     public boolean doesUserExist(String username) {
         for (User user : userDao.getUsersFromDB()) {
+            if(user == null){
+                return false;
+            }
             if(user.getUsername().equals(username)) {
                 return true;
             }
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     public boolean doesUserExist(int id) {
         for (User user : userDao.getUsersFromDB()) {
+            if(user == null){
+                return false;
+            }
             if(user.getUserId() == id) {
                 return true;
             }
@@ -45,7 +49,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public void changeUserName(String newUsername, String oldUsername) {
+    public void changeUserName(String newUsername, String oldUsername) throws UserAlreadyExistsException, UserDoesNotExistException {
       if(doesUserExist(newUsername)) {
           throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
       }
@@ -57,7 +61,7 @@ public class UserServiceImpl implements UserService {
       userDao.changeUsername(user);
     }
 
-    public void changeUserName(String newUsername, int id) {
+    public void changeUserName(String newUsername, int id) throws UserAlreadyExistsException, UserDoesNotExistException{
         if(doesUserExist(newUsername)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
@@ -69,7 +73,7 @@ public class UserServiceImpl implements UserService {
         userDao.changeUsername(user);
     }
 
-    public void changeUserPassword(String username, String password) {
+    public void changeUserPassword(String username, String password) throws UserDoesNotExistException{
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
@@ -78,7 +82,7 @@ public class UserServiceImpl implements UserService {
         userDao.changePasword(user);
     }
 
-    public void changeUserPassword(int id,String password) {
+    public void changeUserPassword(int id,String password) throws UserDoesNotExistException{
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
@@ -94,14 +98,14 @@ public class UserServiceImpl implements UserService {
         return getUserDao(username).getPassword().equals(getHash(password));
     }
 
-    public int getUserId(String username) {
+    public int getUserId(String username) throws UserDoesNotExistException{
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         return getUserDao(username).getUserId();
     }
 
-    public void addUser(String username, String password) {
+    public void addUser(String username, String password) throws UserAlreadyExistsException{
         if(doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
@@ -109,71 +113,71 @@ public class UserServiceImpl implements UserService {
         userDao.addNewUser(user);
     }
 
-    public void removeUser(String username) {
+    public void removeUser(String username) throws UserDoesNotExistException{
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         userDao.removeUser(getUserDao(username));
     }
 
-    public void removeUser(int id) {
+    public void removeUser(int id) throws UserDoesNotExistException{
         if(!doesUserExist(id)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         userDao.removeUser(getUserDao(id));
     }
 
-    public boolean getStatusForUser(String username) {
+    public boolean getStatusForUser(String username) throws UserDoesNotExistException{
         if(!doesUserExist(username)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         return getUserDao(username).getActive();
     }
 
-    public boolean getStatusForUser(int id) {
+    public boolean getStatusForUser(int id) throws UserDoesNotExistException{
         if(!doesUserExist(id)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         return getUserDao(id).getActive();
     }
 
-    public void setStatusForUser(String username, boolean b) {
+    public void setStatusForUser(String username, boolean b) throws UserDoesNotExistException{
         if(!doesUserExist(username)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(username);
         user.setActive(b);
         userDao.changeActive(user);
     }
 
-    public void setStatusForUser(int id, boolean b) {
+    public void setStatusForUser(int id, boolean b) throws UserDoesNotExistException{
         if(!doesUserExist(id)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(id);
         user.setActive(b);
         userDao.changeActive(user);
     }
 
-    public ArrayList<Group> getGroupsForUser(String username) {
+    public ArrayList<Group> getGroupsForUser(String username) throws UserDoesNotExistException{
         if(!doesUserExist(username)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(username);
         return group_userDao.getGroupsByUser(user);
     }
 
-    public ArrayList<Group> getGroupsForUser(int id) {
+    public ArrayList<Group> getGroupsForUser(int id) throws UserDoesNotExistException {
         if(!doesUserExist(id)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(id);
         return group_userDao.getGroupsByUser(user);
     }
 
-    public ArrayList<Integer> getGroupIdsForUser(String username) {
+    public ArrayList<Integer> getGroupIdsForUser(String username) throws UserDoesNotExistException {
         if(!doesUserExist(username)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(username);
         ArrayList<Group> groupsForUser = getGroupsForUser(username);
@@ -184,9 +188,9 @@ public class UserServiceImpl implements UserService {
         return groupIds;
     }
 
-    public ArrayList<Integer>getGroupIdsForUser(int id) {
+    public ArrayList<Integer>getGroupIdsForUser(int id) throws UserDoesNotExistException {
         if(!doesUserExist(id)) {
-            throw new UserDoesNotExistException(ERR_MSG_USER_ALREADY_EXISTS);
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
         User user = getUserDao(id);
         ArrayList<Group> groupsForUser = getGroupsForUser(id);
@@ -197,7 +201,7 @@ public class UserServiceImpl implements UserService {
         return groupIds;
     }
 
-    private User getUserDao(String username) {
+    private User getUserDao(String username)  {
         User user = ModelObjectBuilder.getUserObject();
         user.setUsername(username);
         return userDao.getUserByName(user);

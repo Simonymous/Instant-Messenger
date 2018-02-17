@@ -8,7 +8,6 @@ public class GroupDaoConstants {
     public static final String COL_GROUP_ID = ColNameGroup.GroupId.getColumnName();
     public static final String COL_GROUP_NAME = ColNameGroup.GroupName.getColumnName();
 
-    public static final String PS_CHANGE_ATTRIBUT = "Error: Couldn't change attribute!\n";
     public static final String ERR_MSG_ADD_NEW_GROUP =     "Error: New Group can not be created!\n";
     public static final String ERR_MSG_REMOVE_GROUP =      "Error: Group can not be removed!\n";
     public static final String ERR_MSG_CHANGE_ATTRIBUT =    "Error: An attribute of the table User couldn't be changed!\n";

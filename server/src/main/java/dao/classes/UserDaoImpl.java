@@ -74,7 +74,7 @@ public class UserDaoImpl implements UserDao{
      *
      * @param aUser User to store in DB
      */
-    public void addNewUser( User aUser ){
+    public void addNewUser( User aUser ) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_ADD_NEW_USER)) {
 
@@ -82,13 +82,14 @@ public class UserDaoImpl implements UserDao{
             statement.setString(PARAMETER_2, aUser.getPassword());
 
             statement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println(ERR_MSG_ADD_NEW_USER);
             e.printStackTrace();
         }
     }
 
-    public void removeUser( User aUser ){
+    public void removeUser( User aUser ) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_REMOVE_USER)) {
             statement.setInt(PARAMETER_1, aUser.getUserId() );
@@ -113,8 +114,8 @@ public class UserDaoImpl implements UserDao{
             statement.setString(PARAMETER_1, value);
             statement.setInt(PARAMETER_2, id);
             statement.executeUpdate();
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println(ERR_MSG_CHANGE_ATTRIBUT);
             e.printStackTrace();
         }
@@ -136,25 +137,26 @@ public class UserDaoImpl implements UserDao{
             statement.setInt(PARAMETER_2, id);
             statement.executeUpdate();
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println(ERR_MSG_CHANGE_ATTRIBUT);
             e.printStackTrace();
         }
     }
 
-    public void changeUsername( User aUser ){
+    public void changeUsername( User aUser ) {
         changeAttribut(ColNameUser.Username, aUser, aUser.getUsername());
     }
 
-    public void changePasword( User aUser ){
+    public void changePasword( User aUser ) {
         changeAttribut(ColNameUser.Password, aUser, aUser.getPassword());
     }
 
-    public void changeActive( User aUser ){
+    public void changeActive( User aUser ) {
         changeAttribut(ColNameUser.Active, aUser, aUser.getActive());
     }
 
-    public List<User> getUsersFromDB(){
+    public List<User> getUsersFromDB() {
         List<User> userList = new ArrayList<>();
         ResultSet rs;
         User aUser;
@@ -174,7 +176,8 @@ public class UserDaoImpl implements UserDao{
                 userList.add(aUser);
             }
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println(ERR_MSG_GET_USER_FROM_DB);
             e.printStackTrace();
         }
@@ -199,10 +202,12 @@ public class UserDaoImpl implements UserDao{
                 aNewUser.setActive(rs.getBoolean(COL_USER_ACTIVE));
             }
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println(ERR_MSG_GET_USER_FROM_DB);
             e.printStackTrace();
         }
+
 
         return aNewUser;
     }
@@ -223,7 +228,8 @@ public class UserDaoImpl implements UserDao{
                 aNewUser.setActive(rs.getBoolean(COL_USER_ACTIVE));
             }
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println(ERR_MSG_GET_USER_FROM_DB);
             e.printStackTrace();
         }
