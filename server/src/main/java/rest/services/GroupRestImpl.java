@@ -193,6 +193,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
      @Produces(MediaType.APPLICATION_JSON)
      public Response getMessagesOfGroup(@PathParam("groupId") String groupId, @DefaultValue("0") @QueryParam("page") String page) {
        // TODO implement
+
      }
 
     @Override

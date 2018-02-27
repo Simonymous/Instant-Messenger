@@ -6,16 +6,14 @@ import com.google.gson.GsonBuilder;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
-import rest.exceptions.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static rest.constants.GeneralRestConstants.*;
-import static rest.constants.GroupRestConstants.*;
-import static rest.constants.MessageRestConstants.*;
 import static rest.constants.UserRestConstants.*;
+
 
 @Path(UserRestImpl.webContextPath)
 public class UserRestImpl implements rest.interfaces.UserRest {
@@ -133,14 +131,14 @@ public class UserRestImpl implements rest.interfaces.UserRest {
 
     @Override
     @GET
-    @Path("users/{name}")
+    @Path("users/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserById(@PathParam("name") final String userName) {
+    public Response getUserById(@PathParam("userId") final String userId) {
         Response response = null;
         // TODO auth + response
 
         try {
-            User user =  ServiceObjectBuilder.getUserServiceObject().getUserById(userName); // TODO add this
+            User user =  ServiceObjectBuilder.getUserServiceObject().getUserById(userId); // TODO add this
             response = Response.status(200, MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(user).build();
         }
         catch(rest.exceptions.UserDoesNotExistException e){
