@@ -185,14 +185,15 @@ public class UserDaoImpl implements UserDao{
         return userList;
     }
 
-    public User getUserById( User aUser ){
+    @Override
+    public User getUserById( int aUser ){
         User aNewUser = ModelObjectBuilder.getUserObject();
         ResultSet rs;
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_GET_USER_BY_ID)) {
 
-            statement.setInt(PARAMETER_1, aUser.getUserId());
+            statement.setInt(PARAMETER_1, aUser);
             rs = statement.executeQuery();
 
             while(rs.next()) {

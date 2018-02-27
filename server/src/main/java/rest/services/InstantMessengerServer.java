@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jettison.JettisonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class InstantMessengerServer
@@ -13,7 +14,7 @@ public class InstantMessengerServer
         String baseUrl = ( args.length > 0 ) ? args[0] : "http://localhost:4434";
 
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
-                URI.create( baseUrl ), new ResourceConfig( UserRestImpl.class, GroupRestImpl.class, MessageRestImpl.class ), false );
+                URI.create( baseUrl ), new ResourceConfig( UserRestImpl.class, GroupRestImpl.class), false );
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
             @Override
             public void run() {

@@ -5,6 +5,7 @@ import builder.ModelObjectBuilder;
 import com.google.common.hash.Hashing;
 import dao.interfaces.Group_UserDao;
 import dao.interfaces.UserDao;
+import model.classes.UserQueryResponseImpl;
 import model.interfaces.Group;
 import model.interfaces.User;
 import rest.exceptions.*;
@@ -12,6 +13,7 @@ import service.interfaces.UserService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 import static service.constants.ServiceConstants.ERR_MSG_USER_ALREADY_EXISTS;
 import static service.constants.ServiceConstants.ERR_MSG_USER_DOES_NOT_EXIST;
@@ -105,12 +107,20 @@ public class UserServiceImpl implements UserService {
         return getUserDao(username).getUserId();
     }
 
-    public void addUser(String username, String password) throws UserAlreadyExistsException{
+    public User getUserById(String username) throws UserDoesNotExistException{ // TODO change this
+        if(!doesUserExist(username)) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
+        }
+        return getUserDao(username);
+    }
+
+    public User addUser(String username, String password) throws UserAlreadyExistsException{
         if(doesUserExist(username)) {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = ModelObjectBuilder.getUserObject(username, getHash(password));
-        userDao.addNewUser(user);
+        userDao.addNewUser(user); // TODO set user instance id
+        return user;
     }
 
     public void removeUser(String username) throws UserDoesNotExistException{
@@ -201,6 +211,15 @@ public class UserServiceImpl implements UserService {
         return groupIds;
     }
 
+    @Override
+    public UserQueryResponseImpl getUsersByQuery(String qu) throws UserDoesNotExistException {
+        List<String> l = new ArrayList<String>();
+        l.add(Integer.toString(getUserId(qu)));
+        UserQueryResponseImpl impl = new UserQueryResponseImpl();
+        impl.setIds(l);
+        return impl;
+    }
+
     private User getUserDao(String username)  {
         User user = ModelObjectBuilder.getUserObject();
         user.setUsername(username);
@@ -208,9 +227,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private User getUserDao(int id) {
-        User user = ModelObjectBuilder.getUserObject();
-        user.setUserId(id);
-        return userDao.getUserById(user);
+        // TODO ??
+//        User user = ModelObjectBuilder.getUserObject();
+//        user.setUserId(id);
+        return userDao.getUserById(id);
     }
 
     private String getHash(String password){

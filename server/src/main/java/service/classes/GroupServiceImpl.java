@@ -26,9 +26,10 @@ public class GroupServiceImpl implements GroupService {
         userDao = DaoObjectBuilder.getUserDaoObject();
     }
 
-    public void addNewGroup(String name) {
+    public Group addNewGroup(String name) {
         Group group = ModelObjectBuilder.getGroupObject(name);
-        groupDao.addNewGroup(group);
+        groupDao.addNewGroup(group); // TODO set group id
+        return group;
     }
 
     public void addUserToGroup(int id, int userId) throws GroupDoesNotExistException, UserDoesNotExistException{

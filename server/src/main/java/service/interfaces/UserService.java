@@ -1,6 +1,8 @@
 package service.interfaces;
 
+import model.classes.UserQueryResponseImpl;
 import model.interfaces.Group;
+import model.interfaces.User;
 import rest.exceptions.UserAlreadyExistsException;
 import rest.exceptions.UserDoesNotExistException;
 
@@ -15,7 +17,8 @@ public interface UserService {
     void changeUserPassword(int id, String password) throws UserDoesNotExistException;
     boolean validCredentials(String username, String password);
     int getUserId(String username) throws UserDoesNotExistException;
-    void addUser(String username, String password) throws UserAlreadyExistsException;
+    User getUserById(String username) throws UserDoesNotExistException;
+    User addUser(String username, String password) throws UserAlreadyExistsException;
     void removeUser(String username) throws UserDoesNotExistException;
     void removeUser(int id) throws UserDoesNotExistException;
     boolean getStatusForUser(String username) throws UserDoesNotExistException;
@@ -26,5 +29,7 @@ public interface UserService {
     ArrayList<Group> getGroupsForUser(int id) throws UserDoesNotExistException;
     ArrayList<Integer> getGroupIdsForUser(String username) throws UserDoesNotExistException;
     ArrayList<Integer> getGroupIdsForUser(int id) throws UserDoesNotExistException;
+
+    UserQueryResponseImpl getUsersByQuery(String qu) throws UserDoesNotExistException;
     //TODO Nice to have: getCountOfMesssages(), getAllMessagesFromUser()
 }

@@ -4,64 +4,35 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import model.classes.UserImpl;
+import model.interfaces.User;
+
 public interface UserRest {
-    @GET
-    @Path("doesUserExist")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response doesUserExist(@QueryParam("name") String name);
-
-    @POST
-    @Path("changeUserName/{newName}/{oldName}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response changeUserName(@PathParam("newName") String newName, @PathParam("oldName") String oldName);
-
-    @POST
-    @Path("changeUserPassword/{name}/{password}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response changeUserPassword(@PathParam("name") String userName, @PathParam("password") String password);
 
     @GET
-    @Path("validCredentials")
-    @Consumes("application/json")
+    @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
-    Response validCredentials(@QueryParam("name") String userName, @QueryParam("password") String password);
+    Response getUserByName(@QueryParam("byname") String qu); // TODO create UserQuery class
 
     @GET
-    @Path("getUserId")
-    @Consumes("application/json")
+    @Path("users/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getUserId(@QueryParam("name") String userName);
+    Response getUserById(String username);
 
     @POST
-    @Path("addUser/{name}/{password}")
-    @Consumes("application/json")
+    @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
-    Response addUser(@PathParam("name") String userName, @PathParam("password") String password);
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response addUser(String user);
+
+    @POST
+    @Path("users/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response updateUser(@PathParam("id") String id, String user);
 
     @DELETE
-    @Path("removeUser/{name}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response removeUser(@PathParam("name") String userName);
+    @Path("users/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response removeUser(@PathParam("id") String id);
 
-    @GET
-    @Path("getStatusForUser")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response getStatusForUser(@QueryParam("name") String userName);
-
-    @POST
-    @Path("setStatusForUser/{name}/{status}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response setStatusForUser(@PathParam("name") String userName, @PathParam("status") Boolean userStatus);
-
-    @GET
-    @Path("getGroupsForUser")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response getGroupsForUser(@QueryParam("name") String userName);
 }

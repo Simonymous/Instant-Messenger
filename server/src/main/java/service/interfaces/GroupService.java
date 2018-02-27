@@ -7,7 +7,7 @@ import rest.exceptions.*;
 import java.util.ArrayList;
 
 public interface GroupService {
-    void addNewGroup(String name);
+    Group addNewGroup(String name);
     void addUserToGroup(int id, int userId) throws GroupDoesNotExistException, UserDoesNotExistException;
     void addUserToGroup(int id, String userName) throws GroupDoesNotExistException, UserDoesNotExistException;
     void addUserToGroup(int id, User user) throws GroupDoesNotExistException, UserDoesNotExistException;

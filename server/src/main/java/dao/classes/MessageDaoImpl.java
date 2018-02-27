@@ -92,7 +92,7 @@ public class MessageDaoImpl implements MessageDao{
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println(ERR_MSG_ADD_NEW_MESSAGE);
-            e.printStackTrace();
+            e.printStackTrace(); // TODO cascade this
         }
     }
 
