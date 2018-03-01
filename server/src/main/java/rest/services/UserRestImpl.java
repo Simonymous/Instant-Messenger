@@ -36,7 +36,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         // TODO auth + response
         User user = makeUserFromJSON(json);
         try {
-            ServiceObjectBuilder.getUserServiceObject().changeUserName(user.getUsername(), id); // TODO changeUser? - refactor
+            ServiceObjectBuilder.getUserServiceObject().changeUserName(user.getUsername(), Integer.parseInt(id)); // TODO changeUser? - refactor
             response = Response.status(200, USER_NAME_CHANGED).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch(rest.exceptions.UserAlreadyExistsException e){
@@ -61,7 +61,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
     public Response getUserByName(@QueryParam("byname") String qustr) {
         Response response = null;
         // TODO auth + response
-        if(qustr == null) {
+        if(qustr == null) { // TODO handle this
             return Response.status(500).build();
         }
         try {
@@ -115,7 +115,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         // TODO auth + response
 
         try {
-            ServiceObjectBuilder.getUserServiceObject().removeUser(userName); // TODO removeUser by ID!
+            ServiceObjectBuilder.getUserServiceObject().removeUser(Integer.parseInt(userName)); // TODO removeUser by ID!
             response = Response.status(200, USER_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch(rest.exceptions.UserDoesNotExistException e){
@@ -138,8 +138,8 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         // TODO auth + response
 
         try {
-            User user =  ServiceObjectBuilder.getUserServiceObject().getUserById(userId); // TODO add this
-            response = Response.status(200, MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(user).build();
+            User user =  ServiceObjectBuilder.getUserServiceObject().getUserById(Integer.parseInt(userId)); // TODO add this
+            response = Response.ok(gSon.toJson(user)).build();
         }
         catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());

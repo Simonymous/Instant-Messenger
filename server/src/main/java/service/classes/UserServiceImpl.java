@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         return getUserDao(username).getUserId();
     }
 
-    public User getUserById(String username) throws UserDoesNotExistException{ // TODO change this
+    public User getUserById(int username) throws UserDoesNotExistException{ // TODO change this
         if(!doesUserExist(username)) {
             throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
         }
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = ModelObjectBuilder.getUserObject(username, getHash(password));
         userDao.addNewUser(user); // TODO set user instance id
-        return user;
+        return userDao.getUserByName(username);
     }
 
     public void removeUser(String username) throws UserDoesNotExistException{
@@ -221,9 +221,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User getUserDao(String username)  {
-        User user = ModelObjectBuilder.getUserObject();
-        user.setUsername(username);
-        return userDao.getUserByName(user);
+        return userDao.getUserByName(username);
     }
 
     private User getUserDao(int id) {

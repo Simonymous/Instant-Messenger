@@ -212,14 +212,14 @@ public class UserDaoImpl implements UserDao{
 
         return aNewUser;
     }
-    public User getUserByName( User aUser ){
+    public User getUserByName( String aUser ){
         User aNewUser = ModelObjectBuilder.getUserObject();
         ResultSet rs;
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_GET_USER_BY_NAME)) {
 
-            statement.setString(PARAMETER_1, aUser.getUsername());
+            statement.setString(PARAMETER_1, aUser);
             rs = statement.executeQuery();
 
             while(rs.next()) {

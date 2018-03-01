@@ -57,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
         }
         User user = ModelObjectBuilder.getUserObject();
         user.setUsername(userName);
-        user = userDao.getUserByName(user);
+        user = userDao.getUserByName(userName);
         group_userDao.addNewUser(user, group);
     }
 

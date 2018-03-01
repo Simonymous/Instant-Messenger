@@ -19,7 +19,7 @@ public interface GroupRest {
     @Path("groups")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response addGroup(Group group);
+    Response addGroup(String group);
 
     @DELETE
     @Path("groups/{groupId}")

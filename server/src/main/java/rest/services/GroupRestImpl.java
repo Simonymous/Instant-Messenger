@@ -2,8 +2,11 @@ package rest.services;
 
 import builder.ServiceObjectBuilder;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import model.classes.GroupImpl;
 import model.interfaces.Group;
 import model.interfaces.Message;
+import rest.classes.JSONMessage;
 import rest.exceptions.*;
 
 import javax.ws.rs.*;
@@ -24,6 +27,18 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
     private static final Gson gSon = new Gson();
     private Response.Status status;
 
+    private Group makeGroupFromJSON(String json) {
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        return gson.fromJson(json, GroupImpl.class);
+    }
+
+    private JSONMessage makeMessageFromJSON(String json) {
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        return gson.fromJson(json, JSONMessage.class);
+    }
+
     @Override
     @GET
     @Path("groups")
@@ -38,13 +53,13 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
     @Path("groups")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addGroup(Group gro) {
+    public Response addGroup(String gro) {
       Response response = null;
       // TODO auth (+ auth response)
-
+      Group group = makeGroupFromJSON(gro);
       try {
-        Group group = ServiceObjectBuilder.getGroupServiceObject().addNewGroup(gro.getGroupName());
-        response = Response.status(200, GROUP_ADDED).type(MediaType.APPLICATION_JSON).entity(group).build();
+        Group gr = ServiceObjectBuilder.getGroupServiceObject().addNewGroup(group.getGroupName());
+        response = Response.ok(gSon.toJson(gr)).build();
       } catch (Exception e) {
         System.err.println(e);
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
@@ -80,9 +95,8 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
     @Path("groups/{groupId}/users")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsersOfGroup(@PathParam("groupId") String groupId) {
-      // TODO implement
         try {
-            return Response.status(200).type(MediaType.APPLICATION_JSON).entity(ServiceObjectBuilder.getGroupServiceObject().getUserIdsForGroup(Integer.parseInt(groupId))).build();
+            return Response.ok(gSon.toJson(ServiceObjectBuilder.getGroupServiceObject().getUserIdsForGroup(Integer.parseInt(groupId)))).build();
         } catch (GroupDoesNotExistException e) {
             e.printStackTrace();
             return Response.status(404, ERR_GROUP_DOES_NOT_EXIST).build();
@@ -153,7 +167,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
 
       try {
         Group group = ServiceObjectBuilder.getGroupServiceObject().getGroupById(Integer.parseInt(groupId));
-        response = Response.status(200, GROUP_ADDED).type(MediaType.APPLICATION_JSON).entity(group).build();
+        response = Response.ok(gSon.toJson(group)).build();
       } catch (GroupDoesNotExistException e) {
         System.err.println(e);
         response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).build();
@@ -193,7 +207,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
      @Produces(MediaType.APPLICATION_JSON)
      public Response getMessagesOfGroup(@PathParam("groupId") String groupId, @DefaultValue("0") @QueryParam("page") String page) {
        // TODO implement
-
+         return null;
      }
 
     @Override
@@ -203,9 +217,10 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
     public Response postMessage(@PathParam("groupId") String groupId, String message) {
       Response response = null;
       // TODO auth (+ auth response)
+      JSONMessage m = makeMessageFromJSON(message);
 
       try {
-        ServiceObjectBuilder.getMessageServiceObject().addMessage(Integer.parseInt(groupId), message.getUser().getUserId(), message.getContent());
+        ServiceObjectBuilder.getMessageServiceObject().addMessage(Integer.parseInt(groupId), m.userid, m.content);
         response = Response.status(200, MESSAGE_ADDED).build(); // TODO make new constant
           // TODO addMessage must throw GroupDoesNotExistException!!!!!!!!
 //      } catch(rest.exceptions.GroupDoesNotExistException e){

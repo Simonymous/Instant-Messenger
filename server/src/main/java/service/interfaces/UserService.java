@@ -17,7 +17,7 @@ public interface UserService {
     void changeUserPassword(int id, String password) throws UserDoesNotExistException;
     boolean validCredentials(String username, String password);
     int getUserId(String username) throws UserDoesNotExistException;
-    User getUserById(String username) throws UserDoesNotExistException;
+    User getUserById(int username) throws UserDoesNotExistException;
     User addUser(String username, String password) throws UserAlreadyExistsException;
     void removeUser(String username) throws UserDoesNotExistException;
     void removeUser(int id) throws UserDoesNotExistException;
