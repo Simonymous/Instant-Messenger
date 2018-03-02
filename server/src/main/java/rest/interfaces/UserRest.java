@@ -12,7 +12,7 @@ public interface UserRest {
     @GET
     @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getUserByName(@QueryParam("byname") String qu); // TODO create UserQuery class
+    Response getUserByName(@QueryParam("byname") String qu);
 
     @GET
     @Path("users/{name}")

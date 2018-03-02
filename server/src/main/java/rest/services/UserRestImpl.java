@@ -91,7 +91,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         User user = makeUserFromJSON(json);
         try {
             // TODO input validation
-            User u = ServiceObjectBuilder.getUserServiceObject().addUser(user.getUsername(), user.getPassword()); // TODO addUser should return User (right now w/ pw)
+            User u = ServiceObjectBuilder.getUserServiceObject().addUser(user.getUsername(), user.getPassword());
             response = Response.ok(gSon.toJson(u)).build();
         }
         catch(rest.exceptions.UserAlreadyExistsException e){
@@ -115,7 +115,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         // TODO auth + response
 
         try {
-            ServiceObjectBuilder.getUserServiceObject().removeUser(Integer.parseInt(userName)); // TODO removeUser by ID!
+            ServiceObjectBuilder.getUserServiceObject().removeUser(Integer.parseInt(userName));
             response = Response.status(200, USER_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch(rest.exceptions.UserDoesNotExistException e){
@@ -138,7 +138,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         // TODO auth + response
 
         try {
-            User user =  ServiceObjectBuilder.getUserServiceObject().getUserById(Integer.parseInt(userId)); // TODO add this
+            User user =  ServiceObjectBuilder.getUserServiceObject().getUserById(Integer.parseInt(userId));
             response = Response.ok(gSon.toJson(user)).build();
         }
         catch(rest.exceptions.UserDoesNotExistException e){

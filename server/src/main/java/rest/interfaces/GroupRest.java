@@ -51,7 +51,7 @@ public interface GroupRest {
     @Path("groups/{groupId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response changeGroup(@PathParam("groupId") String groupId, Group group);
+    Response changeGroup(@PathParam("groupId") String groupId, String group);
 
      @GET
      @Path("groups/{groupId}/messages")

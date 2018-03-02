@@ -14,4 +14,6 @@ public interface GroupDao {
     ArrayList<Group> getAllGroups();
 
     void changeGroupName(Group aGroup);
+
+    Group getGroupByName(String name);
 }

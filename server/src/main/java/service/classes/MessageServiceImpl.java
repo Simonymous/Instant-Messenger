@@ -28,13 +28,15 @@ public class MessageServiceImpl implements MessageService{
         groupDao = DaoObjectBuilder.getGroupDaoObject();
     }
 
-    public void addMessage(int groupId, int userId, String content) {
-      Group group = ModelObjectBuilder.getGroupObject();
-      group.setGroupId(groupId);
-      User user = ModelObjectBuilder.getUserObject();
-      user.setUserId(userId);
-
-      Message message = ModelObjectBuilder.getMessageObject(group, user, content);
+    // TODO Move all exceptions to own package (probably service)
+    public void addMessage(int groupId, int userId, String content) throws GroupDoesNotExistException, UserDoesNotExistException {
+        if(!doesGroupExist(groupId)) {
+            throw new rest.exceptions.GroupDoesNotExistException();
+        }
+        if(!doesUserExist(userId)) {
+            throw new rest.exceptions.UserDoesNotExistException();
+        }
+      Message message = ModelObjectBuilder.getMessageObject(groupId, userId, content);
       messageDao.createMessage(message);
     }
 

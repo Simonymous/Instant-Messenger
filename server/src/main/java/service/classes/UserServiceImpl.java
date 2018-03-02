@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(ERR_MSG_USER_ALREADY_EXISTS);
         }
         User user = ModelObjectBuilder.getUserObject(username, getHash(password));
-        userDao.addNewUser(user); // TODO set user instance id
+        userDao.addNewUser(user);
         return userDao.getUserByName(username);
     }
 

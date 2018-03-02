@@ -43,37 +43,29 @@ public class MessageDaoImpl implements MessageDao{
      * FROM Message
      * WHERE id = ?
      */
-    private static final String PS_GET_MESAGE_BY_ID = "SELECT * FROM " + TABLE_MESSAGE + " WHERE "
+    private static final String PS_GET_MESSAGE_BY_ID = "SELECT * FROM " + TABLE_MESSAGE + " WHERE "
             + COL_MESSAGE_ID + " = ?";
 
     /**
      * SELECT *
-     * FROM Message JOIN User
-     * WHERE Messege.userUserId = User.userId
+     * FROM Message
+     * WHERE userUserId = ?
      */
-    public static final String PS_GET_MESAGES_BY_USER = "SELECT * FROM " + TABLE_MESSAGE + " JOIN " + TABLE_USER + " WHERE "
-            + TABLE_MESSAGE + "." + COL_MESSAGE_USER_ID + " = " + TABLE_USER + " . " + COL_USER_ID + " AND "+ TABLE_MESSAGE
-            + "." + COL_MESSAGE_USER_ID + " = ?";
+    public static final String PS_GET_MESSAGES_BY_USER = "SELECT * FROM " + TABLE_MESSAGE + " WHERE "
+            + COL_MESSAGE_USER_ID + " = " + " ? ";
 
     /**
      * SELECT *
-     * FROM Message JOIN chatGroup
-     * WHERE Message.groupGroupId = chatGroup.groupId
-     * AND Message.groupGroupId = ?
+     * FROM Message
+     * WHERE groupGroupId = ?
      */
-    public static final String PS_GET_MESAGES_BY_GROUP = "SELECT * FROM " + TABLE_MESSAGE + " JOIN " + TABLE_GROUP + " WHERE "
-            + TABLE_MESSAGE + "." + COL_MESSAGE_GROUP_ID + " = " + TABLE_GROUP + " . " + COL_GROUP_ID+ " AND "+ TABLE_MESSAGE
-            + "." + COL_MESSAGE_GROUP_ID + " = ?";
+    public static final String PS_GET_MESSAGES_BY_GROUP = "SELECT * FROM " + TABLE_MESSAGE + " JOIN " + TABLE_GROUP + " WHERE "
+            + COL_MESSAGE_GROUP_ID + " = " + " ? ";
 
     /**
-     * SELECT * FROM Message JOIN chatGroup JOIN User
-     * WHERE Message.groupGroupId = chatGroup.groupId AND
-     * Message.userUserId = User.userId;
+     * SELECT * FROM Message
      */
-    public static final String PS_GET_MESSAGES_FROM_DB = "SELECT * FROM " + TABLE_MESSAGE + " JOIN " + TABLE_GROUP + " JOIN "
-            + TABLE_USER + " WHERE " + TABLE_MESSAGE + "." + COL_MESSAGE_GROUP_ID + " = " + TABLE_GROUP + "."
-            + COL_GROUP_ID + " AND " + TABLE_MESSAGE + "." + COL_MESSAGE_USER_ID + " = " + TABLE_USER + "."
-            + COL_USER_ID;
+    public static final String PS_GET_MESSAGES_FROM_DB = "SELECT * FROM " + TABLE_MESSAGE;
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -85,8 +77,8 @@ public class MessageDaoImpl implements MessageDao{
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_ADD_NEW_MESSAGE)) {
 
-            statement.setInt(PARAMETER_1, aMessage.getGroup().getGroupId());
-            statement.setInt(PARAMETER_2, aMessage.getUser().getUserId());
+            statement.setInt(PARAMETER_1, aMessage.getGroup());
+            statement.setInt(PARAMETER_2, aMessage.getUser());
             statement.setString(PARAMETER_3, aMessage.getContent());
 
             statement.executeUpdate();
@@ -111,26 +103,18 @@ public class MessageDaoImpl implements MessageDao{
     public Message getMessageById(Message aMessage) {
         Message aNewMessage = ModelObjectBuilder.getMessageObject();
         ResultSet rs;
-        Group aGroup;
-        User aUser;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(PS_GET_MESAGE_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(PS_GET_MESSAGE_BY_ID)) {
 
             statement.setLong(PARAMETER_1, aMessage.getMessageId());
             rs = statement.executeQuery();
+            rs.next(); // TODO check length
 
-            while(rs.next()) {
-                aGroup = ModelObjectBuilder.getGroupObject();
-                aUser = ModelObjectBuilder.getUserObject();
-
-                aNewMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
-                aGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
-                aNewMessage.setGroup(aGroup);
-                aUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
-                aNewMessage.setUser(aUser);
-                aNewMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
-            }
+            aNewMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
+            aNewMessage.setGroup(rs.getInt(COL_MESSAGE_GROUP_ID));
+            aNewMessage.setUser(rs.getInt(COL_MESSAGE_USER_ID));
+            aNewMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
 
         } catch (SQLException e) {
             System.err.println(ERR_MSG_GET_MESSAGE_FROM_DB);
@@ -145,24 +129,17 @@ public class MessageDaoImpl implements MessageDao{
         Message aNewMessage = ModelObjectBuilder.getMessageObject();
         ArrayList<Message> messages = new ArrayList<Message>();
         ResultSet rs;
-        Group aNewGroup;
-        User aNewUser;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(PS_GET_MESAGES_BY_USER)) {
+             PreparedStatement statement = connection.prepareStatement(PS_GET_MESSAGES_BY_USER)) {
 
             statement.setInt(PARAMETER_1, aUser.getUserId());
             rs = statement.executeQuery();
 
             while(rs.next()) {
-                aNewGroup = ModelObjectBuilder.getGroupObject();
-                aNewUser = ModelObjectBuilder.getUserObject();
-
                 aNewMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
-                aNewGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
-                aNewMessage.setGroup(aNewGroup);
-                aNewUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
-                aNewMessage.setUser(aNewUser);
+                aNewMessage.setGroup(rs.getInt(COL_MESSAGE_GROUP_ID));
+                aNewMessage.setUser(rs.getInt(COL_MESSAGE_USER_ID));
                 aNewMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
 
                 messages.add(aNewMessage);
@@ -181,25 +158,19 @@ public class MessageDaoImpl implements MessageDao{
         Message aNewMessage;
         ArrayList<Message> messages = new ArrayList<Message>();
         ResultSet rs;
-        Group aNewGroup;
-        User aNewUser;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(PS_GET_MESAGES_BY_GROUP)) {
+             PreparedStatement statement = connection.prepareStatement(PS_GET_MESSAGES_BY_GROUP)) {
 
             statement.setInt(PARAMETER_1, aGroup.getGroupId());
             rs = statement.executeQuery();
 
             while(rs.next()) {
                 aNewMessage = ModelObjectBuilder.getMessageObject();
-                aNewGroup = ModelObjectBuilder.getGroupObject();
-                aNewUser = ModelObjectBuilder.getUserObject();
 
                 aNewMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
-                aNewGroup.setGroupId(rs.getInt(COL_MESSAGE_GROUP_ID));
-                aNewMessage.setGroup(aNewGroup);
-                aNewUser.setUserId(rs.getInt(COL_MESSAGE_USER_ID));
-                aNewMessage.setUser(aNewUser);
+                aNewMessage.setGroup(rs.getInt(COL_MESSAGE_GROUP_ID));
+                aNewMessage.setUser(rs.getInt(COL_MESSAGE_USER_ID));
                 aNewMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
 
                 messages.add(aNewMessage);
@@ -217,8 +188,6 @@ public class MessageDaoImpl implements MessageDao{
         ArrayList<Message> messageList = new ArrayList<>();
         ResultSet rs;
         Message aMessage;
-        Group aGroup;
-        User aUser;
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(PS_GET_MESSAGES_FROM_DB)) {
@@ -227,18 +196,10 @@ public class MessageDaoImpl implements MessageDao{
 
             while(rs.next()) {
                 aMessage = ModelObjectBuilder.getMessageObject();
-                aGroup = ModelObjectBuilder.getGroupObject();
-                aUser = ModelObjectBuilder.getUserObject();
 
                 aMessage.setMessageId(rs.getLong(COL_MESSAGE_ID));
-                aGroup.setGroupId(rs.getInt(COL_GROUP_ID));
-                aGroup.setGroupName(rs.getString(COL_GROUP_NAME));
-                aMessage.setGroup(aGroup);
-                aUser.setUsername(rs.getString(COL_USER_USERNAME));
-                aUser.setUserId(rs.getInt(COL_USER_ID));
-                aUser.setActive(rs.getBoolean(COL_USER_ACTIVE));
-                aUser.setPassword(rs.getString(COL_USER_PASSWORD));
-                aMessage.setUser(aUser);
+                aMessage.setGroup(rs.getInt(COL_GROUP_ID));
+                aMessage.setUser(rs.getInt(COL_USER_ID));
                 aMessage.setContent(rs.getString(COL_MESSAGE_CONTENT));
 
                 messageList.add(aMessage);

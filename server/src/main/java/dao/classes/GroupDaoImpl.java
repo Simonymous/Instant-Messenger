@@ -45,6 +45,8 @@ public class GroupDaoImpl implements GroupDao{
     private static final String PS_GET_GROUP_BY_ID = "SELECT * FROM " + TABLE_GROUP + " WHERE "
             + COL_GROUP_ID + " = ?";
 
+    private static final String PS_GET_GROUP_BY_NAME = "SELECT * FROM " + TABLE_GROUP + " WHERE "
+            + COL_GROUP_NAME + " = ?";
     /**
      * SELECT *
      * FROM group
@@ -144,6 +146,30 @@ public class GroupDaoImpl implements GroupDao{
     @Override
     public void changeGroupName(Group aGroup){
         changeAttribut(ColNameGroup.GroupName, aGroup, aGroup.getGroupName());
+    }
+
+    @Override
+    public Group getGroupByName(String name) {
+        Group aNewGroup = ModelObjectBuilder.getGroupObject();
+        ResultSet rs;
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(PS_GET_GROUP_BY_NAME)) {
+
+            statement.setString(PARAMETER_1, name);
+            rs = statement.executeQuery();
+
+            while(rs.next()) {
+                aNewGroup.setGroupName(rs.getString(COL_GROUP_NAME));
+                aNewGroup.setGroupId(rs.getInt(COL_GROUP_ID));
+            }
+
+        } catch (SQLException e) {
+            System.err.println(ERR_MSG_GET_GROUP_FROM_DB);
+            e.printStackTrace();
+        }
+
+        return aNewGroup;
     }
 
     /**

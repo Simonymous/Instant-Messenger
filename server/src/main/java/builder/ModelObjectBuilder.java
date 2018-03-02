@@ -53,7 +53,7 @@ public class ModelObjectBuilder {
         return new MessageImpl(messageId);
     }
 
-    public static Message getMessageObject(Group aGroup, User aUser, String content){
+    public static Message getMessageObject(int aGroup, int aUser, String content){
         return new MessageImpl(aGroup, aUser, content);
     }
 }
