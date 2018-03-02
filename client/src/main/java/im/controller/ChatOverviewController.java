@@ -1,12 +1,16 @@
 package im.controller;
 
 import im.MainApp;
+import im.model.interfaces.Group;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 public class ChatOverviewController {
     @FXML
-    private ListView lvChats;
+    private ListView<Group> lvChats;
+    private ListCell<Group> zelle;
+
 
     private MainApp mainApp;
 
