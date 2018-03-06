@@ -1,6 +1,7 @@
 package im;
 
 import im.controller.ChatOverviewController;
+import im.controller.ChatViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,14 +15,19 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private AnchorPane chatLayout;
+
+    private ChatViewController chatViewController;
+    private ChatOverviewController chatOverviewController;
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("AddressApp");
+        this.primaryStage.setTitle("Messenger Client");
 
         initRootLayout();
         showChatOverview();
+        showChatView();
     }
 
     public void initRootLayout() {
@@ -46,12 +52,28 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/ChatOverview.fxml"));
             AnchorPane chatOverview = (AnchorPane) loader.load();
 
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(chatOverview);
+            rootLayout.setLeft(chatOverview);
+
 
             // Give the controller access to the main app.
-            ChatOverviewController controller = loader.getController();
-            controller.setMainApp(this);
+            chatOverviewController = loader.getController();
+            chatOverviewController.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showChatView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/ChatView.fxml"));
+            AnchorPane chatView = (AnchorPane) loader.load();
+
+            rootLayout.setCenter(chatView);
+
+            chatViewController = loader.getController();
+            chatViewController.setMainApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +82,14 @@ public class MainApp extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public ChatViewController getChatViewController() {
+        return chatViewController;
+    }
+
+    public ChatOverviewController getChatOverviewController() {
+        return chatOverviewController;
     }
 
     public static void main(String[] args) {
