@@ -7,8 +7,10 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 
 // models
+import com.google.gson.reflect.TypeToken;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
@@ -29,23 +31,36 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     private static final String URL = "http://localhost:4434";
     private static final String WEB_CONTEXT_PATH = "/im";
     private static final String USERS_PATH = "users";
+    private static final String GROUPS_PATH = "groups";
 
     private Client client;
     private Response response;
     private Gson gSon;
 
-
+    /**
+     * default constructor
+     */
     public UserRestClientImpl() {
         client = ClientBuilder.newClient();
         response = null;
     }
 
+    /**
+     * convert a json string to User object
+     * @param json String to convert
+     * @return User object
+     */
     private User makeUserFromJSON(String json) {
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         return gson.fromJson(json, UserImpl.class);
     }
 
+    /**
+     * send requst to change user
+     * @param id user to change
+     * @param json new user
+     */
     public void updateUser(final String id, final String json) {
 
         try {
@@ -64,6 +79,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
             } else if (response.getStatus() == 500) {
                 throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+
             }
 
         } catch (Exception e) {
@@ -72,6 +88,11 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         }
     }
 
+    /**
+     * send request to get a user object by name
+     * @param name - name of user to get
+     * @return User
+     */
     public UserQueryResponse getUserByName(final String name) {
 
         try {
@@ -102,6 +123,11 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         return gSon.fromJson(json, UserQueryResponseImpl.class);
     }
 
+    /**
+     * send request to add new user
+     * @param json new user to add
+     * @return User object added
+     */
     public User addUser(String json) {
 
         try {
@@ -128,6 +154,10 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         return makeUserFromJSON(respJson);
     }
 
+    /**
+     * send request to remove user by name
+     * @param userName user to remove
+     */
     public void removeUser(final String userName) {
 
         try {
@@ -152,8 +182,12 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         }
     }
 
+    /**
+     * send request to get user by id
+     * @param userId - user id to look for
+     * @return User object
+     */
     public User getUserById(final String userId) {
-
         try {
             response = client
                     .target(URL + WEB_CONTEXT_PATH)
@@ -179,6 +213,41 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
         String respJson = (String) response.readEntity(String.class);
         return makeUserFromJSON(respJson);
+    }
+
+    /**
+     * send request to get all groups of user
+     * @param userId user to get groups from
+     * @return ArrayList of group ids
+     */
+    public ArrayList<Integer> getGroupsOfUser(final String userId) {
+        try {
+            response = client
+                    .target(URL + WEB_CONTEXT_PATH)
+                    .path(USERS_PATH)
+                    .path(userId)
+                    .path(GROUPS_PATH)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(Response.class);
+
+
+            if (response.getStatus() == 404) {
+                throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
+
+            } else if (response.getStatus() == 500) {
+                throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: Handle exception
+        }
+
+        String json = (String) response.readEntity(String.class);
+        gSon = new GsonBuilder().create();
+
+        return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>(){}.getType());
     }
 
 }

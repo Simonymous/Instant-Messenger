@@ -28,7 +28,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return gson.fromJson(json, UserImpl.class);
     }
 
-    /*
+    /**
      *   Updates an existing User
      *   @return Http-Statuscode capsuled in Response
      */
@@ -59,7 +59,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return response;
     }
 
-    /*
+    /**
      *   Returns User for given Name
      *   @return User capsuled in Response
      */
@@ -88,7 +88,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return response;
     }
 
-    /*
+    /**
      *   Adds new User
      *   @return Http-Statuscode capsuled in Response
      */
@@ -118,7 +118,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return response;
     }
 
-    /*
+    /**
      *   Removes an existing User
      *   @return Http-Statuscode capsuled in Response
      */
@@ -146,7 +146,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return response;
     }
 
-    /*
+    /**
      *   Returns User for given Id
      *   @return User capsuled in Response
      */
@@ -173,6 +173,11 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return response;
     }
 
+    /**
+     * Returns Groups for given user id
+     * @param userId to get groups from
+     * @return ArrayList of Groups capsuled in Response
+     */
     @Override
     @GET
     @Path("users/{userId}/groups")

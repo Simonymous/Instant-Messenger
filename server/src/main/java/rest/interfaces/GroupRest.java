@@ -14,15 +14,6 @@ import java.util.List;
 public interface GroupRest {
 
     /*
-     *   Returns Group for given Filter
-     *   @return Group capsuled in Response
-     */
-    @GET
-    @Path("groups")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response getGroupsByFilter(@QueryParam("byuser") List<String> users, @QueryParam("byname") String name);
-
-    /*
      *   Adds new Group
      *   @return Http-Statuscode capsuled in Response
      */

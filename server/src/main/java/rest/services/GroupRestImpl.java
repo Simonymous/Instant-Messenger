@@ -41,19 +41,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         return gson.fromJson(json, JSONMessage.class);
     }
 
-    /*
-     *   Returns Group for given Filter
-     *   @return Group capsuled in Response
-     */
-    @Override
-    @GET
-    @Path("groups")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getGroupsByFilter(@QueryParam("byuser") List<String> users, @QueryParam("byname") String name) {
-      return Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
-    }
-
-    /*
+    /**
      *   Adds new Group
      *   @return Http-Statuscode capsuled in Response
      */
@@ -78,7 +66,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       return response;
     }
 
-    /*
+    /**
      *   Removes existing Group
      *   @return Http-Statuscode capsuled in Response
      */
@@ -104,7 +92,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       return response;
     }
 
-    /*
+    /**
      *   Returns Users for Group
      *   @return User-List capsuled in Response
      */
@@ -124,7 +112,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         }
     }
 
-    /*
+    /**
      *   Adds User to Group
      *   @return Http-Statuscode capsuled in Response
      */
@@ -153,7 +141,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       return response;
     }
 
-    /*
+    /**
      *   Removes User from Group
      *   @return Http-Statuscode capsuled in Response
      */
@@ -182,7 +170,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       return response;
     }
 
-    /*
+    /**
      *   Returns Group by given Id
      *   @return Group capsuled in Response
      */
@@ -209,7 +197,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       return response;
     }
 
-    /*
+    /**
      *   Changes existing Group
      *   @return Http-Statuscode capsuled in Response
      */
@@ -236,7 +224,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       return response;
     }
 
-    /*
+    /**
      *   Returns Message for given Group
      *   @return Message-List capsuled in Response
      */
@@ -256,7 +244,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         }
      }
 
-    /*
+    /**
      *   Adds new Message to Group
      *   @return Http-Statuscode capsuled in Response
      */
