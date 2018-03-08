@@ -58,4 +58,8 @@ public interface UserRest {
     @Consumes(MediaType.APPLICATION_JSON)
     Response removeUser(@PathParam("id") String id);
 
+    @GET
+    @Path("users/{userId}/groups")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGroupsOfUser(@PathParam("userId") final String userId);
 }

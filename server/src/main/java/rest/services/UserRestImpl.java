@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
+import rest.exceptions.UserDoesNotExistException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -170,5 +171,18 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
         return response;
+    }
+
+    @Override
+    @GET
+    @Path("users/{userId}/groups")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGroupsOfUser(@PathParam("userId") final String userId) {
+        try {
+            return Response.ok(gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getGroupIdsForUser(Integer.parseInt(userId)))).build();
+        } catch (UserDoesNotExistException e) {
+            e.printStackTrace();
+            return Response.status(404, ERR_USER_DOES_NOT_EXIST).build();
+        }
     }
 }
