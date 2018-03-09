@@ -136,7 +136,6 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Response.class);
 
-
             if (response.getStatus() == 404) {
                 throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
 
