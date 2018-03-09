@@ -37,6 +37,14 @@ public class Chats {
         return null;
     }
 
+    public void removeChat(int id) {
+        for (Chat c : chatList) {
+            if(c.getId() == id) {
+                chatList.remove(c);
+            }
+        }
+    }
+
     public void addChat(Chat chat){
         chatList.add(new Chat("s"));
     }

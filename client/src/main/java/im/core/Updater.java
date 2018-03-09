@@ -2,10 +2,14 @@ package im.core;
 
 import im.model.classes.Chat;
 import im.model.classes.Chats;
+import im.model.classes.UserList;
+import model.classes.GroupImpl;
+import model.interfaces.Group;
 import model.interfaces.Message;
 import rest.services.GroupRestClientImpl;
 import rest.services.UserRestClientImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Updater {
@@ -37,7 +41,30 @@ public class Updater {
         }
     }
 
+    public void deleteGroup(String id) {
+        grci.removeGroup(id);
+        Chats.getInstance().removeChat(Integer.parseInt(id));
+    }
+
+    public void addGroup(String name, ArrayList<Integer> userIds) {
+        Group group = grci.addGroup(new GroupImpl(name));
+        String groupId = Integer.toString(group.getGroupId());
+        for(Integer i:userIds) {
+            grci.addUserToGroup(groupId,i.toString());
+        }
+        updateGroups();
+    }
+
+    public void updateLocalUsers() {
+      for(String id:urci.getAllUser().getIds()) {
+          if (!UserList.getInstance().containsUser(Integer.parseInt(id))) {
+              UserList.getInstance().addUser(urci.getUserById(id));
+          }
+      }
+    }
+
     public void updateAll() {
+        updateLocalUsers();
         updateGroups();
         for (Chat c : Chats.getInstance().getChatList()){
             updateMessagesForGroup(c.getStringId());

@@ -15,8 +15,21 @@ public class ClientNotify {
     private static final String ERR_UPDATE_MESSAGES = "Error while updating messages.";
 
     @POST
-    @Path("group")
+    @Path("group/new")
     public Response newGroup() {
+        Response response = null;
+        try {
+            new Updater().updateGroups();
+            response = Response.status(200, GROUPS_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();
+        } catch (Exception e) {
+            response = Response.status(500, ERR_UPDATE_GROUPS).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        return response;
+    }
+
+    @POST
+    @Path("group/deleted")
+    public Response removedGroup() {
         Response response = null;
         try {
             new Updater().updateGroups();
