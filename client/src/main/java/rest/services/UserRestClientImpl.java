@@ -124,6 +124,39 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     }
 
     /**
+     * send request to get a user object by name
+     * @return Userlist
+     */
+    public UserQueryResponse getAllUser() {
+
+        try {
+            response = client
+                    .target(URL + WEB_CONTEXT_PATH)
+                    .path(USERS_PATH)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(Response.class);
+
+
+            if (response.getStatus() == 404) {
+                throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
+
+            } else if (response.getStatus() == 500) {
+                throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: Handle exception
+        }
+
+        String json = (String) response.readEntity(String.class);
+        gSon = new GsonBuilder().create();
+
+        return gSon.fromJson(json, UserQueryResponseImpl.class);
+    }
+
+    /**
      * send request to add new user
      * @param json new user to add
      * @return User object added
