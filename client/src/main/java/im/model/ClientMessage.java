@@ -1,4 +1,4 @@
-package im.model.classes;
+package im.model;
 
 public class ClientMessage {
     private long id;
@@ -23,6 +23,6 @@ public class ClientMessage {
     }
 
     public String getStringId() {
-        return String.format("%d",id);
+        return String.format("%d", id);
     }
 }

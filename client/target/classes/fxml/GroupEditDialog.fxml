@@ -33,7 +33,7 @@
         <ButtonBar prefHeight="40.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <buttons>
                 <Button fx:id="deleteButton" mnemonicParsing="false" text="Löschen" visible="false" onAction="#handleDelete"/>
-                <Button fx:id="cancelButton" mnemonicParsing="false" text="Abbrechen" onAction="#handleClose"/>
+                <Button fx:id="cancelButton" mnemonicParsing="false" text="Abbrechen" onAction="#handleCancel"/>
                 <Button fx:id="saveButton" mnemonicParsing="false" text="OK" onAction="#handleSave"/>
             </buttons>
         </ButtonBar>

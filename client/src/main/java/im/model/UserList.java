@@ -1,10 +1,8 @@
-package im.model.classes;
+package im.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.interfaces.User;
-
-import java.util.ArrayList;
 
 public class UserList {
 
@@ -30,7 +28,7 @@ public class UserList {
     }
 
     public void deleteUser(int id) {
-        for (User u: serverUsers) {
+        for (User u : serverUsers) {
             if (u.getUserId() == id) {
                 deleteUser(u);
             }
@@ -46,7 +44,7 @@ public class UserList {
     }
 
     public boolean containsUser(int id) {
-        for (User u: serverUsers) {
+        for (User u : serverUsers) {
             if (u.getUserId() == id) {
                 return true;
             }

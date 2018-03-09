@@ -1,10 +1,9 @@
 package im.controller;
 
 import im.MainApp;
-import im.model.classes.Chat;
-import im.model.classes.Chats;
+import im.model.Chat;
+import im.model.ChatList;
 import im.model.listCells.ListViewCellGroup;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -13,27 +12,33 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChatOverviewController implements EventHandler<MouseEvent> {
     @FXML
     private ListView lvChats;
 
-    private Chats chats;
+    private ChatList chatList;
     private MainApp mainApp;
 
     public ChatOverviewController() {
     }
 
+    /**
+     * is called if the layout id initialized
+     * sets the chatList
+     */
     @FXML
     private void initialize() {
-        chats = Chats.getInstance();
-        setListView(chats.getChatList());
+        chatList = ChatList.getInstance();
+        setListView(chatList.getChatList());
         lvChats.setOnMouseClicked(this);
     }
 
-    public void setListView(ObservableList observableList) {
+    /**
+     * set the List which is is observed by the listview and the CellFactory for displying the content of group/chat
+     *
+     * @param observableList
+     */
+    private void setListView(ObservableList observableList) {
         lvChats.setItems(observableList);
         lvChats.setCellFactory(new Callback<ListView<Chat>, ListCell<Chat>>() {
             public ListCell<Chat> call(ListView<Chat> lvChats) {
@@ -44,16 +49,17 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-
     }
 
+    /**
+     * handle the click event on listview for changing the group/chat which is shown
+     *
+     * @param event
+     */
+    @Override
     public void handle(MouseEvent event) {
         String chat = lvChats.getSelectionModel().getSelectedItem().toString();
-        mainApp.getChatViewController().setChat(chats.getChatByName(chat));
+        mainApp.getChatViewController().setChat(chatList.getChatByName(chat));
         System.out.println(chat);
-    }
-
-    public Chats getChats(){
-        return chats;
     }
 }

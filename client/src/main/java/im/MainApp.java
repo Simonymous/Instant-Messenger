@@ -26,6 +26,11 @@ public class MainApp extends Application {
     private LoginController loginController;
     private GroupEditDialogController groupEditDialogController;
 
+    /**
+     * program start, set the primaryStage and the Title
+     *
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -33,10 +38,14 @@ public class MainApp extends Application {
 
         initRootLayout();
         showLogin();
-
     }
 
-    public void loginSuccess(){
+    /**
+     * Method is called after login was succeed
+     * for init the main layout of the messenger
+     */
+    public void loginSuccess() {
+        rootLayoutController.setMenuVisable();
         showChatOverview();
         showChatView();
         new Updater().updateAll();
@@ -47,6 +56,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * init the Root of Layout with Menu bar
+     */
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
@@ -67,7 +79,12 @@ public class MainApp extends Application {
         }
     }
 
-    public void showGroupEditDialog(Group group){
+    /**
+     * is called for add or editing a group/chat
+     *
+     * @param group the choosed or new group for editing
+     */
+    public void showGroupEditDialog(Group group) {
 
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -91,6 +108,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * show the login Layout at start of program
+     */
     private void showLogin() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -106,6 +126,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * shows the list of groups/chats at the left of root
+     */
     public void showChatOverview() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -124,6 +147,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * shows the list of messages for the selected chat/group
+     */
     public void showChatView() {
         try {
             FXMLLoader loader = new FXMLLoader();

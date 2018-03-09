@@ -5,19 +5,18 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="im.controller.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Messenger">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Close" onAction="#handleExit"/>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Group">
+          <Menu fx:id="menuGroup" mnemonicParsing="false" text="Group" visible="false">
             <items>
-              <MenuItem mnemonicParsing="false" text="Add" onAction="#handleNewGroup"/>
+              <MenuItem mnemonicParsing="false" onAction="#handleNewGroup" text="Add" />
               <MenuItem mnemonicParsing="false" text="Edit" />
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>

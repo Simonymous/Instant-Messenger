@@ -1,10 +1,9 @@
-package im.model.classes;
+package im.model;
 
-import im.core.ClientNotify;
+import im.model.ClientMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.interfaces.Group;
-import model.interfaces.User;
 import model.interfaces.Message;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class Chat {
     }
 
     public boolean contains(long id) {
-        for (ClientMessage cm :messageList) {
+        for (ClientMessage cm : messageList) {
             if (cm.getId() == id) return true;
         }
         return false;

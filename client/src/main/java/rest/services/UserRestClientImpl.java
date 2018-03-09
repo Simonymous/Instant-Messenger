@@ -46,9 +46,9 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     }
 
     /**
-     * convert a json string to User object
+     * convert a json string to OwnUser object
      * @param json String to convert
-     * @return User object
+     * @return OwnUser object
      */
     private User makeUserFromJSON(String json) {
         GsonBuilder b = new GsonBuilder();
@@ -91,7 +91,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     /**
      * send request to get a user object by name
      * @param name - name of user to get
-     * @return User
+     * @return OwnUser
      */
     public UserQueryResponse getUserByName(final String name) {
 
@@ -158,7 +158,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     /**
      * send request to add new user
      * @param json new user to add
-     * @return User object added
+     * @return OwnUser object added
      */
     public User addUser(String json) {
 
@@ -217,7 +217,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     /**
      * send request to get user by id
      * @param userId - user id to look for
-     * @return User object
+     * @return OwnUser object
      */
     public User getUserById(final String userId) {
         try {

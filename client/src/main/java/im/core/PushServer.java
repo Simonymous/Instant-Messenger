@@ -10,7 +10,7 @@ import java.net.URI;
 public class PushServer {
 
     public PushServer() throws IOException {
-        String baseUrl = "http://localhost:4434";
+        String baseUrl = "http://localhost:4435";
 
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
                 URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);

@@ -4,22 +4,22 @@ import rest.services.UserRestClientImpl;
 
 import java.util.List;
 
-public class User {
-    private static User user = null;
+public class OwnUser {
+    private static OwnUser ownUser = null;
 
     private int userId;
     private String username;
     private String password;
     private boolean isCreated = false;
 
-    private User() {
+    private OwnUser() {
 
     }
 
     public boolean createUser(String name) throws Exception {
         if (!isCreated) {
             List<String> ids =
-            new UserRestClientImpl().getUserByName(name).getIds();
+                    new UserRestClientImpl().getUserByName(name).getIds();
             if (ids.size() > 1) throw new Exception("to many users with this name");
             userId = Integer.parseInt(ids.get(0));
             username = name;
@@ -28,12 +28,12 @@ public class User {
         return isCreated;
     }
 
-    public int getUserId(){
+    public int getUserId() {
         return userId;
     }
 
-    public String getUserStringId(){
-        return String.format("%d",userId);
+    public String getUserStringId() {
+        return String.format("%d", userId);
     }
 
     public String getUsername() {
@@ -52,14 +52,14 @@ public class User {
         this.password = password;
     }
 
-    public boolean isCreated(){
+    public boolean isCreated() {
         return isCreated;
     }
 
-    public static User getInstance() {
-        if (user == null) {
-            user = new User();
+    public static OwnUser getInstance() {
+        if (ownUser == null) {
+            ownUser = new OwnUser();
         }
-        return user;
+        return ownUser;
     }
 }

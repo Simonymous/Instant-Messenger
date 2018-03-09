@@ -1,8 +1,7 @@
 package im.controller;
 
 import im.MainApp;
-import im.core.Updater;
-import im.core.User;
+import im.core.OwnUser;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,9 +39,9 @@ public class LoginController implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         String name = getUserText.getText();
         try {
-            //User.getInstance().createUser(name);
+            //OwnUser.getInstance().createUser(name);
 
-            if (true || User.getInstance().isCreated()) {
+            if (true || OwnUser.getInstance().isCreated()) {
                 mainApp.loginSuccess();
             }
         } catch (Exception e) {

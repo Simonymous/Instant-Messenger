@@ -2,11 +2,9 @@ package im.controller;
 
 import im.MainApp;
 import im.core.Updater;
-import im.model.classes.Chat;
-import im.model.classes.ClientMessage;
-import im.model.listCells.ListViewCellGroup;
+import im.model.Chat;
+import im.model.ClientMessage;
 import im.model.listCells.ListViewCellMessage;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import rest.services.GroupRestClientImpl;
 
@@ -33,13 +30,17 @@ public class ChatViewController implements EventHandler<ActionEvent> {
     public ChatViewController() {
     }
 
+    /**
+     * is called if the layout id initialized
+     * sets the messageList
+     */
     @FXML
     private void initialize() {
         setListView(null);
         btn.setOnAction(this);
     }
 
-    public void setListView(ObservableList observableList) {
+    private void setListView(ObservableList observableList) {
         lvMessages.setItems(observableList);
         lvMessages.setCellFactory(new Callback<ListView<ClientMessage>, ListCell<ClientMessage>>() {
             public ListCell<ClientMessage> call(ListView<ClientMessage> lvChats) {
@@ -60,7 +61,7 @@ public class ChatViewController implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         String sendMessage = mb.getText();
-        new GroupRestClientImpl().postMessage(chat.getStringId(),sendMessage);
+        new GroupRestClientImpl().postMessage(chat.getStringId(), sendMessage);
         new Updater().updateMessagesForGroup(chat.getStringId());
         System.out.println(chat.getName() + sendMessage);
         mb.clear();
