@@ -31,5 +31,6 @@ public interface UserService {
     ArrayList<Integer> getGroupIdsForUser(int id) throws UserDoesNotExistException;
 
     UserQueryResponseImpl getUsersByQuery(String qu) throws UserDoesNotExistException;
+
     //TODO Nice to have: getCountOfMesssages(), getAllMessagesFromUser()
 }

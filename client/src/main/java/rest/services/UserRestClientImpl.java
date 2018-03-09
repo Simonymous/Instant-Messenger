@@ -229,7 +229,6 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Response.class);
 
-
             if (response.getStatus() == 404) {
                 throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
 
@@ -262,7 +261,6 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Response.class);
 
-
             if (response.getStatus() == 404) {
                 throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
 
@@ -280,6 +278,40 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>(){}.getType());
+    }
+
+    /**
+     * send request to get all groups of user
+     * @param userId user to get groups from
+     * @return ArrayList of group ids
+     */
+    public boolean authenticateUser(final String userId, final String passwd) {
+        try {
+            response = client
+                    .target(URL + WEB_CONTEXT_PATH)
+                    .path(USERS_PATH)
+                    .path(userId)
+                    .path(passwd)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(Response.class);
+
+            if (response.getStatus() == 404) {
+                throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
+
+            } else if (response.getStatus() == 500) {
+                throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: Handle exception
+        }
+
+        String json = (String) response.readEntity(String.class);
+        gSon = new GsonBuilder().create();
+
+        return gSon.fromJson(json, Boolean.class);
     }
 
 }

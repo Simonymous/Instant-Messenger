@@ -67,7 +67,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
     @GET
     @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserByName(@QueryParam("byname") String qustr) {
+    public Response getUserByName(@DefaultValue("") @QueryParam("byname") String qustr) {
         Response response = null;
         // TODO auth + response
         if(qustr == null) { // TODO handle this
