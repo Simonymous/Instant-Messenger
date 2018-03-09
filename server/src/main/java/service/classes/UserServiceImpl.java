@@ -214,7 +214,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserQueryResponseImpl getUsersByQuery(String qu) throws UserDoesNotExistException {
         List<String> l = new ArrayList<String>();
-        l.add(Integer.toString(getUserId(qu)));
+        for(User u : userDao.getUsersFromDB()) {
+            if(qu.isEmpty() || u.getUsername().contains(qu)) {
+                l.add(Integer.toString(u.getUserId()));
+            }
+        }
         UserQueryResponseImpl impl = new UserQueryResponseImpl();
         impl.setIds(l);
         return impl;
