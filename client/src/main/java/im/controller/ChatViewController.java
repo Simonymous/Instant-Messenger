@@ -1,12 +1,14 @@
 package im.controller;
 
 import im.MainApp;
+import im.core.Updater;
 import im.model.classes.Chat;
 import im.model.classes.ClientMessage;
 import im.model.listCells.ListViewCellGroup;
 import im.model.listCells.ListViewCellMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,8 +17,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import rest.services.GroupRestClientImpl;
 
-public class ChatViewController implements EventHandler<MouseEvent> {
+public class ChatViewController implements EventHandler<ActionEvent> {
     @FXML
     private ListView lvMessages;
     @FXML
@@ -33,7 +36,7 @@ public class ChatViewController implements EventHandler<MouseEvent> {
     @FXML
     private void initialize() {
         setListView(null);
-        btn.setOnMouseClicked(this);
+        btn.setOnAction(this);
     }
 
     public void setListView(ObservableList observableList) {
@@ -54,9 +57,11 @@ public class ChatViewController implements EventHandler<MouseEvent> {
         this.mainApp = mainApp;
     }
 
-    public void handle(MouseEvent event) {
+    @Override
+    public void handle(ActionEvent event) {
         String sendMessage = mb.getText();
-        //TODO: Send Text
+        new GroupRestClientImpl().postMessage(chat.getStringId(),sendMessage);
+        new Updater().updateMessagesForGroup(chat.getStringId());
         System.out.println(chat.getName() + sendMessage);
         mb.clear();
     }

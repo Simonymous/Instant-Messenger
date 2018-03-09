@@ -28,7 +28,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
 
     @FXML
     private void initialize() {
-        chats = new Chats();
+        chats = Chats.getInstance();
         setListView(chats.getChatList());
         lvChats.setOnMouseClicked(this);
     }

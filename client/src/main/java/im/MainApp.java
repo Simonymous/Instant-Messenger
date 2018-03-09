@@ -2,6 +2,9 @@ package im;
 
 import im.controller.ChatOverviewController;
 import im.controller.ChatViewController;
+import im.controller.LoginController;
+import im.core.PushServer;
+import im.core.Updater;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,6 +22,7 @@ public class MainApp extends Application {
 
     private ChatViewController chatViewController;
     private ChatOverviewController chatOverviewController;
+    private LoginController loginController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -26,8 +30,19 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Messenger Client");
 
         initRootLayout();
+        showLogin();
+
+    }
+
+    public void loginSuccess(){
         showChatOverview();
         showChatView();
+        new Updater().updateAll();
+        try {
+            new PushServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void initRootLayout() {
@@ -41,6 +56,21 @@ public class MainApp extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/Login.fxml"));
+            AnchorPane login = loader.load();
+
+            rootLayout.setCenter(login);
+
+            loginController = loader.getController();
+            loginController.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package im.model.classes;
 
 public class ClientMessage {
+    private long id;
     private String author;
     private String content;
 
@@ -15,5 +16,13 @@ public class ClientMessage {
 
     public String getContent() {
         return content;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getStringId() {
+        return String.format("%d",id);
     }
 }
