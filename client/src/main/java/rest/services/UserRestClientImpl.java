@@ -115,6 +115,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: Handle exception
+            return null;
         }
 
         String json = (String) response.readEntity(String.class);
@@ -157,10 +158,15 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to add new user
-     * @param json new user to add
-     * @return OwnUser object added
+     * @param name - name of new user
+     * @param passwd - password of new user
+     * @return new User Object
      */
-    public User addUser(String json) {
+    public User addUser(final String name, final String passwd) {
+        // create new User object from username and password
+        User newUser = new UserImpl(name, passwd);
+        // create json string out of User object
+        String json = gSon.toJson(newUser);
 
         try {
             response = client
@@ -180,6 +186,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: Handle exception
+            return null;
         }
 
         String respJson = (String) response.readEntity(String.class);

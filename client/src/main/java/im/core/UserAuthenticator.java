@@ -18,7 +18,7 @@ public class UserAuthenticator {
         }
 
         public void addNewUser(String name, String password) {
-            User newUser = urci.addUser(name+password); //TODO: Übergabeparameter anpassen
+            User newUser = urci.addUser(name, password); //TODO: Übergabeparameter anpassen
         }
 
         public boolean authenticateUser(String name, String password) {

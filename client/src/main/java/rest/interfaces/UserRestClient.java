@@ -10,7 +10,7 @@ public interface UserRestClient {
 
     UserQueryResponse getUserByName(final String name);
 
-    User addUser(String json);
+    User addUser(final String name, final String passwd);
 
     void removeUser(final String userName);
 
