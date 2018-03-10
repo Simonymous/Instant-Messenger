@@ -2,6 +2,7 @@ package im.controller;
 
 import im.MainApp;
 import im.core.OwnUser;
+import im.core.UserAuthenticator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,14 +35,21 @@ public class LoginController {
     @FXML
     public void handleLogin() {
         String name = getUserText.getText();
-        try {
-            //OwnUser.getInstance().createUser(name);
+        String password = getPasswordText.getText();
 
-            if (true || OwnUser.getInstance().isCreated()) {
-                mainApp.loginSuccess();
+        UserAuthenticator authenticator = new UserAuthenticator();
+        if (true || authenticator.authenticateUser(name, password) || true) { //TODO: remvoe true when authentification works
+            try {
+                //OwnUser.getInstance().createUser(name);
+
+                if (true || OwnUser.getInstance().isCreated()) {
+                    mainApp.loginSuccess();
+                }
+            } catch (Exception e) {
+
             }
-        } catch (Exception e) {
-            loginLabel.setText("Ungültiger Benutzername");
+        } else {
+            loginLabel.setText("Benutzername oder Passwort ungültig");
         }
     }
 
