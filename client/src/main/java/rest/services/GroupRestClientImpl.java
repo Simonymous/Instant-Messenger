@@ -78,7 +78,6 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
         }
 
         String respJson = response.readEntity(String.class);
@@ -110,7 +109,6 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
         }
     }
 
@@ -141,7 +139,8 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
+            // group does not exist, so return null
+            return null;
         }
 
         String json = (String) response.readEntity(String.class);
@@ -176,7 +175,6 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
         }
     }
 
@@ -207,7 +205,6 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
         }
     }
 
@@ -237,7 +234,8 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
+            // group does not exist, so return null
+            return null;
         }
 
         String json = (String) response.readEntity(String.class);
@@ -272,7 +270,6 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
         }
     }
 
@@ -304,7 +301,8 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
+            // group does not exist, so return null
+            return null;
         }
 
         String json = (String) response.readEntity(String.class);
@@ -338,7 +336,6 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: Handle exception
         }
     }
 
