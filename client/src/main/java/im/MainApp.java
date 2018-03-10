@@ -25,6 +25,7 @@ public class MainApp extends Application {
     private ChatOverviewController chatOverviewController;
     private LoginController loginController;
     private GroupEditDialogController groupEditDialogController;
+    private RegisterFormController registerFormController;
 
     /**
      * program start, set the primaryStage and the Title
@@ -101,6 +102,33 @@ public class MainApp extends Application {
             groupEditDialogController = loader.getController();
             groupEditDialogController.setDialogStage(dialogStage);
             groupEditDialogController.setGroup(group);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * is called for registering a new user
+     *
+     */
+    public void showRegisterForm() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/RegisterForm.fxml"));
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Neuer Nutzer");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            registerFormController = loader.getController();
+            registerFormController.setDialogStage(dialogStage);
 
             dialogStage.showAndWait();
         } catch (IOException e) {

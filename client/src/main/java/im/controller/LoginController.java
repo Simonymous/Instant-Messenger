@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 
-public class LoginController implements EventHandler<ActionEvent> {
+public class LoginController {
     @FXML
     private TextField getUserText;
     @FXML
@@ -26,17 +26,13 @@ public class LoginController implements EventHandler<ActionEvent> {
     public LoginController() {
     }
 
-    @FXML
-    private void initialize() {
-        loginBtn.setOnAction(this);
-    }
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-    @Override
-    public void handle(ActionEvent event) {
+    @FXML
+    public void handleLogin() {
         String name = getUserText.getText();
         try {
             //OwnUser.getInstance().createUser(name);
@@ -47,5 +43,10 @@ public class LoginController implements EventHandler<ActionEvent> {
         } catch (Exception e) {
             loginLabel.setText("Ungültiger Benutzername");
         }
+    }
+
+    @FXML
+    public void handleRegister() {
+       mainApp.showRegisterForm();
     }
 }
