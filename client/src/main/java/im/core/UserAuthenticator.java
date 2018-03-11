@@ -1,9 +1,12 @@
 package im.core;
 
+import com.google.common.hash.Hashing;
 import model.interfaces.User;
 import model.interfaces.UserQueryResponse;
 import rest.services.GroupRestClientImpl;
 import rest.services.UserRestClientImpl;
+
+import java.nio.charset.StandardCharsets;
 
 public class UserAuthenticator {
         private UserRestClientImpl urci;
@@ -29,7 +32,9 @@ public class UserAuthenticator {
                 return false;
             } else {
                 String id = user.getIds().get(0); //????
-                return urci.authenticateUser(id, password);
+                User u = urci.getUserById(id);
+                String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+                return u.getPassword().equals(hashedPassword);
             }
         }
 }
