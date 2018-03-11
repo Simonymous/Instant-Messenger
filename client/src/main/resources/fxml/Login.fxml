@@ -15,7 +15,6 @@
             <TextField fx:id="getUserText" layoutX="10.0" layoutY="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Benutzername"/>
             <Button fx:id="loginBtn" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Login" onAction="#handleLogin" />
              <Button fx:id="registerBtn" layoutX="10.0" layoutY="130.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Register" onAction="#handleRegister"/>
-            <Label fx:id="loginLabel" layoutX="10.0" layoutY="134.0" />
          </children>
       </Pane>
    </children>

@@ -24,6 +24,12 @@ public class UserAuthenticator {
         }
 
         public boolean authenticateUser(String name, String password) {
-            return urci.authenticateUser(name, password);
+            UserQueryResponse user = urci.getUserByName(name);
+            if (user.getIds().isEmpty()) {
+                return false;
+            } else {
+                String id = user.getIds().get(0); //????
+                return urci.authenticateUser(id, password);
+            }
         }
 }
