@@ -2,6 +2,14 @@ package rest.services;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import model.classes.UserImpl;
+import model.classes.UserQueryResponseImpl;
+import model.interfaces.User;
+import model.interfaces.UserQueryResponse;
+import rest.exceptions.UserAlreadyExistsException;
+import rest.exceptions.UserDoesNotExistException;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -9,21 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
-// models
-import com.google.gson.reflect.TypeToken;
-import model.classes.UserImpl;
-import model.classes.UserQueryResponseImpl;
-import model.interfaces.User;
-import model.interfaces.UserQueryResponse;
-
-// rest exceptions
-import rest.exceptions.UserAlreadyExistsException;
-import rest.exceptions.UserDoesNotExistException;
-
-// public String constants
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static rest.constants.UserRestConstants.ERR_USER_ALREADY_EXISTS;
 import static rest.constants.UserRestConstants.ERR_USER_DOES_NOT_EXIST;
+
+// models
+// rest exceptions
+// public String constants
 
 
 public class UserRestClientImpl implements rest.interfaces.UserRestClient {
@@ -69,7 +69,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
                     .path(USERS_PATH)
                     .path(id)
                     .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.entity(String.class, json));
+                    .post(Entity.json(json));
 
             if (response.getStatus() == 404) {
                 throw new UserDoesNotExistException(ERR_USER_DOES_NOT_EXIST);
@@ -171,7 +171,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
                     .target(URL + WEB_CONTEXT_PATH)
                     .path(USERS_PATH)
                     .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.entity(String.class, json));
+                    .post(Entity.json(json));
 
             if (response.getStatus() == 409) {
                 throw new UserAlreadyExistsException(ERR_USER_ALREADY_EXISTS);

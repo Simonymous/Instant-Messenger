@@ -3,6 +3,12 @@ package rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import model.classes.GroupImpl;
+import model.interfaces.Group;
+import model.interfaces.Message;
+import rest.exceptions.GroupDoesNotExistException;
+import rest.exceptions.UserOrGroupDoesNotExistException;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -10,19 +16,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
-// models
-import model.interfaces.Group;
-import model.classes.GroupImpl;
-
-// rest exceptions
-import model.interfaces.Message;
-import rest.exceptions.GroupDoesNotExistException;
-import rest.exceptions.UserOrGroupDoesNotExistException;
-
-// public String constants
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static rest.constants.GroupRestConstants.ERR_GROUP_DOES_NOT_EXIST;
 import static rest.constants.GroupRestConstants.ERR_USER_GROUP_DOES_NOT_EXIST;
+
+// models
+// rest exceptions
+// public String constants
 
 
 public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
@@ -70,7 +70,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
                     .target(URL + WEB_CONTEXT_PATH)
                     .path(GROUPS_PATH)
                     .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.entity(String.class, json));
+                    .post(Entity.json(json));
 
             if (response.getStatus() == 500) {
                 throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
@@ -259,7 +259,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
                     .path(GROUPS_PATH)
                     .path(groupId)
                     .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.entity(String.class, json));
+                    .post(Entity.json(json));
 
             if (response.getStatus() == 404) {
                 throw new GroupDoesNotExistException(ERR_GROUP_DOES_NOT_EXIST);
@@ -325,7 +325,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
                     .path(groupId)
                     .path(MESSAGES_PATH)
                     .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.entity(String.class, jsonMessage));
+                    .post(Entity.json(jsonMessage)); // TODO geht so nicht
 
             if (response.getStatus() == 404) {
                 throw new GroupDoesNotExistException(ERR_GROUP_DOES_NOT_EXIST);
