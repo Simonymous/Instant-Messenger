@@ -3,25 +3,20 @@ package rest.services;
 import builder.ServiceObjectBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.classes.GroupImpl;
 import model.interfaces.Group;
-import model.interfaces.Message;
-import model.interfaces.User;
 import rest.classes.JSONGroup;
 import rest.classes.JSONMessage;
-import rest.exceptions.*;
+import rest.exceptions.GroupDoesNotExistException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.sql.SQLException;
-import java.util.List;
 
-import static rest.constants.GeneralRestConstants.*;
+import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static rest.constants.GroupRestConstants.*;
-import static rest.constants.MessageRestConstants.*;
-import static rest.constants.UserRestConstants.*;
+import static rest.constants.MessageRestConstants.MESSAGE_ADDED;
+import static rest.constants.UserRestConstants.ERR_USER_DOES_NOT_EXIST;
 
 @Path(GroupRestImpl.webContextPath)
 public class GroupRestImpl implements rest.interfaces.GroupRest {
@@ -63,6 +58,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("addGroup " + gro);
       return response;
     }
 
@@ -89,6 +85,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("removeGroup " + groupId);
       return response;
     }
 
@@ -138,6 +135,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("addUserToGroup " + groupId + " <-- " + userId);
       return response;
     }
 
@@ -167,6 +165,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("removeUserFromGroup " + groupId + " <-X- " + userId);
       return response;
     }
 
@@ -194,6 +193,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("getGroupById " + groupId);
       return response;
     }
 
@@ -221,6 +221,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("changeGroup " + groupId + "(" + json + ")");
       return response;
     }
 
@@ -269,6 +270,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).build();
       }
 
+      System.err.println("postMessage " + groupId + " << " + message);
       return response;
     }
 

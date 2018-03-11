@@ -56,6 +56,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             System.err.println(e.getMessage());
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        System.err.println("updateUser " + id + "(" + json + ")"); // TODO also prints changed pw
         return response;
     }
 
@@ -85,6 +86,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             System.err.println(e.getMessage());
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        System.err.println("getUserByName " + qustr);
         return response;
     }
 
@@ -115,6 +117,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             e.printStackTrace();
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        System.err.println("addUser " + json); // TODO also prints pw
         return response;
     }
 
@@ -143,6 +146,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             System.err.println(e.getMessage());
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        System.err.println("removeUser " + userName);
         return response;
     }
 
@@ -170,6 +174,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             System.err.println(e.getMessage());
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
+        System.err.println("getUserById " + userId);
         return response;
     }
 
