@@ -26,15 +26,18 @@ public class UserAuthenticator {
             User newUser = urci.addUser(name, password);
         }
 
-        public boolean authenticateUser(String name, String password) {
+        public Boolean authenticateUser(String name, String password) {
             UserQueryResponse user = urci.getUserByName(name);
             if (user.getIds().isEmpty()) {
-                return false;
+                return null;
             } else {
                 String id = user.getIds().get(0); //????
                 User u = urci.getUserById(id);
                 String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-                return u.getPassword().equals(hashedPassword);
+                if (u.getPassword().equals(hashedPassword)) {
+                    OwnUser.getInstance().createUser(u.getUserId(), u.getUsername(), u.getPassword());
+                    return true;
+                } else return false;
             }
         }
 }

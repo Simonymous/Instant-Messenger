@@ -35,15 +35,7 @@ public class LoginController {
 
         UserAuthenticator authenticator = new UserAuthenticator();
         if (authenticator.authenticateUser(name, password)) {
-            try {
-                //OwnUser.getInstance().createUser(name);
-
-                if (true || OwnUser.getInstance().isCreated()) {
-                    mainApp.loginSuccess();
-                }
-            } catch (Exception e) {
-
-            }
+            mainApp.loginSuccess();
         } else {
           showAlert();
         }

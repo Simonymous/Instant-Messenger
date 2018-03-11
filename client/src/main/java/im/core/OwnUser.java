@@ -16,16 +16,13 @@ public class OwnUser {
 
     }
 
-    public boolean createUser(String name) throws Exception {
+    public void createUser(int id, String n, String pw) {
         if (!isCreated) {
-            List<String> ids =
-                    new UserRestClientImpl().getUserByName(name).getIds();
-            if (ids.size() > 1) throw new Exception("to many users with this name");
-            userId = Integer.parseInt(ids.get(0));
-            username = name;
+            userId = id;
+            username = n;
+            password = pw;
             isCreated = true;
         }
-        return isCreated;
     }
 
     public int getUserId() {
