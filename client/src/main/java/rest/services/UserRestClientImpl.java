@@ -113,7 +113,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // user does not exist, so return null
+            // user does not exist, so return null TODO: BUG: DOESNT RETURN NULL (workaround wurde erstellt)
             return null;
         }
 

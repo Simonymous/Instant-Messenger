@@ -1,6 +1,7 @@
 package im.core;
 
 import model.interfaces.User;
+import model.interfaces.UserQueryResponse;
 import rest.services.GroupRestClientImpl;
 import rest.services.UserRestClientImpl;
 
@@ -14,11 +15,12 @@ public class UserAuthenticator {
         }
 
         public boolean doesUserExist(String name) {
-            return (urci.getUserByName(name) != null); //TODO: getUserByName muss entsprechend angepasst werden
+            UserQueryResponse user = urci.getUserByName(name);
+            return !user.getIds().isEmpty();
         }
 
         public void addNewUser(String name, String password) {
-            User newUser = urci.addUser(name, password); //TODO: Übergabeparameter anpassen
+            User newUser = urci.addUser(name, password);
         }
 
         public boolean authenticateUser(String name, String password) {

@@ -35,7 +35,9 @@ public class RegisterFormController  {
     public void handleCheckName() {
         UserAuthenticator authenticator = new UserAuthenticator();
         if (authenticator.doesUserExist(nameField.getText())) {
-            showAlert();
+            showAlert("Nutzer existiert bereits!", "Bitte wähle einen anderen Nutzernamen.");
+        } else {
+            showAlert("Nutzername in Ordnung","Der angegebene Nutzername kann verwendet werden.");
         }
     }
 
@@ -48,7 +50,7 @@ public class RegisterFormController  {
     private void handleSave() {
       UserAuthenticator authenticator = new UserAuthenticator();
       if (authenticator.doesUserExist(nameField.getText())) {
-          showAlert();
+          showAlert("Nutzer existiert bereits!", "Bitte wähle einen anderen Nutzernamen.");
       } else {
           authenticator.addNewUser(nameField.getText(), passwordField.getText());
           dialogStage.close();
@@ -59,11 +61,11 @@ public class RegisterFormController  {
         this.dialogStage = dialogStage;
     }
 
-    private void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Fehler");
-        alert.setHeaderText("Nutzer existiert bereits!");
-        alert.setContentText("Bitte wähle einen anderen Benutzernamen");
+    private void showAlert(String alertHeader, String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Namensüberprüfung");
+        alert.setHeaderText(alertHeader);
+        alert.setContentText(alertMessage);
 
         alert.showAndWait();
     }
