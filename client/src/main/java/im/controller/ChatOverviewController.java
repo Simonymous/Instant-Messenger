@@ -1,6 +1,6 @@
 package im.controller;
 
-import im.MainApp;
+import im.InstantMessengerClient;
 import im.model.Chat;
 import im.model.ChatList;
 import im.model.listCells.ListViewCellGroup;
@@ -17,7 +17,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
     private ListView lvChats;
 
     private ChatList chatList;
-    private MainApp mainApp;
+    private InstantMessengerClient mainApp;
 
     public ChatOverviewController() {
     }
@@ -47,7 +47,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
         });
     }
 
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(InstantMessengerClient mainApp) {
         this.mainApp = mainApp;
     }
 

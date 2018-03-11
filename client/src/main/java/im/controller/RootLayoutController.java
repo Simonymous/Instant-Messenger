@@ -1,6 +1,6 @@
 package im.controller;
 
-import im.MainApp;
+import im.InstantMessengerClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import model.classes.GroupImpl;
@@ -11,7 +11,7 @@ public class RootLayoutController {
     @FXML
     private Menu menuGroup;
 
-    private MainApp mainApp;
+    private InstantMessengerClient mainApp;
 
     public RootLayoutController() {
     }
@@ -31,7 +31,7 @@ public class RootLayoutController {
         mainApp.showGroupEditDialog(group);
     }
 
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(InstantMessengerClient mainApp) {
         this.mainApp = mainApp;
     }
 

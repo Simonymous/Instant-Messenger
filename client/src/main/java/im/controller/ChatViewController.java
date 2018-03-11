@@ -1,6 +1,6 @@
 package im.controller;
 
-import im.MainApp;
+import im.InstantMessengerClient;
 import im.core.Updater;
 import im.model.Chat;
 import im.model.ClientMessage;
@@ -25,7 +25,7 @@ public class ChatViewController implements EventHandler<ActionEvent> {
     private TextField mb;
 
     private Chat chat;
-    private MainApp mainApp;
+    private InstantMessengerClient mainApp;
 
     public ChatViewController() {
     }
@@ -54,7 +54,7 @@ public class ChatViewController implements EventHandler<ActionEvent> {
         lvMessages.setItems(chat.getMessageList());
     }
 
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(InstantMessengerClient mainApp) {
         this.mainApp = mainApp;
     }
 

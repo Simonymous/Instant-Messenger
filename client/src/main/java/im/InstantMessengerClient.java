@@ -14,7 +14,7 @@ import model.interfaces.Group;
 
 import java.io.IOException;
 
-public class MainApp extends Application {
+public class InstantMessengerClient extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -64,7 +64,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/RootLayout.fxml"));
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -89,7 +89,7 @@ public class MainApp extends Application {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/GroupEditDialog.fxml"));
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/GroupEditDialog.fxml"));
             AnchorPane page = loader.load();
 
             Stage dialogStage = new Stage();
@@ -117,7 +117,7 @@ public class MainApp extends Application {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/RegisterForm.fxml"));
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/RegisterForm.fxml"));
             AnchorPane page = loader.load();
 
             Stage dialogStage = new Stage();
@@ -142,7 +142,7 @@ public class MainApp extends Application {
     private void showLogin() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/Login.fxml"));
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/Login.fxml"));
             AnchorPane login = loader.load();
 
             rootLayout.setCenter(login);
@@ -160,7 +160,7 @@ public class MainApp extends Application {
     public void showChatOverview() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/ChatOverview.fxml"));
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/ChatOverview.fxml"));
             AnchorPane chatOverview = (AnchorPane) loader.load();
 
             rootLayout.setLeft(chatOverview);
@@ -181,7 +181,7 @@ public class MainApp extends Application {
     public void showChatView() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("fxml/ChatView.fxml"));
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/ChatView.fxml"));
             AnchorPane chatView = (AnchorPane) loader.load();
 
             rootLayout.setCenter(chatView);

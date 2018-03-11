@@ -1,10 +1,8 @@
 package im.controller;
 
-import im.MainApp;
+import im.InstantMessengerClient;
 import im.core.OwnUser;
 import im.core.UserAuthenticator;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,13 +20,13 @@ public class LoginController {
     @FXML
     private Label loginLabel;
 
-    private MainApp mainApp;
+    private InstantMessengerClient mainApp;
 
     public LoginController() {
     }
 
 
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(InstantMessengerClient mainApp) {
         this.mainApp = mainApp;
     }
 
