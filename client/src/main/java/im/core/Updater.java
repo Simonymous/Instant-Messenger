@@ -33,10 +33,12 @@ public class Updater {
 
     public void updateGroups() {
         List<Integer> groupsOfUser = urci.getGroupsOfUser(OwnUser.getInstance().getUserStringId());
-        for (Integer id : groupsOfUser) {
-            if (!ChatList.getInstance().contains(id)) {
-                ChatList.getInstance().addChat(new Chat(grci.getGroupById(id.toString())));
-                updateMessagesForGroup(id.toString());
+        if (!groupsOfUser.isEmpty()) {
+            for (Integer id : groupsOfUser) {
+                if (!ChatList.getInstance().contains(id)) {
+                    ChatList.getInstance().addChat(new Chat(grci.getGroupById(id.toString())));
+                    updateMessagesForGroup(id.toString());
+                }
             }
         }
     }
@@ -48,11 +50,14 @@ public class Updater {
 
     public void addGroup(String name, ArrayList<Integer> userIds) {
         Group group = grci.addGroup(new GroupImpl(name));
-        String groupId = Integer.toString(group.getGroupId());
-        for (Integer i : userIds) {
-            grci.addUserToGroup(groupId, i.toString());
-        }
-        updateGroups();
+//        String groupId = Integer.toString(group.getGroupId());
+//        System.out.println(groupId);
+//        if (!userIds.isEmpty()) {
+//            for (Integer i : userIds) {
+//                grci.addUserToGroup(groupId, i.toString());       TODO: Add Users
+//            }
+//        }
+        //updateGroups();
     }
 
     public void updateLocalUsers() {

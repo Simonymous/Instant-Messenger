@@ -29,7 +29,7 @@ public class UserAuthenticator {
         public Boolean authenticateUser(String name, String password) {
             UserQueryResponse user = urci.getUserByName(name);
             if (user.getIds().isEmpty()) {
-                return null;
+                return false;
             } else {
                 String id = user.getIds().get(0); //????
                 User u = urci.getUserById(id);

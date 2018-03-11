@@ -4,10 +4,8 @@ import im.core.Updater;
 import im.model.UserList;
 import im.model.listCells.ListViewCellUser;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.classes.UserImpl;
@@ -15,9 +13,8 @@ import model.interfaces.Group;
 import model.interfaces.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GroupEditDialogController implements EventHandler<MouseEvent> {
+public class GroupEditDialogController  {
     @FXML
     private TextField groupNameField;
     @FXML
@@ -32,21 +29,21 @@ public class GroupEditDialogController implements EventHandler<MouseEvent> {
     private Stage dialogStage;
     private Group group;
     private Updater updater;
-    private List<User> selectedUser;
+    private ArrayList<User> selectedUser;
 
     public GroupEditDialogController() {
     }
 
     @FXML
     private void initialize() {
+        updater = new Updater();
         //updater.updateLocalUsers();
+        selectedUser = new ArrayList();
         UserList.getInstance().addUser(new UserImpl("name1", ""));
         UserList.getInstance().addUser(new UserImpl("name2", ""));
         UserList.getInstance().addUser(new UserImpl("name3", ""));
 
         setListView(UserList.getInstance().getServerUsers());
-        userChoice.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        userChoice.setOnMouseClicked(this);
     }
 
     public void setListView(ObservableList observableList) {
@@ -73,7 +70,7 @@ public class GroupEditDialogController implements EventHandler<MouseEvent> {
     @FXML
     private void handleSave() {
         if (groupNameField.getText() == "") {
-            //Alert
+            showAlert();
         } else {
             updater.addGroup(groupNameField.getText(), getUserIDs());
             dialogStage.close();
@@ -81,7 +78,7 @@ public class GroupEditDialogController implements EventHandler<MouseEvent> {
     }
 
     private ArrayList<Integer> getUserIDs() {
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Integer> ids = new ArrayList();
         for (User user : selectedUser) {
             ids.add(user.getUserId());
         }
@@ -96,8 +93,12 @@ public class GroupEditDialogController implements EventHandler<MouseEvent> {
         this.dialogStage = dialogStage;
     }
 
-    @Override
-    public void handle(MouseEvent event) {
-        selectedUser = userChoice.getSelectionModel().getSelectedItems();
+    private void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Fehler");
+        alert.setHeaderText("Der Gruppenname darf nicht leer sein!");
+        alert.setContentText("Bitte überprüfe den Gruppennamen");
+
+        alert.showAndWait();
     }
 }
