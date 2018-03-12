@@ -23,7 +23,6 @@ public class LoginController {
     public LoginController() {
     }
 
-
     public void setMainApp(InstantMessengerClient mainApp) {
         this.mainApp = mainApp;
     }
@@ -41,7 +40,7 @@ public class LoginController {
             }
         } else {
             showAlert();
-        }gi
+        }
     }
 
     @FXML

@@ -7,6 +7,7 @@ import model.classes.GroupImpl;
 import model.interfaces.Group;
 import model.interfaces.Message;
 import rest.classes.JSONGroup;
+import rest.classes.JSONMessage;
 import rest.exceptions.GroupDoesNotExistException;
 import rest.exceptions.UserOrGroupDoesNotExistException;
 
@@ -311,15 +312,21 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
         String json = (String) response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
-        return gSon.fromJson(json, new TypeToken<ArrayList<Message>>(){}.getType());
+
+        return gSon.fromJson(json, new TypeToken<ArrayList<Message>>(){}.getType()); //TODO: Funktioniert so nicht! wirft eine Exception
     }
 
     /**
      * send request to post a message
      * @param groupId group to post message to
-     * @param jsonMessage message to post
+     * @param msg message to post
      */
-    public void postMessage(final String groupId, final String jsonMessage) {
+    public void postMessage(final String groupId, Message msg) {
+        gSon = new GsonBuilder().create();
+        JSONMessage m = new JSONMessage();
+        m.content = msg.getContent();
+        m.userid = msg.getUser();
+        String json = gSon.toJson(m);
 
         try {
             response = client
@@ -328,7 +335,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
                     .path(groupId)
                     .path(MESSAGES_PATH)
                     .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.json(jsonMessage)); // TODO geht so nicht
+                    .post(Entity.json(json)); // TODO geht so nicht
 
             if (response.getStatus() == 404) {
                 throw new GroupDoesNotExistException(ERR_GROUP_DOES_NOT_EXIST);

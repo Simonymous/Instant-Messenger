@@ -1,6 +1,7 @@
 package im.controller;
 
 import im.InstantMessengerClient;
+import im.core.OwnUser;
 import im.core.Updater;
 import im.model.Chat;
 import im.model.ClientMessage;
@@ -14,6 +15,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
+import model.classes.MessageImpl;
 import rest.services.GroupRestClientImpl;
 
 public class ChatViewController implements EventHandler<ActionEvent> {
@@ -61,7 +63,8 @@ public class ChatViewController implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         String sendMessage = mb.getText();
-        new GroupRestClientImpl().postMessage(chat.getStringId(), sendMessage);
+        new GroupRestClientImpl().postMessage(chat.getStringId(),
+                new MessageImpl(OwnUser.getInstance().getUserId(),sendMessage));
         new Updater().updateMessagesForGroup(chat.getStringId());
         System.out.println(chat.getName() + sendMessage);
         mb.clear();

@@ -1,6 +1,8 @@
 package rest.interfaces;
 
 import model.interfaces.Group;
+import model.interfaces.Message;
+
 import java.util.ArrayList;
 
 
@@ -20,6 +22,6 @@ public interface GroupRestClient {
 
     void changeGroup(final String groupId, Group group);
 
-    void postMessage(final String groupId, final String jsonMessage);
+    void postMessage(final String groupId, Message msg);
 
 }

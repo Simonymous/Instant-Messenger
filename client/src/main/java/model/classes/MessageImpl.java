@@ -18,6 +18,11 @@ public class MessageImpl implements Message {
         this.setMessageId(messageId);
     }
 
+    public MessageImpl(int userId, String content ) {
+        this.setContent(content);
+        this.setUser(userId);
+    }
+
     public MessageImpl(int aGroup, int aUser, String content){
         this.setGroup(aGroup);
         this.setUser(aUser);
