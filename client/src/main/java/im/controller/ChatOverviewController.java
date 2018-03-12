@@ -58,7 +58,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        String chat = lvChats.getSelectionModel().getSelectedItem().toString();
+        String chat = lvChats.getSelectionModel().getSelectedItem().toString(); // TODO what?
         mainApp.getChatViewController().setChat(chatList.getChatByName(chat));
         System.out.println(chat);
     }

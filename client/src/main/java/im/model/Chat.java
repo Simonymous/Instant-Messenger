@@ -1,42 +1,14 @@
 package im.model;
 
-import im.model.ClientMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.interfaces.Group;
 import model.interfaces.Message;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Chat {
     private int id;
     private String name;
     ObservableList<ClientMessage> messageList = FXCollections.observableArrayList();
-
-    public Chat() {
-        List<ClientMessage> list = new ArrayList<ClientMessage>();
-        list.add(new ClientMessage("manuel", "hallo"));
-        list.add(new ClientMessage("simon", "hi"));
-        messageList.setAll(list);
-        name = "chat A";
-    }
-
-    public Chat(int i) {
-        List<ClientMessage> list = new ArrayList<ClientMessage>();
-        list.add(new ClientMessage("alex", "ich bin schwul"));
-        list.add(new ClientMessage("manuel", "ich weis"));
-        messageList.setAll(list);
-        name = "chat B";
-    }
-
-    public Chat(String i) {
-        List<ClientMessage> list = new ArrayList<ClientMessage>();
-        list.add(new ClientMessage("niklauch", "ich bin dünn"));
-        list.add(new ClientMessage("simon", "echt??"));
-        messageList.setAll(list);
-        name = "Chat C";
-    }
 
     public Chat(Group group) {
         id = group.getGroupId();

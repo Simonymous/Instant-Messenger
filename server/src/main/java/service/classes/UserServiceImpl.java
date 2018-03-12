@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = getUserDao(username);
         ArrayList<Group> groupsForUser = getGroupsForUser(username);
-        ArrayList<Integer> groupIds = null;
+        ArrayList<Integer> groupIds = new ArrayList<Integer>();
         for (Group g : groupsForUser) {
             groupIds.add(g.getGroupId());
         }
@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = getUserDao(id);
         ArrayList<Group> groupsForUser = getGroupsForUser(id);
-        ArrayList<Integer> groupIds = null;
+        ArrayList<Integer> groupIds = new ArrayList<Integer>();
         for (Group g : groupsForUser) {
             groupIds.add(g.getGroupId());
         }

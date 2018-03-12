@@ -13,8 +13,6 @@ public class ChatList {
 
     private ChatList() {
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1));
-        chats.add(new Chat());
         chatList.setAll(chats);
 
     }
@@ -46,7 +44,7 @@ public class ChatList {
     }
 
     public void addChat(Chat chat) {
-        chatList.add(new Chat("s"));
+        chatList.add(chat);
     }
 
     public boolean contains(int id) {

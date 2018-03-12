@@ -11,8 +11,9 @@ import rest.exceptions.UserDoesNotExistException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 
-import static rest.constants.GeneralRestConstants.*;
+import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static rest.constants.UserRestConstants.*;
 
 
@@ -189,7 +190,9 @@ public class UserRestImpl implements rest.interfaces.UserRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGroupsOfUser(@PathParam("userId") final String userId) {
         try {
-            return Response.ok(gSon.toJson(ServiceObjectBuilder.getUserServiceObject().getGroupIdsForUser(Integer.parseInt(userId)))).build();
+            ArrayList<Integer> i = ServiceObjectBuilder.getUserServiceObject().getGroupIdsForUser(Integer.parseInt(userId));
+            System.err.println("getGroupsOfUser " + userId + ": " + i.toString());
+            return Response.ok(gSon.toJson(i)).build();
         } catch (UserDoesNotExistException e) {
             e.printStackTrace();
             return Response.status(404, ERR_USER_DOES_NOT_EXIST).build();
