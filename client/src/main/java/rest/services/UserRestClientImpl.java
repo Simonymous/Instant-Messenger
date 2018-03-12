@@ -277,7 +277,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         } catch (Exception e) {
             e.printStackTrace();
             // user does not exist, so return null
-            return null;
+            return null; // TODO not good
         }
 
         String json = (String) response.readEntity(String.class);

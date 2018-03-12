@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import model.classes.GroupImpl;
 import model.interfaces.Group;
 import model.interfaces.Message;
+import rest.classes.JSONGroup;
 import rest.exceptions.GroupDoesNotExistException;
 import rest.exceptions.UserOrGroupDoesNotExistException;
 
@@ -63,7 +64,9 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
      */
     public Group addGroup(Group gro) {
         gSon = new GsonBuilder().create();
-        String json = gSon.toJson(gro);
+        JSONGroup g = new JSONGroup();
+        g.name = gro.getGroupName();
+        String json = gSon.toJson(g);
 
         try {
             response = client
