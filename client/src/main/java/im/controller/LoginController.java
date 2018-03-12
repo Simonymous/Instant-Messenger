@@ -32,13 +32,16 @@ public class LoginController {
     public void handleLogin() {
         String name = getUserText.getText();
         String password = getPasswordText.getText();
-
-        UserAuthenticator authenticator = new UserAuthenticator();
-        if (authenticator.authenticateUser(name, password)) {
-            mainApp.loginSuccess();
+        if(!name.isEmpty()) {
+            UserAuthenticator authenticator = new UserAuthenticator();
+            if (authenticator.authenticateUser(name, password)) {
+                mainApp.loginSuccess();
+            } else {
+                showAlert();
+            }
         } else {
-          showAlert();
-        }
+            showAlert();
+        }gi
     }
 
     @FXML
