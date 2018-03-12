@@ -244,7 +244,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
         String json = (String) response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
-        return gSon.fromJson(json, Group.class);
+        return gSon.fromJson(json, GroupImpl.class);
     }
 
     /**
