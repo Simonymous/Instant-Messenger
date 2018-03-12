@@ -17,8 +17,8 @@
           <Menu fx:id="menuGroup" mnemonicParsing="false" text="Group" visible="false">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleNewGroup" text="Add" />
-              <MenuItem mnemonicParsing="false" text="Edit" />
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#handleEditGroup" text="Edit" />
+              <MenuItem mnemonicParsing="false" onAction="#handleDeleteGroup" text="Delete" />
             </items>
           </Menu>
         </menus>

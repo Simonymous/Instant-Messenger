@@ -20,7 +20,7 @@ import rest.services.GroupRestClientImpl;
 
 public class ChatViewController implements EventHandler<ActionEvent> {
     @FXML
-    private ListView lvMessages;
+    private ListView<ClientMessage> lvMessages;
     @FXML
     private Button btn;
     @FXML
@@ -42,7 +42,12 @@ public class ChatViewController implements EventHandler<ActionEvent> {
         btn.setOnAction(this);
     }
 
-    private void setListView(ObservableList observableList) {
+    /**
+     * set the List which is observed by the listview and the CellFactory for displaying the content of message
+     *
+     * @param observableList
+     */
+    private void setListView(ObservableList<ClientMessage> observableList) {
         lvMessages.setItems(observableList);
         lvMessages.setCellFactory(new Callback<ListView<ClientMessage>, ListCell<ClientMessage>>() {
             public ListCell<ClientMessage> call(ListView<ClientMessage> lvChats) {
@@ -51,6 +56,11 @@ public class ChatViewController implements EventHandler<ActionEvent> {
         });
     }
 
+    /**
+     * set the Chat, whose messages are displayed;
+     *
+     * @param chat
+     */
     public void setChat(Chat chat) {
         this.chat = chat;
         lvMessages.setItems(chat.getMessageList());
@@ -60,6 +70,11 @@ public class ChatViewController implements EventHandler<ActionEvent> {
         this.mainApp = mainApp;
     }
 
+    /**
+     * handle the click event on the send button and post the message to server
+     *
+     * @param event
+     */
     @Override
     public void handle(ActionEvent event) {
         String sendMessage = mb.getText();

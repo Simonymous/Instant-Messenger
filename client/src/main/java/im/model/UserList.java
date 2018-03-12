@@ -1,5 +1,6 @@
 package im.model;
 
+import im.core.OwnUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.interfaces.User;
@@ -20,7 +21,8 @@ public class UserList {
     }
 
     public void addUser(User u) {
-        serverUsers.add(u);
+        if(u.getUserId() != OwnUser.getInstance().getUserId() && !containsUser(u))
+            serverUsers.add(u);
     }
 
     public void deleteUser(User u) {

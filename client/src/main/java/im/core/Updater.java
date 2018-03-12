@@ -31,7 +31,7 @@ public class Updater {
         }
     }
 
-    public void updateGroups() {
+    public void updateLocalGroups() {
         List<Integer> groupsOfUser = urci.getGroupsOfUser(OwnUser.getInstance().getUserStringId());
         if (!groupsOfUser.isEmpty()) {
             for (Integer id : groupsOfUser) {
@@ -41,6 +41,10 @@ public class Updater {
                 }
             }
         }
+    }
+
+    public void updateGroup(Group grp){
+        grci.changeGroup(Integer.toString(grp.getGroupId()),grp);
     }
 
     public void deleteGroup(String id) {
@@ -55,7 +59,7 @@ public class Updater {
         for (Integer i : userIds) {
             grci.addUserToGroup(groupId, i.toString());      // TODO: Add Users
         }
-        updateGroups();
+        updateLocalGroups();
     }
 
     public void updateLocalUsers() {
@@ -68,7 +72,7 @@ public class Updater {
 
     public void updateAll() {
         updateLocalUsers();
-        updateGroups();
+        updateLocalGroups();
         for (Chat c : ChatList.getInstance().getChatList()) {
             updateMessagesForGroup(c.getStringId());
         }

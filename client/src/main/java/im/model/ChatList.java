@@ -36,11 +36,13 @@ public class ChatList {
     }
 
     public void removeChat(int id) {
+        Chat chat = null;
         for (Chat c : chatList) {
             if (c.getId() == id) {
-                chatList.remove(c);
+                chat = c;
             }
         }
+        chatList.remove(chat);
     }
 
     public void addChat(Chat chat) {

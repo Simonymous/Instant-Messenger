@@ -14,7 +14,7 @@ import javafx.util.Callback;
 
 public class ChatOverviewController implements EventHandler<MouseEvent> {
     @FXML
-    private ListView lvChats;
+    private ListView<Chat> lvChats;
 
     private ChatList chatList;
     private InstantMessengerClient mainApp;
@@ -34,11 +34,11 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
     }
 
     /**
-     * set the List which is is observed by the listview and the CellFactory for displying the content of group/chat
+     * set the List which is observed by the listview and the CellFactory for displying the content of group/chat
      *
      * @param observableList
      */
-    private void setListView(ObservableList observableList) {
+    private void setListView(ObservableList<Chat> observableList) {
         lvChats.setItems(observableList);
         lvChats.setCellFactory(new Callback<ListView<Chat>, ListCell<Chat>>() {
             public ListCell<Chat> call(ListView<Chat> lvChats) {
@@ -51,6 +51,10 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
         this.mainApp = mainApp;
     }
 
+    public Chat getSelected() {
+        return lvChats.getSelectionModel().getSelectedItem();
+    }
+
     /**
      * handle the click event on listview for changing the group/chat which is shown
      *
@@ -58,8 +62,6 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        String chat = lvChats.getSelectionModel().getSelectedItem().toString(); // TODO what?
-        mainApp.getChatViewController().setChat(chatList.getChatByName(chat));
-        System.out.println(chat);
+        mainApp.getChatViewController().setChat(lvChats.getSelectionModel().getSelectedItem());
     }
 }

@@ -1,6 +1,8 @@
 package im.controller;
 
 import im.InstantMessengerClient;
+import im.core.Updater;
+import im.model.Chat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import model.classes.GroupImpl;
@@ -27,8 +29,21 @@ public class RootLayoutController {
 
     @FXML
     private void handleNewGroup() {
-        Group group = new GroupImpl();
+        mainApp.showGroupEditDialog(null);
+    }
+
+    @FXML
+    private void handleEditGroup() {
+        Chat chat = mainApp.getChatOverviewController().getSelected();
+        Group group = new GroupImpl(chat.getId(),chat.getName());
         mainApp.showGroupEditDialog(group);
+    }
+
+    @FXML
+    private void handleDeleteGroup() {
+        Chat chat = mainApp.getChatOverviewController().getSelected();
+        Group group = new GroupImpl(chat.getId(),chat.getName());
+        new Updater().deleteGroup(Integer.toString(group.getGroupId()));
     }
 
     public void setMainApp(InstantMessengerClient mainApp) {
