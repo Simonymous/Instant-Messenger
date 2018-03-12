@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.classes.GroupImpl;
+import model.classes.MessageImpl;
 import model.interfaces.Group;
 import model.interfaces.Message;
 import rest.classes.JSONGroup;
@@ -16,6 +17,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
@@ -56,6 +58,17 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         return gson.fromJson(json, GroupImpl.class);
+    }
+    /**
+     * convert a json string to a Message object
+     * @param json String to convert
+     * @return Group object
+     */
+    private ArrayList<Message> makeMessageListFromJSON(String json) {
+        Type listType = new TypeToken<ArrayList<MessageImpl>>() {}.getType();
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        return gson.fromJson(json, listType);
     }
 
     /**
@@ -290,7 +303,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
                     .path(GROUPS_PATH)
                     .path(groupId)
                     .path(MESSAGES_PATH)
-                    .queryParam("page", page)
+                    //.queryParam("page", page)
                     .request(MediaType.APPLICATION_JSON)
                     .get(Response.class);
 
@@ -309,11 +322,11 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
             return null;
         }
 
-        String json = (String) response.readEntity(String.class);
-        gSon = new GsonBuilder().create();
+        String respJson = (String) response.readEntity(String.class);
 
+        //return gSon.fromJson(json, new TypeToken<ArrayList<Message>>(){}.getType()); //TODO: Funktioniert so nicht! wirft eine Exception
 
-        return gSon.fromJson(json, new TypeToken<ArrayList<Message>>(){}.getType()); //TODO: Funktioniert so nicht! wirft eine Exception
+        return makeMessageListFromJSON(respJson);
     }
 
     /**
