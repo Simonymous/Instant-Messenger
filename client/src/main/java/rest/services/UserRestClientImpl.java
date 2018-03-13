@@ -197,15 +197,15 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to remove user by name
-     * @param userName user to remove
+     * @param userId user to remove
      */
-    public void removeUser(final String userName) {
+    public void removeUser(final String userId) {
 
         try {
             response = client
                     .target(URL + WEB_CONTEXT_PATH)
                     .path(USERS_PATH)
-                    .path(userName)
+                    .path(userId)
                     .request(MediaType.APPLICATION_JSON)
                     .delete();
 

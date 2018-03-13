@@ -157,26 +157,28 @@ public class UserRestImpl implements rest.interfaces.UserRest {
      */
     @Override
     @DELETE
-    @Path("users/{name}")
+    @Path("users/{userid}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeUser(@PathParam("name") final String userName) {
+    public Response removeUser(@PathParam("userid") final String userId) {
         Response response = null;
         // TODO auth + response
 
         try {
-            ServiceObjectBuilder.getUserServiceObject().removeUser(Integer.parseInt(userName));
+            ServiceObjectBuilder.getUserServiceObject().removeUser(Integer.parseInt(userId));
             response = Response.status(200, USER_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch(rest.exceptions.UserDoesNotExistException e){
             System.err.println(e.getMessage());
             response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+            e.printStackTrace();
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
+            e.printStackTrace();
         }
-        System.err.println("removeUser " + userName);
+        System.err.println("removeUser " + userId);
         return response;
     }
 
