@@ -32,5 +32,7 @@ public interface UserService {
 
     UserQueryResponseImpl getUsersByQuery(String qu) throws UserDoesNotExistException;
 
+    User getUserByName(String username) throws UserDoesNotExistException;
+
     //TODO Nice to have: getCountOfMesssages(), getAllMessagesFromUser()
 }

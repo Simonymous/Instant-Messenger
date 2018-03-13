@@ -2,6 +2,7 @@ package im.core;
 
 import im.model.Chat;
 import im.model.ChatList;
+import im.model.ClientMessage;
 import im.model.UserList;
 import model.classes.GroupImpl;
 import model.interfaces.Group;
@@ -27,7 +28,11 @@ public class Updater {
         for (Message m : messages) {
             if (!c.contains(m.getMessageId())) {
                 c.addMessage(m);
+                //TODO: fügt nicht in die liste ein
             }
+        }
+        for(ClientMessage cm : c.getMessageList()){
+            System.out.println(cm.getContent());
         }
     }
 
@@ -45,6 +50,7 @@ public class Updater {
 
     public void updateGroup(Group grp){
         grci.changeGroup(Integer.toString(grp.getGroupId()),grp);
+        //TODO: update observablelist<Chat> in chatOverview
     }
 
     public void deleteGroup(String id) {

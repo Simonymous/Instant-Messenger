@@ -11,6 +11,10 @@ import javafx.scene.control.TextField;
 
 
 public class LoginController {
+    private static final String ALERT_TITLE = "Fehler";
+    private static final String ALERT_HEADER = "Nutzer konnte nicht authentifiziert werden";
+    private static final String ALERT_MESSAGE = "Bitte überprüfe den Namen oder das Passwort";
+
     @FXML
     private TextField getUserText;
     @FXML
@@ -23,37 +27,34 @@ public class LoginController {
     public LoginController() {
     }
 
+    @FXML
+    protected void initialize() {
+
+    }
+
     public void setMainApp(InstantMessengerClient mainApp) {
         this.mainApp = mainApp;
+        getUserText.requestFocus();
     }
 
     @FXML
     public void handleLogin() {
         String name = getUserText.getText();
         String password = getPasswordText.getText();
-        if(!name.isEmpty()) {
+        if (!name.isEmpty()) {
             UserAuthenticator authenticator = new UserAuthenticator();
             if (authenticator.authenticateUser(name, password)) {
                 mainApp.loginSuccess();
             } else {
-                showAlert();
+                mainApp.showAlert(ALERT_TITLE, ALERT_HEADER, ALERT_MESSAGE);
             }
         } else {
-            showAlert();
+            mainApp.showAlert(ALERT_TITLE, ALERT_HEADER, ALERT_MESSAGE);
         }
     }
 
     @FXML
     public void handleRegister() {
-       mainApp.showRegisterForm();
-    }
-
-    private void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Fehler");
-        alert.setHeaderText("Nutzer konnte nicht authentifiziert werden");
-        alert.setContentText("Bitte überprüfe den Namen oder das Passwort");
-
-        alert.showAndWait();
+        mainApp.showRegisterForm();
     }
 }

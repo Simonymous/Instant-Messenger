@@ -22,6 +22,15 @@ public interface UserRest {
     Response getUserByName(@QueryParam("byname") String qu);
 
     /*
+    *   Returns User for given Name
+    *   @return User capsuled in Response
+     */
+    @GET
+    @Path("users")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response getTheUserByName(@QueryParam("byname") String qu);
+
+    /*
      *   Returns User for given Id
      *   @return User capsuled in Response
      */

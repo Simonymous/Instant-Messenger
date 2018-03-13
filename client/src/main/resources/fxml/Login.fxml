@@ -12,7 +12,7 @@
       <Pane layoutX="200" layoutY="144.0" prefHeight="170.0" prefWidth="200.0" style="-fx-background-color: #126872;">
          <children>
             <PasswordField fx:id="getPasswordText" layoutX="10.0" layoutY="65.0" prefHeight="25.0" prefWidth="180.0" promptText="Passwort" />
-            <TextField fx:id="getUserText" layoutX="10.0" layoutY="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Benutzername"/>
+            <TextField fx:id="getUserText" layoutX="10.0" layoutY="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Benutzername" />
             <Button fx:id="loginBtn" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Login" onAction="#handleLogin" />
              <Button fx:id="registerBtn" layoutX="10.0" layoutY="130.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Register" onAction="#handleRegister"/>
          </children>

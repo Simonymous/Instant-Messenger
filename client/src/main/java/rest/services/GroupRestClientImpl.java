@@ -268,7 +268,9 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
      */
     public void changeGroup(final String groupId, Group group) {
         gSon = new GsonBuilder().create();
-        String json = gSon.toJson(group);
+        JSONGroup g = new JSONGroup();
+        g.name = group.getGroupName();
+        String json = gSon.toJson(g);
 
         try {
             response = client

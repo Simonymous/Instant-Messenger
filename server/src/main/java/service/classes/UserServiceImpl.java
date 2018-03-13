@@ -220,8 +220,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         UserQueryResponseImpl impl = new UserQueryResponseImpl();
+
         impl.setIds(l);
         return impl;
+    }
+
+    public User getUserByName(String username) throws UserDoesNotExistException {
+        if(!doesUserExist(username)) {
+            throw new UserDoesNotExistException(ERR_MSG_USER_DOES_NOT_EXIST);
+        }
+        return getUserDao(username);
     }
 
     private User getUserDao(String username)  {

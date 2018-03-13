@@ -1,15 +1,14 @@
 package im.controller;
 
 import im.InstantMessengerClient;
-import im.core.Updater;
+import im.core.OwnUser;
 import im.core.UserAuthenticator;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RegisterFormController  {
+public class ChangeUsernameFormController {
     private static final String ALERT_TITLE = "Namensüberprüfung";
     private static final String ALERT_HEADER_USER_EXIST = "Nutzer existiert bereits!";
     private static final String ALERT_HEADER_USER_OK = "Nutzername in Ordnung";
@@ -18,8 +17,6 @@ public class RegisterFormController  {
 
     @FXML
     private TextField nameField;
-    @FXML
-    private TextField passwordField;
     @FXML
     private Button cancelButton;
     @FXML
@@ -31,12 +28,13 @@ public class RegisterFormController  {
     private InstantMessengerClient mainApp;
     private UserAuthenticator authenticator;
 
-    public RegisterFormController() {
+    public ChangeUsernameFormController() {
     }
 
     @FXML
     private void initialize() {
         authenticator = new UserAuthenticator();
+        nameField.setText(OwnUser.getInstance().getUsername());
     }
 
     @FXML
@@ -55,12 +53,12 @@ public class RegisterFormController  {
 
     @FXML
     private void handleSave() {
-      if (authenticator.doesUserExist(nameField.getText())) {
-          mainApp.showAlert(ALERT_TITLE, ALERT_HEADER_USER_EXIST, ALERT_MESSAGE_USER_EXIST);
-      } else {
-          authenticator.addNewUser(nameField.getText(), passwordField.getText());
-          dialogStage.close();
-      }
+        if (authenticator.doesUserExist(nameField.getText())) {
+            mainApp.showAlert(ALERT_TITLE, ALERT_HEADER_USER_EXIST, ALERT_MESSAGE_USER_EXIST);
+        } else {
+            authenticator.changeUsername(nameField.getText());
+            dialogStage.close();
+        }
     }
 
     public void setDialogStage(Stage dialogStage) {

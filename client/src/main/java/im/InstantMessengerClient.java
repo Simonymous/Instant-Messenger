@@ -6,6 +6,7 @@ import im.core.Updater;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -26,6 +27,8 @@ public class InstantMessengerClient extends Application {
     private LoginController loginController;
     private GroupEditDialogController groupEditDialogController;
     private RegisterFormController registerFormController;
+    private ChangeUsernameFormController changeUsernameFormController;
+    private ChangePasswordFormController changePasswordFormController;
 
     /**
      * program start, set the primaryStage and the Title
@@ -114,7 +117,6 @@ public class InstantMessengerClient extends Application {
      *
      */
     public void showRegisterForm() {
-
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/RegisterForm.fxml"));
@@ -129,6 +131,61 @@ public class InstantMessengerClient extends Application {
 
             registerFormController = loader.getController();
             registerFormController.setDialogStage(dialogStage);
+            registerFormController.setMainApp(this);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * is called for changing the username
+     *
+     */
+    public void showChangeUsernameForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/ChangeUsernameForm.fxml"));
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Nutzername ändern");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            changeUsernameFormController = loader.getController();
+            changeUsernameFormController.setDialogStage(dialogStage);
+            changeUsernameFormController.setMainApp(this);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * is called for changing the password
+     *
+     */
+    public void showChangePasswordForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/ChangePasswordForm.fxml"));
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Password ändern");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            changePasswordFormController = loader.getController();
+            changePasswordFormController.setDialogStage(dialogStage);
+            changePasswordFormController.setMainApp(this);
 
             dialogStage.showAndWait();
         } catch (IOException e) {
@@ -192,6 +249,22 @@ public class InstantMessengerClient extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * shows an Alert with parameters
+     *
+     * @param alertTitle
+     * @param alertHeader
+     * @param alertMessage
+     */
+    public void showAlert(String alertTitle, String alertHeader, String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(alertTitle);
+        alert.setHeaderText(alertHeader);
+        alert.setContentText(alertMessage);
+
+        alert.showAndWait();
     }
 
     public Stage getPrimaryStage() {

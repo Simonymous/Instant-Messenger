@@ -1,6 +1,7 @@
 package im.core;
 
 import com.google.common.hash.Hashing;
+import model.classes.UserImpl;
 import model.interfaces.User;
 import model.interfaces.UserQueryResponse;
 import rest.services.GroupRestClientImpl;
@@ -9,35 +10,58 @@ import rest.services.UserRestClientImpl;
 import java.nio.charset.StandardCharsets;
 
 public class UserAuthenticator {
-        private UserRestClientImpl urci;
-        private GroupRestClientImpl grci;
+    private UserRestClientImpl urci;
 
-        public UserAuthenticator() {
-            urci = new UserRestClientImpl();
-            grci = new GroupRestClientImpl();
-        }
+    public UserAuthenticator() {
+        urci = new UserRestClientImpl();
+    }
 
-        public boolean doesUserExist(String name) {
-            UserQueryResponse user = urci.getUserByName(name);
-            return !user.getIds().isEmpty();
-        }
+    public boolean doesUserExist(String name) {
+        User user = urci.getTheUserByName(name);
 
-        public void addNewUser(String name, String password) {
-            User newUser = urci.addUser(name, password);
-        }
+        return user != null;
+    }
 
-        public Boolean authenticateUser(String name, String password) {
-            UserQueryResponse user = urci.getUserByName(name);
-            if (user.getIds().isEmpty()) {
-                return false;
-            } else {
-                String id = user.getIds().get(0); //????
-                User u = urci.getUserById(id);
-                String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-                if (u.getPassword().equals(hashedPassword)) {
-                    OwnUser.getInstance().createUser(u.getUserId(), u.getUsername(), u.getPassword());
-                    return true;
-                } else return false;
-            }
+    public void addNewUser(String name, String password) {
+        User newUser = urci.addUser(name, password);
+    }
+
+    public boolean isPasswordOk(String password) {
+        String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        return OwnUser.getInstance().getPassword().equals(hashedPassword);
+    }
+
+    public void changeUsername(String name) {
+        OwnUser ownUser = OwnUser.getInstance();
+        ownUser.setUsername(name);
+        User user = new UserImpl();
+        user.setUsername(ownUser.getUsername());
+        user.setPassword(ownUser.getPassword());
+        user.setUserId(ownUser.getUserId());
+        urci.updateUser(Integer.toString(ownUser.getUserId()), user);
+    }
+
+    public void changPassword(String password) {
+        String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        OwnUser ownUser = OwnUser.getInstance();
+        ownUser.setPassword(hashedPassword);
+        User user = new UserImpl();
+        user.setUsername(ownUser.getUsername());
+        user.setPassword(ownUser.getPassword());
+        user.setUserId(ownUser.getUserId());
+        urci.updateUser(Integer.toString(ownUser.getUserId()), user);
+    }
+
+    public Boolean authenticateUser(String name, String password) {
+        User user = urci.getTheUserByName(name);
+        if (user == null) {
+            return false;
+        } else {
+            String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+            if (user.getPassword().equals(hashedPassword)) {
+                OwnUser.getInstance().createUser(user.getUserId(), user.getUsername(), user.getPassword());
+                return true;
+            } else return false;
         }
+    }
 }

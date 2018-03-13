@@ -42,7 +42,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         // TODO auth + response
         User user = makeUserFromJSON(json);
         try {
-            ServiceObjectBuilder.getUserServiceObject().changeUserName(user.getUsername(), Integer.parseInt(id)); // TODO changeUser? - refactor
+            ServiceObjectBuilder.getUserServiceObject().changeUserName(user.getUsername(), Integer.parseInt(id)); // TODO passwort kann nicht geändert werden.., changeUser? - refactor
             response = Response.status(200, USER_NAME_CHANGED).type(MediaType.TEXT_HTML_TYPE).build();
         }
         catch(rest.exceptions.UserAlreadyExistsException e){
@@ -88,6 +88,35 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
         System.err.println("getUserByName " + qustr);
+        return response;
+    }
+
+    /**
+     *   Returns User for given Name
+     *   @return User capsuled in Response
+     */
+    @Override
+    @GET
+    @Path("users/name")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTheUserByName(@QueryParam("byname") String name) {
+        Response response = null;
+        if(name == null) { // TODO handle this
+            return Response.status(500).build();
+        }
+        try {
+            User user =  ServiceObjectBuilder.getUserServiceObject().getUserByName(name);
+            response = Response.ok(gSon.toJson(user)).build();
+        }
+        catch(rest.exceptions.UserDoesNotExistException e){
+            System.err.println(e.getMessage());
+            response = Response.status(404, ERR_USER_DOES_NOT_EXIST).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        System.err.println("getTheUserByName " + name);
         return response;
     }
 

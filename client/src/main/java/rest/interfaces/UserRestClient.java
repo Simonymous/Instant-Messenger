@@ -6,7 +6,7 @@ import model.interfaces.UserQueryResponse;
 
 public interface UserRestClient {
 
-    void updateUser(final String id, final String json);
+    void updateUser(final String id, User user);
 
     UserQueryResponse getUserByName(final String name);
 
@@ -15,5 +15,7 @@ public interface UserRestClient {
     void removeUser(final String userName);
 
     User getUserById(final String id);
+
+    User getTheUserByName(final String name);
 
 }

@@ -3,6 +3,7 @@ package rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
@@ -59,9 +60,11 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     /**
      * send requst to change user
      * @param id user to change
-     * @param json new user
+     * @param user new user
      */
-    public void updateUser(final String id, final String json) {
+    public void updateUser(final String id, User user) {
+        gSon = new GsonBuilder().create();
+        String json = gSon.toJson(user);
 
         try {
             response = client
@@ -161,6 +164,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
      * @return new User Object
      */
     public User addUser(final String name, final String passwd) {
+        gSon = new GsonBuilder().create();
         // create new User object from username and password
         User newUser = new UserImpl(name, passwd);
         // create json string out of User object
@@ -248,6 +252,37 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         }
 
         String respJson = (String) response.readEntity(String.class);
+        return makeUserFromJSON(respJson);
+    }
+
+    @Override
+    public User getTheUserByName(String name) {
+        try {
+            response = client
+                    .target(URL + WEB_CONTEXT_PATH)
+                    .path(USERS_PATH)
+                    .path("name")
+                    .queryParam("byname", name)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(Response.class);
+
+            if (response.getStatus() == 404) {
+                System.err.println("User does not exist");
+                return null;
+
+            } else if (response.getStatus() == 500) {
+                throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // user does not exist, so return null
+            return null;
+        }
+
+        String respJson = (String) response.readEntity(String.class);
+
         return makeUserFromJSON(respJson);
     }
 
