@@ -37,6 +37,9 @@ public class LoginController {
         getUserText.requestFocus();
     }
 
+    /**
+     * Handles a Click on the Login-Button and executes its logic
+     */
     @FXML
     public void handleLogin() {
         String name = getUserText.getText();
@@ -53,6 +56,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles a Click on the Register-Button and opens a new Windows for Registration
+     */
     @FXML
     public void handleRegister() {
         mainApp.showRegisterForm();

@@ -39,6 +39,9 @@ public class RegisterFormController  {
         authenticator = new UserAuthenticator();
     }
 
+    /**
+     * Handles a click on the Check button and executes its logic
+     */
     @FXML
     public void handleCheckName() {
         if (authenticator.doesUserExist(nameField.getText())) {
@@ -48,11 +51,17 @@ public class RegisterFormController  {
         }
     }
 
+    /**
+     * Handles a click on the Close Button and cloeses the Form
+     */
     @FXML
     public void handleCancel() {
         dialogStage.close();
     }
 
+    /**
+     * Handles a click on the Save Button and executes its logic
+     */
     @FXML
     private void handleSave() {
       if (authenticator.doesUserExist(nameField.getText())) {
