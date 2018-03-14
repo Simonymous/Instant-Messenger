@@ -81,7 +81,7 @@ public class GroupEditDialogController implements EventHandler<MouseEvent> {
 
     @FXML
     private void handleSave() {
-        if(group == null) doSave();
+        if (group == null) doSave();
         else doUpdate();
     }
 

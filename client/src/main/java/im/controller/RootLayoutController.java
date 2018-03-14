@@ -50,14 +50,14 @@ public class RootLayoutController {
     @FXML
     private void handleEditGroup() {
         Chat chat = mainApp.getChatOverviewController().getSelected();
-        Group group = new GroupImpl(chat.getId(),chat.getName());
+        Group group = new GroupImpl(chat.getId(), chat.getName());
         mainApp.showGroupEditDialog(group);
     }
 
     @FXML
     private void handleDeleteGroup() {
         Chat chat = mainApp.getChatOverviewController().getSelected();
-        Group group = new GroupImpl(chat.getId(),chat.getName());
+        Group group = new GroupImpl(chat.getId(), chat.getName());
         new Updater().deleteGroup(Integer.toString(group.getGroupId()));
     }
 

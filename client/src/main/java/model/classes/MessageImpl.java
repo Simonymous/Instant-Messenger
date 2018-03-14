@@ -1,8 +1,6 @@
 package model.classes;
 
-import model.interfaces.Group;
 import model.interfaces.Message;
-import model.interfaces.User;
 
 //TODO Eventuell Content als eigene Klasse
 public class MessageImpl implements Message {
@@ -14,16 +12,16 @@ public class MessageImpl implements Message {
     public MessageImpl() {
     }
 
-    public MessageImpl(long messageId){
+    public MessageImpl(long messageId) {
         this.setMessageId(messageId);
     }
 
-    public MessageImpl(int userId, String content ) {
+    public MessageImpl(int userId, String content) {
         this.setContent(content);
         this.setUser(userId);
     }
 
-    public MessageImpl(int aGroup, int aUser, String content){
+    public MessageImpl(int aGroup, int aUser, String content) {
         this.setGroup(aGroup);
         this.setUser(aUser);
         this.setContent(content);

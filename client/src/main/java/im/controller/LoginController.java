@@ -1,16 +1,17 @@
 package im.controller;
 
 import im.InstantMessengerClient;
-import im.core.OwnUser;
 import im.core.UserAuthenticator;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 
-public class LoginController {
+public class LoginController implements EventHandler<KeyEvent> {
     private static final String ALERT_TITLE = "Fehler";
     private static final String ALERT_HEADER = "Nutzer konnte nicht authentifiziert werden";
     private static final String ALERT_MESSAGE = "Bitte überprüfe den Namen oder das Passwort";
@@ -29,7 +30,8 @@ public class LoginController {
 
     @FXML
     protected void initialize() {
-
+        getUserText.setOnKeyPressed(this);
+        getPasswordText.setOnKeyPressed(this);
     }
 
     public void setMainApp(InstantMessengerClient mainApp) {
@@ -62,5 +64,15 @@ public class LoginController {
     @FXML
     public void handleRegister() {
         mainApp.showRegisterForm();
+    }
+
+    /**
+     * handle the enter event on the textfield and executes its logic
+     *
+     * @param event
+     */
+    @Override
+    public void handle(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) handleLogin();
     }
 }

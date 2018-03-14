@@ -51,6 +51,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * convert a json string to Group object
+     *
      * @param json String to convert
      * @return Group object
      */
@@ -59,13 +60,16 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
         Gson gson = b.create();
         return gson.fromJson(json, GroupImpl.class);
     }
+
     /**
      * convert a json string to a Message object
+     *
      * @param json String to convert
      * @return Group object
      */
     private ArrayList<Message> makeMessageListFromJSON(String json) {
-        Type listType = new TypeToken<ArrayList<MessageImpl>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<MessageImpl>>() {
+        }.getType();
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         return gson.fromJson(json, listType);
@@ -73,6 +77,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send a requst to add a new group
+     *
      * @param gro new Group object to add
      * @return added Group object
      */
@@ -104,7 +109,8 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send a delete request for group with given id
-     * @param groupId  groupId to indentify group
+     *
+     * @param groupId groupId to indentify group
      */
     public void removeGroup(final String groupId) {
 
@@ -131,6 +137,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * get a list of all users in a group
+     *
      * @param groupId
      * @return ArrayList with userIds
      */
@@ -163,13 +170,15 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
         String json = (String) response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
-        return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>(){}.getType());
+        return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>() {
+        }.getType());
     }
 
     /**
      * send request to add new user to group
-     * @param groupId  group to add user to
-     * @param userId user to add
+     *
+     * @param groupId group to add user to
+     * @param userId  user to add
      */
     public void addUserToGroup(final String groupId, final String userId) {
 
@@ -197,8 +206,9 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send request to remove user from group
+     *
      * @param groupId group to remove user from
-     * @param userId user to remove
+     * @param userId  user to remove
      */
     public void removeUserFromGroup(final String groupId, final String userId) {
 
@@ -227,6 +237,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send request to get a group
+     *
      * @param groupId id of group to get
      * @return Group object
      */
@@ -263,8 +274,9 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send request to change a group
+     *
      * @param groupId group to change
-     * @param group new changes Group object
+     * @param group   new changes Group object
      */
     public void changeGroup(final String groupId, Group group) {
         gSon = new GsonBuilder().create();
@@ -294,8 +306,9 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send request to get all messages within a group
+     *
      * @param groupId group to get messages from
-     * @param page select which page of messages to get
+     * @param page    select which page of messages to get
      * @return ArrayList of Messages in group
      */
     public ArrayList<Message> getMessagesOfGroup(final String groupId, final String page) {
@@ -333,8 +346,9 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     /**
      * send request to post a message
+     *
      * @param groupId group to post message to
-     * @param msg message to post
+     * @param msg     message to post
      */
     public void postMessage(final String groupId, Message msg) {
         gSon = new GsonBuilder().create();

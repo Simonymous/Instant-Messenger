@@ -6,10 +6,10 @@ import im.model.ChatList;
 import im.model.listCells.ListViewCellGroup;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 public class ChatOverviewController implements EventHandler<MouseEvent> {

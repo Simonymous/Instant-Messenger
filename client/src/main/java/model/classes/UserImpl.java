@@ -1,9 +1,6 @@
 package model.classes;
 
-import com.google.common.hash.Hashing;
 import model.interfaces.User;
-
-import java.nio.charset.StandardCharsets;
 
 public class UserImpl implements User {
     private int userId;
@@ -11,11 +8,11 @@ public class UserImpl implements User {
     private String password;
     private boolean active;
 
-    public UserImpl(){
+    public UserImpl() {
 
     }
 
-    public UserImpl(int userId){
+    public UserImpl(int userId) {
         this.setUserId(userId);
     }
 
@@ -24,7 +21,7 @@ public class UserImpl implements User {
         this.setPassword(password);
     }
 
-    public UserImpl(int userId, String username, String password, boolean active){
+    public UserImpl(int userId, String username, String password, boolean active) {
         this.setUserId(userId);
         this.setUsername(username);
         this.setPassword(password);
@@ -32,12 +29,12 @@ public class UserImpl implements User {
     }
 
     @Override
-    public int getUserId(){
+    public int getUserId() {
         return userId;
     }
 
     @Override
-    public void setUserId(int id){
+    public void setUserId(int id) {
         userId = id;
     }
 

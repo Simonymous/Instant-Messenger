@@ -2,6 +2,7 @@ package im.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.interfaces.Group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,13 @@ public class ChatList {
         return null;
     }
 
+    public Chat getChatById(int id) {
+        for (Chat c : chatList) {
+            if (c.getStringId().equals(Integer.toString(id))) return c;
+        }
+        return null;
+    }
+
     public void removeChat(int id) {
         Chat chat = null;
         for (Chat c : chatList) {
@@ -43,6 +51,15 @@ public class ChatList {
             }
         }
         chatList.remove(chat);
+    }
+
+    public void updateChat(Group group) {
+        if (!contains(group.getGroupId())) {
+            chatList.add(new Chat(group));
+            return;
+        }
+        Chat c = getChatById(group.getGroupId());
+        c.setName(group.getGroupName());
     }
 
     public void addChat(Chat chat) {

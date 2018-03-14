@@ -3,7 +3,6 @@ package rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
@@ -48,6 +47,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * convert a json string to OwnUser object
+     *
      * @param json String to convert
      * @return OwnUser object
      */
@@ -59,7 +59,8 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send requst to change user
-     * @param id user to change
+     *
+     * @param id   user to change
      * @param user new user
      */
     public void updateUser(final String id, User user) {
@@ -92,6 +93,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to get a user object by name
+     *
      * @param name - name of user to get
      * @return OwnUser
      */
@@ -128,6 +130,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to get a user object by name
+     *
      * @return Userlist
      */
     public UserQueryResponse getAllUser() {
@@ -159,7 +162,8 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to add new user
-     * @param name - name of new user
+     *
+     * @param name   - name of new user
      * @param passwd - password of new user
      * @return new User Object
      */
@@ -197,6 +201,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to remove user by name
+     *
      * @param userId user to remove
      */
     public void removeUser(final String userId) {
@@ -224,6 +229,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to get user by id
+     *
      * @param userId - user id to look for
      * @return OwnUser object
      */
@@ -288,6 +294,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     /**
      * send request to get all groups of user
+     *
      * @param userId user to get groups from
      * @return ArrayList of group ids
      */
@@ -318,11 +325,13 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         String json = (String) response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
-        return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>(){}.getType());
+        return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>() {
+        }.getType());
     }
 
     /**
      * send request to get all groups of user
+     *
      * @param userId user to get groups from
      * @return ArrayList of group ids
      */

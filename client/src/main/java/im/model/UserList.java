@@ -21,7 +21,7 @@ public class UserList {
     }
 
     public void addUser(User u) {
-        if(u.getUserId() != OwnUser.getInstance().getUserId() && !containsUser(u))
+        if (u.getUserId() != OwnUser.getInstance().getUserId() && !containsUser(u))
             serverUsers.add(u);
     }
 
@@ -35,6 +35,13 @@ public class UserList {
                 deleteUser(u);
             }
         }
+    }
+
+    public User getUser(int id) {
+        for (User u : serverUsers) {
+            if (u.getUserId() == id) return u;
+        }
+        return null;
     }
 
     public ObservableList<User> getServerUsers() {

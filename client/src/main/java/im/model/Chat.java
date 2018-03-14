@@ -1,9 +1,11 @@
 package im.model;
 
+import im.core.OwnUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.interfaces.Group;
 import model.interfaces.Message;
+import model.interfaces.User;
 
 public class Chat {
     private int id;
@@ -23,7 +25,17 @@ public class Chat {
     }
 
     public void addMessage(Message m) {
-        //TODO
+        if (contains(m.getMessageId())) return;
+        User u = UserList.getInstance().getUser(m.getUser());
+        String username;
+        if (m.getUser() == OwnUser.getInstance().getUserId()) {
+            username = OwnUser.getInstance().getUsername();
+        } else if (u == null) {
+            username = Integer.toString(m.getUser());
+        } else {
+            username = u.getUsername();
+        }
+        messageList.add(new ClientMessage(m.getMessageId(), username, m.getContent()));
     }
 
     public ObservableList<ClientMessage> getMessageList() {
@@ -32,6 +44,10 @@ public class Chat {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

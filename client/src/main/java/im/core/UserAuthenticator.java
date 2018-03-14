@@ -3,8 +3,6 @@ package im.core;
 import com.google.common.hash.Hashing;
 import model.classes.UserImpl;
 import model.interfaces.User;
-import model.interfaces.UserQueryResponse;
-import rest.services.GroupRestClientImpl;
 import rest.services.UserRestClientImpl;
 
 import java.nio.charset.StandardCharsets;
@@ -21,6 +19,7 @@ public class UserAuthenticator {
 
     /**
      * Checks if a user, given by name, exsits on the Server
+     *
      * @param name name of user
      * @return does user exist?
      */
@@ -32,7 +31,8 @@ public class UserAuthenticator {
 
     /**
      * Adds a new User to the Server
-     * @param name name of new user
+     *
+     * @param name     name of new user
      * @param password password of new user
      */
     public void addNewUser(String name, String password) {
@@ -41,6 +41,7 @@ public class UserAuthenticator {
 
     /**
      * Checks if a given clear password is valid
+     *
      * @param password non hasehd password
      * @return password matches?
      */
@@ -51,6 +52,7 @@ public class UserAuthenticator {
 
     /**
      * Changes the Username of the authenticated User
+     *
      * @param name new Username
      */
     public void changeUsername(String name) {
@@ -65,6 +67,7 @@ public class UserAuthenticator {
 
     /**
      * Changes the Password of the authenticated User
+     *
      * @param password new unhashed Password
      */
     public void changPassword(String password) {
@@ -80,7 +83,8 @@ public class UserAuthenticator {
 
     /**
      * Authenticates a user
-     * @param name name of user
+     *
+     * @param name     name of user
      * @param password non hashed password of user
      * @return does name/password match?
      */

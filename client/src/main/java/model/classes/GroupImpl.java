@@ -1,22 +1,19 @@
 package model.classes;
 
-import model.exceptions.UserDoesNotExistException;
 import model.interfaces.Group;
-import model.interfaces.User;
 
-import java.util.ArrayList;
-
-public class GroupImpl implements Group{
+public class GroupImpl implements Group {
     private int groupId;
     private String groupName;
 
-    public GroupImpl(){}
+    public GroupImpl() {
+    }
 
     public GroupImpl(int groupId) {
         this.setGroupId(groupId);
     }
 
-    public GroupImpl(String groupName){
+    public GroupImpl(String groupName) {
         this.setGroupName(groupName);
     }
 

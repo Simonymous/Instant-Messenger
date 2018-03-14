@@ -5,7 +5,8 @@ public class ClientMessage {
     private String author;
     private String content;
 
-    public ClientMessage(String a, String c) {
+    public ClientMessage(long id, String a, String c) {
+        this.id = id;
         author = a;
         content = c;
     }

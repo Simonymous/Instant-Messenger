@@ -1,7 +1,7 @@
 package im;
 
 import im.controller.*;
-import im.core.PushServer;
+import im.core.OwnUser;
 import im.core.Updater;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -50,14 +50,31 @@ public class InstantMessengerClient extends Application {
      */
     public void loginSuccess() {
         rootLayoutController.setMenuVisable();
+        primaryStage.setTitle(primaryStage.getTitle() + " - " + OwnUser.getInstance().getUsername());
         showChatOverview();
         showChatView();
         new Updater().updateAll();
-        try {
-            new PushServer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            new PushServer();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        Thread d = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Updater updater = new Updater();
+                while (true) {
+                    updater.updateAll();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        d.setDaemon(true);
+        d.start();
     }
 
     /**
@@ -114,7 +131,6 @@ public class InstantMessengerClient extends Application {
 
     /**
      * is called for registering a new user
-     *
      */
     public void showRegisterForm() {
         try {
@@ -141,7 +157,6 @@ public class InstantMessengerClient extends Application {
 
     /**
      * is called for changing the username
-     *
      */
     public void showChangeUsernameForm() {
         try {
@@ -168,7 +183,6 @@ public class InstantMessengerClient extends Application {
 
     /**
      * is called for changing the password
-     *
      */
     public void showChangePasswordForm() {
         try {

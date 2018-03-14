@@ -2,7 +2,6 @@ package im.core;
 
 import im.model.Chat;
 import im.model.ChatList;
-import im.model.ClientMessage;
 import im.model.UserList;
 import model.classes.GroupImpl;
 import model.interfaces.Group;
@@ -26,35 +25,28 @@ public class Updater {
         List<Message> messages = grci.getMessagesOfGroup(id, ""); //TODO: I don't know for what pages is.
         Chat c = ChatList.getInstance().getChatById(id);
         for (Message m : messages) {
-            if (!c.contains(m.getMessageId())) {
-                c.addMessage(m);
-                //TODO: fügt nicht in die liste ein
-            }
-        }
-        for(ClientMessage cm : c.getMessageList()){
-            System.out.println(cm.getContent());
+            c.addMessage(m);
         }
     }
 
     public void updateLocalGroups() {
         List<Integer> groupsOfUser = urci.getGroupsOfUser(OwnUser.getInstance().getUserStringId());
-        if (!groupsOfUser.isEmpty()) {
-            for (Integer id : groupsOfUser) {
-                if (!ChatList.getInstance().contains(id)) {
-                    ChatList.getInstance().addChat(new Chat(grci.getGroupById(id.toString())));
-                    updateMessagesForGroup(id.toString());
-                }
-            }
+        for (Integer id : groupsOfUser) {
+            ChatList.getInstance().updateChat(grci.getGroupById(id.toString()));
         }
     }
 
-    public void updateGroup(Group grp){
-        grci.changeGroup(Integer.toString(grp.getGroupId()),grp);
-        //TODO: update observablelist<Chat> in chatOverview
+    public void updateGroup(Group grp) {
+        grci.changeGroup(Integer.toString(grp.getGroupId()), grp);
+        updateLocalGroups();
     }
 
     public void deleteGroup(String id) {
         grci.removeGroup(id);
+        deleteLocalGroup(id);
+    }
+
+    public void deleteLocalGroup(String id) {
         ChatList.getInstance().removeChat(Integer.parseInt(id));
     }
 
@@ -63,7 +55,7 @@ public class Updater {
         String groupId = Integer.toString(group.getGroupId());
         System.out.println(groupId);
         for (Integer i : userIds) {
-            grci.addUserToGroup(groupId, i.toString());      // TODO: Add Users
+            grci.addUserToGroup(groupId, i.toString());
         }
         updateLocalGroups();
     }

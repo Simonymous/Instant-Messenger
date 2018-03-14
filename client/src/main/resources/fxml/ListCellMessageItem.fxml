@@ -4,16 +4,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-
 <HBox fx:id="hBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121">
     <children>
         <Label fx:id="messageAuthor" minWidth="100.0">
-         <font>
-            <Font name="System Bold Italic" size="14.0" />
-         </font>
-         <padding>
-            <Insets right="10.0" />
-         </padding></Label>
-        <Label fx:id="messageContent" />
+            <font>
+                <Font name="System Bold Italic" size="14.0"/>
+            </font>
+            <padding>
+                <Insets right="10.0"/>
+            </padding>
+        </Label>
+        <Label fx:id="messageContent"/>
     </children>
 </HBox>

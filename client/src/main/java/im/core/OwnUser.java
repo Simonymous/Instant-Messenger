@@ -1,9 +1,5 @@
 package im.core;
 
-import rest.services.UserRestClientImpl;
-
-import java.util.List;
-
 public class OwnUser {
     private static OwnUser ownUser = null;
 
