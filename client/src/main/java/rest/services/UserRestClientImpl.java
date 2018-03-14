@@ -15,6 +15,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
@@ -55,6 +56,44 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         return gson.fromJson(json, UserImpl.class);
+    }
+
+    /**
+     * send request to iniate updater notify
+     *
+     * @return Response
+     */
+    public Response initiateUpdate() {
+        gSon = new GsonBuilder().create();
+        InetAddress ip = null;
+        try {
+            ip = InetAddress.getLocalHost();
+
+        } catch (Exception e){
+
+        }
+
+        String json = gSon.toJson(ip);
+
+        try {
+            response = client
+                    .target(URL + WEB_CONTEXT_PATH)
+                    .path(USERS_PATH)
+                    //.path("")
+                    .request(MediaType.APPLICATION_JSON)
+                    .post(Entity.json(json));
+
+            if (response.getStatus() == 500) {
+                throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //String respJson = (String) response.readEntity(String.class);
+        return response;
     }
 
     /**
