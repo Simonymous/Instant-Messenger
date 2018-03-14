@@ -97,7 +97,9 @@ public class Updater {
      */
     public void updateLocalUsers() {
         for (String id : urci.getAllUser().getIds()) {
-            UserList.getInstance().addUser(urci.getUserById(id));
+            if(!UserList.getInstance().containsUser(Integer.parseInt(id))) {
+                UserList.getInstance().addUser(urci.getUserById(id));
+            }
         }
     }
 
