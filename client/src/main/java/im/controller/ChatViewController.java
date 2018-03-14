@@ -44,7 +44,7 @@ public class ChatViewController implements EventHandler<KeyEvent> {
     }
 
     /**
-     * set the List which is observed by the listview and the CellFactory for displaying the content of message
+     * set the List which is observed by the listView and the CellFactory for displaying the content of message
      *
      * @param observableList
      */

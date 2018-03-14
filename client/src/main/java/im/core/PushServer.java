@@ -7,8 +7,16 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.URI;
 
+/**
+ * Notify server
+ */
 public class PushServer {
 
+    /**
+     * standard constructor, start an http server for notifying the client for changes
+     *
+     * @throws IOException
+     */
     public PushServer() throws IOException {
         String baseUrl = "http://localhost:4435";
 

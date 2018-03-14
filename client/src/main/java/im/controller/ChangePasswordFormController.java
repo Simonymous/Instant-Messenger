@@ -28,16 +28,25 @@ public class ChangePasswordFormController {
     public ChangePasswordFormController() {
     }
 
+    /**
+     * is called if the layout is initialized
+     */
     @FXML
     private void initialize() {
         authenticator = new UserAuthenticator();
     }
 
+    /**
+     * handle click on the cancel button and close the dialog
+     */
     @FXML
     public void handleCancel() {
         dialogStage.close();
     }
 
+    /**
+     * handle click on the save button, saves the new password and close the dialog
+     */
     @FXML
     private void handleSave() {
         if (!authenticator.isPasswordOk(oldPasswordField.getText())) {

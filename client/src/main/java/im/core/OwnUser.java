@@ -1,5 +1,8 @@
 package im.core;
 
+/**
+ * This Class represents the logged in User
+ */
 public class OwnUser {
     private static OwnUser ownUser = null;
 
@@ -12,6 +15,13 @@ public class OwnUser {
 
     }
 
+    /**
+     * create the User whose logged in
+     *
+     * @param id userID
+     * @param n  userName
+     * @param pw userPassword
+     */
     public void createUser(int id, String n, String pw) {
         if (!isCreated) {
             userId = id;
@@ -49,6 +59,11 @@ public class OwnUser {
         return isCreated;
     }
 
+    /**
+     * gets the instance of the Singelton Object
+     *
+     * @return the instance
+     */
     public static OwnUser getInstance() {
         if (ownUser == null) {
             ownUser = new OwnUser();

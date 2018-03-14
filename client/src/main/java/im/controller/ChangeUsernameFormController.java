@@ -31,12 +31,19 @@ public class ChangeUsernameFormController {
     public ChangeUsernameFormController() {
     }
 
+    /**
+     * is called if the layout id initialized
+     * sets the nameField with actual username
+     */
     @FXML
     private void initialize() {
         authenticator = new UserAuthenticator();
         nameField.setText(OwnUser.getInstance().getUsername());
     }
 
+    /**
+     * handle click in the Check button and check the username of exist
+     */
     @FXML
     public void handleCheckName() {
         if (authenticator.doesUserExist(nameField.getText())) {
@@ -46,11 +53,17 @@ public class ChangeUsernameFormController {
         }
     }
 
+    /**
+     * handle click on cancel button and closed the dialog
+     */
     @FXML
     public void handleCancel() {
         dialogStage.close();
     }
 
+    /**
+     * handle click on save button, saves the new username and close the dialog
+     */
     @FXML
     private void handleSave() {
         if (authenticator.doesUserExist(nameField.getText())) {

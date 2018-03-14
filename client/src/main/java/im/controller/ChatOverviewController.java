@@ -34,7 +34,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
     }
 
     /**
-     * set the List which is observed by the listview and the CellFactory for displying the content of group/chat
+     * set the List which is observed by the listView and the CellFactory for displaying the content of group/chat
      *
      * @param observableList
      */
@@ -56,7 +56,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
     }
 
     /**
-     * handle the click event on listview for changing the group/chat which is shown
+     * handle the click event on listView for changing the group/chat which is shown
      *
      * @param event
      */

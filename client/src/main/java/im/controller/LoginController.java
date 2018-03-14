@@ -28,6 +28,9 @@ public class LoginController implements EventHandler<KeyEvent> {
     public LoginController() {
     }
 
+    /**
+     * is called if the layout is initialized
+     */
     @FXML
     protected void initialize() {
         getUserText.setOnKeyPressed(this);

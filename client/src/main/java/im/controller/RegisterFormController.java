@@ -32,6 +32,9 @@ public class RegisterFormController {
     public RegisterFormController() {
     }
 
+    /**
+     * is called if the layout is initialized
+     */
     @FXML
     private void initialize() {
         authenticator = new UserAuthenticator();

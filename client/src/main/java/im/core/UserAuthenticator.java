@@ -7,6 +7,9 @@ import rest.services.UserRestClientImpl;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Class for authentication of the User
+ */
 public class UserAuthenticator {
     private UserRestClientImpl urci;
 

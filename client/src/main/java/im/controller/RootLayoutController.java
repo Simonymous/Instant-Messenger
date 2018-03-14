@@ -23,30 +23,48 @@ public class RootLayoutController {
     public RootLayoutController() {
     }
 
+    /**
+     * is called if the layout is initialized
+     */
     @FXML
     private void initialize() {
     }
 
+    /**
+     * handle click on menuItem Exit, and close the InstantMessenger
+     */
     @FXML
     private void handleExit() {
         mainApp.getPrimaryStage().close();
     }
 
+    /**
+     * handle click on menuItem EditUsername, and show the dialog for changes
+     */
     @FXML
     private void handleEditUsername() {
         mainApp.showChangeUsernameForm();
     }
 
+    /**
+     * handle click on menuItem EditPassword, and show the dialog for changes
+     */
     @FXML
     private void handleEditPassword() {
         mainApp.showChangePasswordForm();
     }
 
+    /**
+     * handle click on menuItem NewGroup, and show the dialog for content
+     */
     @FXML
     private void handleNewGroup() {
         mainApp.showGroupEditDialog(null);
     }
 
+    /**
+     * handle click on menuItem EditGroup, and show the dialog for changes
+     */
     @FXML
     private void handleEditGroup() {
         Chat chat = mainApp.getChatOverviewController().getSelected();
@@ -54,6 +72,9 @@ public class RootLayoutController {
         mainApp.showGroupEditDialog(group);
     }
 
+    /**
+     * handle click on menuItem DeleteGroup, and deletes the selected group
+     */
     @FXML
     private void handleDeleteGroup() {
         Chat chat = mainApp.getChatOverviewController().getSelected();
@@ -65,6 +86,9 @@ public class RootLayoutController {
         this.mainApp = mainApp;
     }
 
+    /**
+     * sets the hidden menuItems if the login was successful
+     */
     public void setMenuVisable() {
         menuGroup.setVisible(true);
         itemChUsername.setVisible(true);
