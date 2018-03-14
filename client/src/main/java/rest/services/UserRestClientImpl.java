@@ -33,6 +33,8 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     private static final String WEB_CONTEXT_PATH = "/im";
     private static final String USERS_PATH = "users";
     private static final String GROUPS_PATH = "groups";
+    private static final String INIT_PATH = "init";
+    private static final String STOP_PATH = "stop";
 
     private Client client;
     private Response response;
@@ -68,8 +70,8 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         InetAddress ip = null;
         try {
             ip = InetAddress.getLocalHost();
-
-        } catch (Exception e){
+            System.out.println();
+        } catch (Exception e) {
 
         }
 
@@ -79,20 +81,51 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
             response = client
                     .target(URL + WEB_CONTEXT_PATH)
                     .path(USERS_PATH)
-                    //.path("")
+                    .path(INIT_PATH)
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.json(json));
 
             if (response.getStatus() == 500) {
                 throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //String respJson = (String) response.readEntity(String.class);
+        return response;
+    }
+
+    /**
+     * send request to stop updater notify
+     *
+     * @return Response
+     */
+    public Response stopUpdate() {
+        gSon = new GsonBuilder().create();
+        InetAddress ip = null;
+        try {
+            ip = InetAddress.getLocalHost();
+        } catch (Exception e) {
+
+        }
+
+        String json = gSon.toJson(ip);
+
+        try {
+            response = client
+                    .target(URL + WEB_CONTEXT_PATH)
+                    .path(USERS_PATH)
+                    .path(STOP_PATH)
+                    .request(MediaType.APPLICATION_JSON)
+                    .post(Entity.json(json));
+
+            if (response.getStatus() == 500) {
+                throw new RuntimeException(ERR_INTERNAL_SERVER_ERROR + ": " + response.getStatus());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return response;
     }
 

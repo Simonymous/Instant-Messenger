@@ -220,14 +220,15 @@ public class UserRestImpl implements rest.interfaces.UserRest {
      */
     @Override
     @POST
-    @Path("users/init/{ip}")
-    public Response initUpdate(@PathParam("ip") String inet) {
+    @Path("users/init")
+    public Response initUpdate(String inet) {
         Response response = null;
 
         try{
             Gson gson = new GsonBuilder().create();
             InetAddress address = gson.fromJson(inet, InetAddress.class);
             ClientList.getInstance().initUpdate(address);
+            System.out.println(address);
             response = Response.status(200, CLIENT_NOTIFY_ADDED).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e){
             System.err.println(e.getMessage());
@@ -244,7 +245,7 @@ public class UserRestImpl implements rest.interfaces.UserRest {
      */
     @Override
     @POST
-    @Path("users/stop/{ip}")
+    @Path("users/stop")
     public Response stopUpdate(String inet) {
         Response response = null;
 
