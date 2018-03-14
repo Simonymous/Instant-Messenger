@@ -17,10 +17,12 @@ public class ClientList {
 
     public void initUpdate(InetAddress address) {
         addresses.add(address);
+        System.out.println("Notification enabled for: "+address);
     }
 
     public void stopUpdate(InetAddress address) {
         addresses.remove(address);
+        System.out.println("Notification stopped for: "+address);
     }
 
     public void notifyUpdateGroup() {
