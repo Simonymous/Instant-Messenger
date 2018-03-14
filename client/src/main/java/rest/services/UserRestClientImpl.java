@@ -70,11 +70,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     public void initiateUpdate() {
         gSon = new GsonBuilder().create();
         JSONClientAddress address = new JSONClientAddress(OwnAddress.getInstance().getPort(), OwnAddress.getInstance().getAddress());
-        try {
-            System.out.println("Initiate update on : "+ OwnAddress.getInstance().getAddress() + ":"+OwnAddress.getInstance().getPort());
-        } catch (Exception e) {
-
-        }
+        System.out.println("Initiate update-Listener on : "+ OwnAddress.getInstance().getAddress() + ":"+OwnAddress.getInstance().getPort());
 
         String json = gSon.toJson(address);
 
@@ -93,7 +89,6 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
             e.printStackTrace();
         }
 
-        //return response;
     }
 
     /**
@@ -101,16 +96,12 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
      *
      * @return Response
      */
-    public Response stopUpdate() {
+    public void stopUpdate() {
         gSon = new GsonBuilder().create();
-        InetAddress ip = null;
-        try {
-            ip = InetAddress.getLocalHost();
-        } catch (Exception e) {
+        JSONClientAddress address = new JSONClientAddress(OwnAddress.getInstance().getPort(), OwnAddress.getInstance().getAddress());
+        System.out.println("Shutdown update-Listener on : "+ OwnAddress.getInstance().getAddress() + ":"+OwnAddress.getInstance().getPort());
 
-        }
-
-        String json = gSon.toJson(ip);
+        String json = gSon.toJson(address);
 
         try {
             response = client
@@ -127,7 +118,6 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
             e.printStackTrace();
         }
 
-        return response;
     }
 
     /**

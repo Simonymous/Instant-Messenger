@@ -31,6 +31,15 @@ public class RootLayoutController {
     }
 
     /**
+     * handle click on menuItem Update All, and updates everything
+     */
+    @FXML
+    private void handleUpdate() {
+        Updater updater = new Updater();
+        updater.updateAll();
+    }
+
+    /**
      * handle click on menuItem Exit, and close the InstantMessenger
      */
     @FXML

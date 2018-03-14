@@ -126,6 +126,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
 
       try {
         ServiceObjectBuilder.getGroupServiceObject().addUserToGroup(Integer.parseInt(groupId), Integer.parseInt(userId));
+        ClientList.getInstance().notifyUpdateGroup();
         response = Response.status(200, USER_ADDED_TO_GROUP).build();
       } catch(rest.exceptions.UserDoesNotExistException e){
         System.err.println(e);
@@ -156,6 +157,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
 
       try {
         ServiceObjectBuilder.getGroupServiceObject().removeUserFromGroup(Integer.parseInt(groupId), Integer.parseInt(userId));
+        ClientList.getInstance().notifyUpdateGroup();
         response = Response.status(200, USER_ADDED_TO_GROUP).build();
       } catch(rest.exceptions.UserDoesNotExistException e){
         System.err.println(e);

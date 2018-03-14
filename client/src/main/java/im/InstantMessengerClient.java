@@ -5,6 +5,8 @@ import im.core.OwnUser;
 import im.core.PushServer;
 import im.core.Updater;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.interfaces.Group;
 import rest.services.UserRestClientImpl;
 
@@ -45,6 +48,16 @@ public class InstantMessengerClient extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Messenger Client");
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                new UserRestClientImpl().stopUpdate();
+
+                Platform.exit();
+
+                System.exit(0);
+            }
+        });
 
         initRootLayout();
         showLogin();

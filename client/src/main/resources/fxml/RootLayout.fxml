@@ -10,6 +10,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Messenger">
                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdate" text="Update All"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleEditUsername" text="Nutzername ändern"
                                   fx:id="itemChUsername" visible="false"/>
