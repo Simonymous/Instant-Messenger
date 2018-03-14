@@ -121,6 +121,7 @@ public class InstantMessengerClient extends Application {
 
             groupEditDialogController = loader.getController();
             groupEditDialogController.setDialogStage(dialogStage);
+            groupEditDialogController.setMainApp(this);
             groupEditDialogController.setGroup(group);
 
             dialogStage.showAndWait();
