@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
+import rest.classes.JSONClientAddress;
 import rest.exceptions.UserDoesNotExistException;
 import service.classes.ClientList;
 
@@ -13,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
@@ -226,9 +228,9 @@ public class UserRestImpl implements rest.interfaces.UserRest {
 
         try{
             Gson gson = new GsonBuilder().create();
-            InetAddress address = gson.fromJson(inet, InetAddress.class);
+            JSONClientAddress jsonaddress = gson.fromJson(inet, JSONClientAddress.class);
+            InetSocketAddress address = new InetSocketAddress(jsonaddress.address,jsonaddress.port);
             ClientList.getInstance().initUpdate(address);
-            System.out.println(address);
             response = Response.status(200, CLIENT_NOTIFY_ADDED).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e){
             System.err.println(e.getMessage());
@@ -251,7 +253,8 @@ public class UserRestImpl implements rest.interfaces.UserRest {
 
         try{
             Gson gson = new GsonBuilder().create();
-            InetAddress address = gson.fromJson(inet, InetAddress.class);
+            JSONClientAddress jsonaddress = gson.fromJson(inet, JSONClientAddress.class);
+            InetSocketAddress address = new InetSocketAddress(jsonaddress.address,jsonaddress.port);
             ClientList.getInstance().stopUpdate(address);
             response = Response.status(200, CLIENT_NOTIFY_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e){

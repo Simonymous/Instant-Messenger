@@ -16,12 +16,16 @@ import model.interfaces.Group;
 import rest.services.UserRestClientImpl;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class InstantMessengerClient extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
     private AnchorPane chatLayout;
+
+    private InetAddress address;
+    private int port;
 
     private RootLayoutController rootLayoutController;
     private ChatViewController chatViewController;

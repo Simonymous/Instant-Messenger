@@ -97,7 +97,6 @@ public class ServerNotifyImpl implements ServerNotify {
                     .path(id)
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.json(null));
-            System.out.println("HIER DEBUG: "+response);
 
             if (response.getStatus() == 500) {
                 throw new RuntimeException(ERR_UPDATE_MESSAGES + ": " + response.getStatus());

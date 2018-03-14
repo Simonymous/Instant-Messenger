@@ -3,10 +3,12 @@ package rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import im.core.OwnAddress;
 import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
 import model.interfaces.UserQueryResponse;
+import rest.classes.JSONClientAddress;
 import rest.exceptions.UserAlreadyExistsException;
 import rest.exceptions.UserDoesNotExistException;
 
@@ -16,7 +18,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
@@ -68,15 +69,14 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
      */
     public void initiateUpdate() {
         gSon = new GsonBuilder().create();
-        InetAddress ip = null;
+        JSONClientAddress address = new JSONClientAddress(OwnAddress.getInstance().getPort(), OwnAddress.getInstance().getAddress());
         try {
-            ip = InetAddress.getLocalHost();
-            System.out.println("Initiate update on : "+ip);
+            System.out.println("Initiate update on : "+ OwnAddress.getInstance().getAddress() + ":"+OwnAddress.getInstance().getPort());
         } catch (Exception e) {
 
         }
 
-        String json = gSon.toJson(ip);
+        String json = gSon.toJson(address);
 
         try {
             response = client

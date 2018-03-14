@@ -6,6 +6,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.URI;
 
@@ -13,7 +14,6 @@ import java.net.URI;
  * Notify server
  */
 public class PushServer {
-
     /**
      * standard constructor, start an http server for notifying the client for changes
      *
@@ -22,10 +22,11 @@ public class PushServer {
     public PushServer() throws IOException {
         ServerSocket s = new ServerSocket(0);
         int port = s.getLocalPort();
-        //String baseUrl = "http://localhost:"+Integer.toString(port);
+        InetAddress address = InetAddress.getLocalHost();
+        OwnAddress.getInstance().createAddress(address,port);
         try{
-            InetAddress ip = InetAddress.getLocalHost();
-            String baseUrl = "http://"+ip.getHostAddress()+":4435";
+
+            String baseUrl = "http://"+address.getHostAddress()+":"+port;
             final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
                     URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -40,17 +41,8 @@ public class PushServer {
                             + "Stoppen des Grizzly-HTTP-Servers mit:      Strg+C\n",
                     baseUrl + ClientNotify.webContextPath ) );
         }catch (Exception e) {
-            InetAddress ip = InetAddress.getLocalHost();
-            String baseUrl = "http://"+ip.getHostAddress()+":4435";
-            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
-                    URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
-            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    server.shutdownNow();
-                }
-            }));
-            server.start();
+           e.printStackTrace();
         }
     }
+
 }

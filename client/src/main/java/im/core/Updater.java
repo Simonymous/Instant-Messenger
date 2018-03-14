@@ -35,7 +35,7 @@ public class Updater {
         for (Message m : messages) {
             c.addMessage(m);
         }
-        System.out.println("Local Chat Messages für Gruppe "+id+"updatet");
+        System.out.println("Local Chat Messages für Gruppe "+id+" geupdatet");
 
     }
 
@@ -47,7 +47,7 @@ public class Updater {
         for (Integer id : groupsOfUser) {
             ChatList.getInstance().updateChat(grci.getGroupById(id.toString()));
         }
-        System.out.println("Local Groups updatet");
+        System.out.println("Local Groups geupdatet");
     }
 
     /**
@@ -104,7 +104,7 @@ public class Updater {
                 UserList.getInstance().addUser(urci.getUserById(id));
             }
         }
-        System.out.println("Local Users updatet");
+        System.out.println("Local Users geupdatet");
     }
 
     /**
