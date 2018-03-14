@@ -33,6 +33,10 @@ public class PushServer {
                 }
             }));
             server.start();
+
+            System.out.println( String.format( "\nGrizzly-HTTP-Server gestartet mit der URL: %s\n"
+                            + "Stoppen des Grizzly-HTTP-Servers mit:      Strg+C\n",
+                    baseUrl + ClientNotify.webContextPath ) );
         }catch (Exception e) {
             String baseUrl = "http://localhost:4436";
             final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(

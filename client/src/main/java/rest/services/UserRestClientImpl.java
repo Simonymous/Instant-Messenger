@@ -16,6 +16,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
@@ -65,12 +66,12 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
      *
      * @return Response
      */
-    public Response initiateUpdate() {
+    public void initiateUpdate() {
         gSon = new GsonBuilder().create();
         InetAddress ip = null;
         try {
             ip = InetAddress.getLocalHost();
-            System.out.println();
+            System.out.println("Initiate update on : "+ip);
         } catch (Exception e) {
 
         }
@@ -92,7 +93,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
             e.printStackTrace();
         }
 
-        return response;
+        //return response;
     }
 
     /**

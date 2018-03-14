@@ -26,6 +26,7 @@ public class ClientNotify {
         try {
             new Updater().updateLocalGroups();
             response = Response.status(200, GROUPS_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();
+            System.out.println("Received Notify Delete Group");
         } catch (Exception e) {
             response = Response.status(500, ERR_UPDATE_GROUPS).type(MediaType.TEXT_HTML_TYPE).build();
         }
@@ -45,6 +46,7 @@ public class ClientNotify {
         try {
             new Updater().deleteLocalGroup(id);
             response = Response.status(200, GROUPS_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();
+            System.out.println("Received Notify Delete Group");
         } catch (Exception e) {
             response = Response.status(500, ERR_UPDATE_GROUPS).type(MediaType.TEXT_HTML_TYPE).build();
         }
@@ -64,6 +66,7 @@ public class ClientNotify {
         try {
             new Updater().updateMessagesForGroup(id);
             response = Response.status(200, MESSAGES_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();
+            System.out.println("Received Notify New Message");
         } catch (Exception e) {
             response = Response.status(500, ERR_UPDATE_MESSAGES).type(MediaType.TEXT_HTML_TYPE).build();
         }

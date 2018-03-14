@@ -29,21 +29,21 @@ public class ClientList {
     public void notifyUpdateGroup() {
         for (InetAddress add : addresses) {
             new ServerNotifyImpl(URL_PRAEFIX + add.getHostAddress() + ":4435").notifyUpdatedGroup();
-            System.out.printf("Client: %s notified\nupdateGroup", add);
+            System.out.println("Client: "+add+" notified->updateGroup");
         }
     }
 
     public void notifyRemoveGroup(String id) {
         for (InetAddress add : addresses) {
             new ServerNotifyImpl(URL_PRAEFIX + add.getHostAddress() + ":4435").notifyRemovedGroup(id);
-            System.out.printf("Client: %s notified\nremoveGroup", add);
+            System.out.println("Client: "+add+" notified->removeGroup");
         }
     }
 
     public void notifyNewMessage(String id) {
         for (InetAddress add : addresses) {
             new ServerNotifyImpl(URL_PRAEFIX + add.getHostAddress() + ":4435").notifyNewMessage(id);
-            System.out.printf("Client: %s notified\nnewMessage", add);
+            System.out.println("Client: "+URL_PRAEFIX+add.getHostAddress()+":4435 notified->newMessage");
         }
     }
 

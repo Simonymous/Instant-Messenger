@@ -1,5 +1,7 @@
 package service.classes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import service.interfaces.ServerNotify;
 
 import javax.ws.rs.client.Client;
@@ -25,6 +27,7 @@ public class ServerNotifyImpl implements ServerNotify {
     private String URL;
     private Client client;
     private Response response;
+    private Gson gSon;
 
     /**
      * default constructor
@@ -87,7 +90,6 @@ public class ServerNotifyImpl implements ServerNotify {
      * @param id - message id
      */
     public void notifyNewMessage(final String id) {
-
         try {
             response = client
                     .target(URL + WEB_CONTEXT_PATH)
@@ -95,6 +97,7 @@ public class ServerNotifyImpl implements ServerNotify {
                     .path(id)
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.json(null));
+            System.out.println("HIER DEBUG: "+response);
 
             if (response.getStatus() == 500) {
                 throw new RuntimeException(ERR_UPDATE_MESSAGES + ": " + response.getStatus());
