@@ -3,9 +3,9 @@ package service.interfaces;
 
 public interface ServerNotify {
 
-    void notifyNewGroup();
+    void notifyUpdatedGroup();
 
-    void notifyRemovedGroup();
+    void notifyRemovedGroup(final String id);
 
     void notifyNewMessage(final String id);
 

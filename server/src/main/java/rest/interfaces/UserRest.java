@@ -40,6 +40,20 @@ public interface UserRest {
     Response getUserById(String username);
 
     /*
+     *  Init the update for given IP
+     */
+    @POST
+    @Path("users/init/{ip}")
+    Response initUpdate(@PathParam("ip") String inet);
+
+    /*
+     *  Init the update for given IP
+     */
+    @POST
+    @Path("users/stop/{ip}")
+    Response stopUpdate(@PathParam("ip") String inet);
+
+    /*
      *   Adds new User
      *   @return Http-Statuscode capsuled in Response
      */

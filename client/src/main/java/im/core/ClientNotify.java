@@ -20,7 +20,7 @@ public class ClientNotify {
      * @return the response
      */
     @POST
-    @Path("group/updated")
+    @Path("group/update")
     public Response updatedGroup() {
         Response response = null;
         try {

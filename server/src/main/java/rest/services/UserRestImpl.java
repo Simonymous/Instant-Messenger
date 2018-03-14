@@ -11,6 +11,7 @@ import rest.exceptions.UserDoesNotExistException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
@@ -208,6 +209,27 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         }
         System.err.println("getUserById " + userId);
         return response;
+    }
+
+    @Override
+    @POST
+    @Path("users/init/{ip}")
+    public Response initUpdate(@PathParam("ip") String inet) {
+        Response response = null;
+
+        try{
+            Gson gson = new GsonBuilder().create();
+            InetAddress address = gson.fromJson(inet, InetAddress.class);
+
+        }
+        return response;
+    }
+
+    @Override
+    @POST
+    @Path("users/stop/{ip}")
+    public Response stopUpdate(String inet) {
+        return null;
     }
 
     /**

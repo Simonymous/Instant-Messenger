@@ -16,34 +16,35 @@ public class ServerNotifyImpl implements ServerNotify {
     private static final String ERR_UPDATE_GROUPS = "Error while updating groups.";
     private static final String ERR_UPDATE_MESSAGES = "Error while updating messages.";
 
-    private static final String URL = "http://localhost:4434";
     private static final String WEB_CONTEXT_PATH = "/im";
     private static final String GROUPS_PATH = "group";
     private static final String MESSAGES_PATH = "message";
-    private static final String NEW_PATH = "new";
-    private static final String DELETED_PATH = "deleted";
+    private static final String UPDATED_PATH = "update";
+    private static final String DELETED_PATH = "delete";
 
+    private String URL;
     private Client client;
     private Response response;
 
     /**
      * default constructor
      */
-    public ServerNotifyImpl() {
+    public ServerNotifyImpl(String url) {
         client = ClientBuilder.newClient();
+        URL = url;
         response = null;
     }
 
     /**
      * notifies the client to update groups due to added group
      */
-    public void notifyNewGroup() {
+    public void notifyUpdatedGroup() {
 
         try {
             response = client
                     .target(URL + WEB_CONTEXT_PATH)
                     .path(GROUPS_PATH)
-                    .path(NEW_PATH)
+                    .path(UPDATED_PATH)
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.json(null));
 
@@ -60,13 +61,14 @@ public class ServerNotifyImpl implements ServerNotify {
     /**
      * notifies the client to update groups due to removed group
      */
-    public void notifyRemovedGroup() {
+    public void notifyRemovedGroup(final String id) {
 
         try {
             response = client
                     .target(URL + WEB_CONTEXT_PATH)
                     .path(GROUPS_PATH)
                     .path(DELETED_PATH)
+                    .path(id)
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.json(null));
 
