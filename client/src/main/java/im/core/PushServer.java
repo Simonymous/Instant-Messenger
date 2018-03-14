@@ -21,16 +21,29 @@ public class PushServer {
     public PushServer() throws IOException {
         ServerSocket s = new ServerSocket(0);
         int port = s.getLocalPort();
-        String baseUrl = "http://localhost"+Integer.toString(port);
-
-        final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
-                URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                server.shutdownNow();
-            }
-        }));
-        server.start();
+        //String baseUrl = "http://localhost:"+Integer.toString(port);
+        try{
+            String baseUrl = "http://localhost:4435";
+            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
+                    URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    server.shutdownNow();
+                }
+            }));
+            server.start();
+        }catch (Exception e) {
+            String baseUrl = "http://localhost:4436";
+            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
+                    URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    server.shutdownNow();
+                }
+            }));
+            server.start();
+        }
     }
 }

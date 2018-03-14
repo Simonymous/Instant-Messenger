@@ -7,6 +7,7 @@ import model.interfaces.Group;
 import rest.classes.JSONGroup;
 import rest.classes.JSONMessage;
 import rest.exceptions.GroupDoesNotExistException;
+import service.classes.ClientList;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -52,6 +53,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
         JSONGroup group = makeGroupFromJSON(gro);
         Group gr = ServiceObjectBuilder.getGroupServiceObject().addNewGroup(group.name);
         gr = ServiceObjectBuilder.getGroupServiceObject().getGroupById(gr.getGroupId());
+        ClientList.getInstance().notifyUpdateGroup();
         response = Response.ok(gSon.toJson(gr)).build();
       } catch (Exception e) {
         e.printStackTrace();
@@ -76,6 +78,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
 
       try {
         ServiceObjectBuilder.getGroupServiceObject().removeGroup(Integer.parseInt(groupId));
+        ClientList.getInstance().notifyRemoveGroup(groupId);
         response = Response.status(200, GROUP_REMOVED).build();
       } catch(rest.exceptions.GroupDoesNotExistException e){
         System.err.println(e);
@@ -212,7 +215,8 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
       try {
         JSONGroup group = makeGroupFromJSON(json);
         ServiceObjectBuilder.getGroupServiceObject().changeGroupName(Integer.parseInt(groupId), group.name); // TODO changeGroup? (should update only name for now)
-        response = Response.status(200, GROUP_NAME_CHANGED).build(); // TODO make new constant
+          ClientList.getInstance().notifyUpdateGroup();
+          response = Response.status(200, GROUP_NAME_CHANGED).build(); // TODO make new constant
       } catch(rest.exceptions.GroupDoesNotExistException e){
         System.err.println(e);
         response = Response.status(404, ERR_GROUP_DOES_NOT_EXIST).build();
@@ -260,6 +264,7 @@ public class GroupRestImpl implements rest.interfaces.GroupRest {
 
       try {
         ServiceObjectBuilder.getMessageServiceObject().addMessage(Integer.parseInt(groupId), m.userid, m.content);
+        ClientList.getInstance().notifyNewMessage(groupId);
         response = Response.status(200, MESSAGE_ADDED).build();
           // TODO addMessage must throw GroupDoesNotExistException!!!!!!!!
 //      } catch(rest.exceptions.GroupDoesNotExistException e){

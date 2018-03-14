@@ -2,6 +2,7 @@ package im;
 
 import im.controller.*;
 import im.core.OwnUser;
+import im.core.PushServer;
 import im.core.Updater;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.interfaces.Group;
+import rest.services.UserRestClientImpl;
 
 import java.io.IOException;
 
@@ -54,27 +56,29 @@ public class InstantMessengerClient extends Application {
         showChatOverview();
         showChatView();
         new Updater().updateAll();
-//        try {
-//            new PushServer();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        Thread d = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Updater updater = new Updater();
-                while (true) {
-                    updater.updateAll();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        d.setDaemon(true);
-        d.start();
+        try {
+            new PushServer();
+            new UserRestClientImpl().initiateUpdate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        Thread d = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Updater updater = new Updater();
+//                while (true) {
+//                    updater.updateAll();
+//                    try {
+//                        Thread.sleep(500);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//        d.setDaemon(true);
+//        d.start();
     }
 
     /**
