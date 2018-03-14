@@ -5,6 +5,7 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.URI;
 
@@ -23,7 +24,8 @@ public class PushServer {
         int port = s.getLocalPort();
         //String baseUrl = "http://localhost:"+Integer.toString(port);
         try{
-            String baseUrl = "http://localhost:4435";
+            InetAddress ip = InetAddress.getLocalHost();
+            String baseUrl = "http://"+ip.getHostAddress()+":4435";
             final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
                     URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -38,7 +40,8 @@ public class PushServer {
                             + "Stoppen des Grizzly-HTTP-Servers mit:      Strg+C\n",
                     baseUrl + ClientNotify.webContextPath ) );
         }catch (Exception e) {
-            String baseUrl = "http://localhost:4436";
+            InetAddress ip = InetAddress.getLocalHost();
+            String baseUrl = "http://"+ip.getHostAddress()+":4435";
             final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
                     URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
