@@ -8,6 +8,7 @@ import java.util.List;
 
 //TODO: Documentation
 public class ClientList {
+    private static final String URL_PRAEFIX = "http://";
     private static ClientList instance;
     private List<InetAddress> addresses;
 
@@ -27,19 +28,22 @@ public class ClientList {
 
     public void notifyUpdateGroup() {
         for (InetAddress add : addresses) {
-            new ServerNotifyImpl(add.getHostAddress()).notifyUpdatedGroup();
+            new ServerNotifyImpl(URL_PRAEFIX + add.getHostAddress() + ":4435").notifyUpdatedGroup();
+            System.out.printf("Client: %s notified\nupdateGroup", add);
         }
     }
 
     public void notifyRemoveGroup(String id) {
         for (InetAddress add : addresses) {
-            new ServerNotifyImpl(add.getHostAddress()).notifyRemovedGroup(id);
+            new ServerNotifyImpl(URL_PRAEFIX + add.getHostAddress() + ":4435").notifyRemovedGroup(id);
+            System.out.printf("Client: %s notified\nremoveGroup", add);
         }
     }
 
     public void notifyNewMessage(String id) {
         for (InetAddress add : addresses) {
-            new ServerNotifyImpl(add.getHostAddress()).notifyNewMessage(id);
+            new ServerNotifyImpl(URL_PRAEFIX + add.getHostAddress() + ":4435").notifyNewMessage(id);
+            System.out.printf("Client: %s notified\nnewMessage", add);
         }
     }
 
