@@ -7,6 +7,7 @@ import model.classes.UserImpl;
 import model.classes.UserQueryResponseImpl;
 import model.interfaces.User;
 import rest.exceptions.UserDoesNotExistException;
+import service.classes.ClientList;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -211,6 +212,12 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         return response;
     }
 
+    /**
+     * Initiate the notifying for the given InetAddress Object
+     *
+     * @param inet
+     * @return
+     */
     @Override
     @POST
     @Path("users/init/{ip}")
@@ -220,18 +227,37 @@ public class UserRestImpl implements rest.interfaces.UserRest {
         try{
             Gson gson = new GsonBuilder().create();
             InetAddress address = gson.fromJson(inet, InetAddress.class);
-
+            ClientList.getInstance().initUpdate(address);
+            response = Response.status(200, CLIENT_NOTIFY_ADDED).type(MediaType.TEXT_HTML_TYPE).build();
         } catch (Exception e){
-
+            System.err.println(e.getMessage());
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
         }
         return response;
     }
 
+    /**
+     * Stops the notifying for the given InetAddress Object
+     *
+     * @param inet
+     * @return
+     */
     @Override
     @POST
     @Path("users/stop/{ip}")
     public Response stopUpdate(String inet) {
-        return null;
+        Response response = null;
+
+        try{
+            Gson gson = new GsonBuilder().create();
+            InetAddress address = gson.fromJson(inet, InetAddress.class);
+            ClientList.getInstance().stopUpdate(address);
+            response = Response.status(200, CLIENT_NOTIFY_REMOVED).type(MediaType.TEXT_HTML_TYPE).build();
+        } catch (Exception e){
+            System.err.println(e.getMessage());
+            response = Response.status(500, ERR_INTERNAL_SERVER_ERROR).type(MediaType.TEXT_HTML_TYPE).build();
+        }
+        return response;
     }
 
     /**
