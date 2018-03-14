@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import static dao.constants.GlobalConstants.*;
 import static dao.constants.GroupDaoConstants.*;
 import static dao.constants.GroupDaoConstants.*;
+import static dao.constants.Group_UserDaoConstants.COL_GROUP_GROUP_ID;
+import static dao.constants.Group_UserDaoConstants.TABLE_GROUP_USERS;
 
 public class GroupDaoImpl implements GroupDao{
 
@@ -36,6 +38,13 @@ public class GroupDaoImpl implements GroupDao{
      * WHERE id = ?
      */
     private static final String PS_REMOVE_GROUP = "DELETE FROM " + TABLE_GROUP + " WHERE " + COL_GROUP_ID + " = ?";
+
+    /**
+     * DELETE FROM Group_Users
+     * WHERE id = ?
+     */
+    private static final String PS_REMOVE_GROUP_USER = "DELETE FROM " + TABLE_GROUP_USERS + " WHERE "
+            + COL_GROUP_GROUP_ID + " = ?";
 
     /**
      * SELECT *
@@ -90,6 +99,7 @@ public class GroupDaoImpl implements GroupDao{
             System.err.println(ERR_MSG_REMOVE_GROUP);
             e.printStackTrace();
         }
+        removeGroupUser(aGroup.getGroupId());
     }
 
 
@@ -170,6 +180,18 @@ public class GroupDaoImpl implements GroupDao{
         }
 
         return aNewGroup;
+    }
+
+    private void removeGroupUser(int id) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(PS_REMOVE_GROUP_USER)) {
+            statement.setInt(PARAMETER_1, id );
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            System.err.println(ERR_MSG_REMOVE_GROUP);
+            e.printStackTrace();
+        }
     }
 
     /**
