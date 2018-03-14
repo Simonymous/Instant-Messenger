@@ -5,6 +5,7 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.URI;
 
 /**
@@ -18,7 +19,9 @@ public class PushServer {
      * @throws IOException
      */
     public PushServer() throws IOException {
-        String baseUrl = "http://localhost:4435";
+        ServerSocket s = new ServerSocket(0);
+        int port = s.getLocalPort();
+        String baseUrl = "http://localhost"+Integer.toString(port);
 
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
                 URI.create(baseUrl), new ResourceConfig(ClientNotify.class), false);

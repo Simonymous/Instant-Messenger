@@ -221,6 +221,8 @@ public class UserRestImpl implements rest.interfaces.UserRest {
             Gson gson = new GsonBuilder().create();
             InetAddress address = gson.fromJson(inet, InetAddress.class);
 
+        } catch (Exception e){
+
         }
         return response;
     }
