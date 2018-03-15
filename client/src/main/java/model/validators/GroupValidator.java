@@ -1,7 +1,7 @@
 package model.validators;
 
 /**
- * interface for Group validator
+ * class for Group validator
  */
 public class GroupValidator {
 }
