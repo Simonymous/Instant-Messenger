@@ -5,6 +5,8 @@ import im.core.OwnUser;
 import im.core.PushServer;
 import im.core.Updater;
 import im.model.ChatList;
+import im.model.interfaces.Group;
+import im.rest.services.UserRestClientImpl;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -16,20 +18,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import model.interfaces.Group;
-import rest.services.UserRestClientImpl;
 
 import java.io.IOException;
 import java.net.InetAddress;
 
+/**
+ * the mainClass that is run the Messenger
+ */
 public class InstantMessengerClient extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private AnchorPane chatLayout;
-
-    private InetAddress address;
-    private int port;
 
     private RootLayoutController rootLayoutController;
     private ChatViewController chatViewController;
@@ -81,23 +80,6 @@ public class InstantMessengerClient extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        Thread d = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Updater updater = new Updater();
-//                while (true) {
-//                    updater.updateAll();
-//                    try {
-//                        Thread.sleep(500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//        d.setDaemon(true);
-//        d.start();
     }
 
     /**
@@ -136,7 +118,8 @@ public class InstantMessengerClient extends Application {
             AnchorPane page = loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("EditGroup");
+            if (group == null) dialogStage.setTitle("Chat erstellen");
+            else dialogStage.setTitle("Chat bearbeiten");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);

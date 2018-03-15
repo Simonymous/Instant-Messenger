@@ -27,7 +27,7 @@
                 <Button fx:id="deleteButton" mnemonicParsing="false" text="Löschen" visible="false"
                         onAction="#handleDelete"/>
                 <Button fx:id="cancelButton" mnemonicParsing="false" text="Abbrechen" onAction="#handleCancel"/>
-                <Button fx:id="saveButton" mnemonicParsing="false" text="OK" onAction="#handleSave"/>
+                <Button fx:id="saveButton" mnemonicParsing="false" text="Bestätigen" onAction="#handleSave"/>
             </buttons>
         </ButtonBar>
     </children>

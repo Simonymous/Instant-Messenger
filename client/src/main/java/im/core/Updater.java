@@ -3,12 +3,12 @@ package im.core;
 import im.model.Chat;
 import im.model.ChatList;
 import im.model.UserList;
-import model.classes.GroupImpl;
-import model.classes.MessageImpl;
-import model.interfaces.Group;
-import model.interfaces.Message;
-import rest.services.GroupRestClientImpl;
-import rest.services.UserRestClientImpl;
+import im.model.classes.GroupImpl;
+import im.model.classes.MessageImpl;
+import im.model.interfaces.Group;
+import im.model.interfaces.Message;
+import im.rest.services.GroupRestClientImpl;
+import im.rest.services.UserRestClientImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class Updater {
      * @param id the groupID for message updates
      */
     public void updateMessagesForGroup(String id) {
-        List<Message> messages = grci.getMessagesOfGroup(id, ""); //TODO: I don't know for what pages is.
+        List<Message> messages = grci.getMessagesOfGroup(id, "");
         Chat c = ChatList.getInstance().getChatById(id);
         for (Message m : messages) {
             c.addMessage(m);

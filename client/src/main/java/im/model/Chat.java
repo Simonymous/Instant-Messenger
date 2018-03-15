@@ -3,20 +3,34 @@ package im.model;
 import im.core.OwnUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.interfaces.Group;
-import model.interfaces.Message;
-import model.interfaces.User;
+import im.model.interfaces.Group;
+import im.model.interfaces.Message;
+import im.model.interfaces.User;
 
+/**
+ * represents a Chat that is shown in the ChatList
+ */
 public class Chat {
     private int id;
     private String name;
     ObservableList<ClientMessage> messageList = FXCollections.observableArrayList();
 
+    /**
+     * constructor for initializing a chat with Group object
+     *
+     * @param group
+     */
     public Chat(Group group) {
         id = group.getGroupId();
         name = group.getGroupName();
     }
 
+    /**
+     * Check if the message with given id  is already in messageList
+     *
+     * @param id the id that is check
+     * @return
+     */
     public boolean contains(long id) {
         for (ClientMessage cm : messageList) {
             if (cm.getId() == id) return true;
@@ -24,6 +38,11 @@ public class Chat {
         return false;
     }
 
+    /**
+     * is called if a new message is send from server to add it to list
+     *
+     * @param m the message to add
+     */
     public void addMessage(Message m) {
         if (contains(m.getMessageId())) return;
         User u = UserList.getInstance().getUser(m.getUser());

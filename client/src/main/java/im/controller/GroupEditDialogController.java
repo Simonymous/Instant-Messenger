@@ -12,8 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import model.interfaces.Group;
-import model.interfaces.User;
+import im.model.interfaces.Group;
+import im.model.interfaces.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +152,7 @@ public class GroupEditDialogController implements EventHandler<MouseEvent> {
         if (this.group != null) {
             deleteButton.setVisible(true);
             groupNameField.setText(this.group.getGroupName());
-            saveButton.setText("Update");
+            saveButton.setText("Übernehmen");
             userChoice.setVisible(false);
         }
     }

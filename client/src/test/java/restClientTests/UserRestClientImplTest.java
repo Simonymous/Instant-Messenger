@@ -1,9 +1,9 @@
 package restClientTests;
 
-import model.classes.UserImpl;
-import model.classes.UserQueryResponseImpl;
-import model.interfaces.User;
-import model.interfaces.UserQueryResponse;
+import im.model.classes.UserImpl;
+import im.model.classes.UserQueryResponseImpl;
+import im.model.interfaces.User;
+import im.model.interfaces.UserQueryResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +11,8 @@ import org.junit.After;
 
 import static org.junit.Assert.assertEquals;
 
-import rest.exceptions.UserDoesNotExistException;
-import rest.services.UserRestClientImpl;
+import im.rest.exceptions.UserDoesNotExistException;
+import im.rest.services.UserRestClientImpl;
 
 import java.util.ArrayList;
 import java.util.List;

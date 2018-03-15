@@ -1,7 +1,6 @@
 package im.controller;
 
 import im.InstantMessengerClient;
-import im.core.OwnUser;
 import im.core.Updater;
 import im.model.Chat;
 import im.model.ClientMessage;
@@ -16,8 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
-import model.classes.MessageImpl;
-import rest.services.GroupRestClientImpl;
 
 public class ChatViewController implements EventHandler<KeyEvent> {
     @FXML

@@ -1,10 +1,20 @@
 package im.model;
 
+/**
+ * Class that represents a local chatMessage
+ */
 public class ClientMessage {
     private long id;
     private String author;
     private String content;
 
+    /**
+     * constructor to create a new message with given attributes
+     *
+     * @param id the id of the chat
+     * @param a the author of the chat
+     * @param c the content of the chat
+     */
     public ClientMessage(long id, String a, String c) {
         this.id = id;
         author = a;
@@ -24,6 +34,6 @@ public class ClientMessage {
     }
 
     public String getStringId() {
-        return String.format("%d", id);
+        return Long.toString(id);
     }
 }

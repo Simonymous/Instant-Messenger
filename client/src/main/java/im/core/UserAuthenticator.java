@@ -1,9 +1,9 @@
 package im.core;
 
 import com.google.common.hash.Hashing;
-import model.classes.UserImpl;
-import model.interfaces.User;
-import rest.services.UserRestClientImpl;
+import im.model.classes.UserImpl;
+import im.model.interfaces.User;
+import im.rest.services.UserRestClientImpl;
 
 import java.nio.charset.StandardCharsets;
 

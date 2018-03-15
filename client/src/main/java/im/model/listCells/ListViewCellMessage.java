@@ -5,7 +5,16 @@ import im.model.ClientMessage;
 import javafx.application.Platform;
 import javafx.scene.control.ListCell;
 
+/**
+ * represents the listCell of the MessageList in ChatView
+ */
 public class ListViewCellMessage extends ListCell<ClientMessage> {
+    /**
+     * update an item and show it in ListView
+     *
+     * @param cm the clientMessage that is updated
+     * @param empty
+     */
     @Override
     public void updateItem(ClientMessage cm, boolean empty) {
         super.updateItem(cm, empty);

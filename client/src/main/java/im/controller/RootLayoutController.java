@@ -6,8 +6,8 @@ import im.model.Chat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import model.classes.GroupImpl;
-import model.interfaces.Group;
+import im.model.classes.GroupImpl;
+import im.model.interfaces.Group;
 
 public class RootLayoutController {
 

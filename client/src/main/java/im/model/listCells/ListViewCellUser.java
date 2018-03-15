@@ -3,9 +3,18 @@ package im.model.listCells;
 import im.controller.listcells.UserData;
 import javafx.application.Platform;
 import javafx.scene.control.ListCell;
-import model.interfaces.User;
+import im.model.interfaces.User;
 
+/**
+ * represents the listCell of UserList in GroupEditDialog
+ */
 public class ListViewCellUser extends ListCell<User> {
+    /**
+     * update an item an show it in ListView,
+     *
+     * @param user the user that is updated
+     * @param empty
+     */
     @Override
     public void updateItem(User user, boolean empty) {
         super.updateItem(user, empty);

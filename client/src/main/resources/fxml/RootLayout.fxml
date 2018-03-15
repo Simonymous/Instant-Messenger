@@ -10,19 +10,19 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Messenger">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleUpdate" text="Update All"/>
-                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdate" text="Alles aktualisieren"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleEditUsername" text="Nutzername ändern"
                                   fx:id="itemChUsername" visible="false"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleEditPassword" text="Passwort ändern"
                                   fx:id="itemChPassword" visible="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Beenden"/>
                     </items>
                 </Menu>
-                <Menu fx:id="menuGroup" mnemonicParsing="false" text="Group" visible="false">
+                <Menu fx:id="menuGroup" mnemonicParsing="false" text="Chat" visible="false">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleNewGroup" text="Add"/>
-                        <MenuItem mnemonicParsing="false" onAction="#handleEditGroup" text="Edit"/>
-                        <MenuItem mnemonicParsing="false" onAction="#handleDeleteGroup" text="Delete"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleNewGroup" text="Hinzufügen"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleEditGroup" text="Bearbeiten"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleDeleteGroup" text="Löschen"/>
                     </items>
                 </Menu>
             </menus>

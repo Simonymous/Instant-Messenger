@@ -3,25 +3,29 @@ package im.core;
 import java.net.InetAddress;
 
 /**
- * This Class represents the logged in User
+ * This Class represents the address of the client
  */
 public class OwnAddress {
     private static OwnAddress ownAddress = null;
 
     private InetAddress address;
     private int port;
-
-    private boolean isCreated;
-
+    private boolean isCreated = false;
 
     private OwnAddress() {
-
     }
 
+    /**
+     * creates the local address of client
+     *
+     * @param a
+     * @param p
+     */
     public void createAddress(InetAddress a, int p) {
         if (!isCreated) {
             address = a;
             port = p;
+            isCreated = true;
         }
     }
 
