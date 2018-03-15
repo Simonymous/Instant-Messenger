@@ -38,7 +38,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
      *
      * @param observableList
      */
-    private void setListView(ObservableList<Chat> observableList) {
+    public void setListView(ObservableList<Chat> observableList) {
         lvChats.setItems(observableList);
         lvChats.setCellFactory(new Callback<ListView<Chat>, ListCell<Chat>>() {
             public ListCell<Chat> call(ListView<Chat> lvChats) {

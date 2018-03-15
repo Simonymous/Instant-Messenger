@@ -1,5 +1,6 @@
 package im.model;
 
+import im.InstantMessengerClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.interfaces.Group;
@@ -9,6 +10,8 @@ import java.util.List;
 
 public class ChatList {
     private static ChatList chatListInstance = null;
+
+    private InstantMessengerClient mainApp;
 
     ObservableList<Chat> chatList = FXCollections.observableArrayList();
 
@@ -51,6 +54,7 @@ public class ChatList {
             }
         }
         chatList.remove(chat);
+        mainApp.getChatOverviewController().setListView(chatList);
     }
 
     public void updateChat(Group group) {
@@ -78,5 +82,9 @@ public class ChatList {
             chatListInstance = new ChatList();
         }
         return chatListInstance;
+    }
+
+    public void setMainApp(InstantMessengerClient mainApp) {
+        this.mainApp = mainApp;
     }
 }

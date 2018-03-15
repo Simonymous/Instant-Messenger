@@ -73,10 +73,11 @@ public class ChatViewController implements EventHandler<KeyEvent> {
      */
     @FXML
     private void handleSend() {
+        if(mb.getText().isEmpty()) return;
         String sendMessage = mb.getText();
-        new GroupRestClientImpl().postMessage(chat.getStringId(),
-                new MessageImpl(OwnUser.getInstance().getUserId(), sendMessage));
-        new Updater().updateMessagesForGroup(chat.getStringId());
+        Updater updater = new Updater();
+        updater.postMessage(chat.getStringId(),sendMessage);
+        updater.updateMessagesForGroup(chat.getStringId());
         mb.clear();
     }
 

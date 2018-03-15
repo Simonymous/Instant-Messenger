@@ -4,6 +4,7 @@ import im.controller.*;
 import im.core.OwnUser;
 import im.core.PushServer;
 import im.core.Updater;
+import im.model.ChatList;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -72,6 +73,7 @@ public class InstantMessengerClient extends Application {
         primaryStage.setTitle(primaryStage.getTitle() + " - " + OwnUser.getInstance().getUsername());
         showChatOverview();
         showChatView();
+        ChatList.getInstance().setMainApp(this);
         new Updater().updateAll();
         try {
             new PushServer();

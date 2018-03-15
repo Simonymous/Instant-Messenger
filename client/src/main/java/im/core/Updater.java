@@ -4,6 +4,7 @@ import im.model.Chat;
 import im.model.ChatList;
 import im.model.UserList;
 import model.classes.GroupImpl;
+import model.classes.MessageImpl;
 import model.interfaces.Group;
 import model.interfaces.Message;
 import rest.services.GroupRestClientImpl;
@@ -93,6 +94,16 @@ public class Updater {
             grci.addUserToGroup(groupId, i.toString());
         }
         updateLocalGroups();
+    }
+
+    /**
+     * post message to server
+     *
+     * @param groupID group id in that the message is posted
+     * @param message the message that is posted
+     */
+    public void postMessage(String groupID, String message) {
+        grci.postMessage(groupID,new MessageImpl(OwnUser.getInstance().getUserId(), message));
     }
 
     /**
