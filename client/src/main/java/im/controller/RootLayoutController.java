@@ -17,6 +17,8 @@ public class RootLayoutController {
     private MenuItem itemChUsername;
     @FXML
     private MenuItem itemChPassword;
+    @FXML
+    private MenuItem itemUpdateAll;
 
     private InstantMessengerClient mainApp;
 
@@ -102,5 +104,6 @@ public class RootLayoutController {
         menuGroup.setVisible(true);
         itemChUsername.setVisible(true);
         itemChPassword.setVisible(true);
+        itemUpdateAll.setVisible(true);
     }
 }
