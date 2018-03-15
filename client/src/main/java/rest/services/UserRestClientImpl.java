@@ -3,15 +3,6 @@ package rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import im.core.OwnAddress;
-import model.classes.UserImpl;
-import model.classes.UserQueryResponseImpl;
-import model.interfaces.User;
-import model.interfaces.UserQueryResponse;
-import rest.classes.JSONClientAddress;
-import rest.exceptions.UserAlreadyExistsException;
-import rest.exceptions.UserDoesNotExistException;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -19,16 +10,27 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import im.core.OwnAddress;
 
+//models
+import model.classes.UserImpl;
+import model.classes.UserQueryResponseImpl;
+import model.interfaces.User;
+import model.interfaces.UserQueryResponse;
+import rest.classes.JSONClientAddress;
+
+// rest exceptions
+import rest.exceptions.UserAlreadyExistsException;
+import rest.exceptions.UserDoesNotExistException;
+
+// public String constants
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static rest.constants.UserRestConstants.ERR_USER_ALREADY_EXISTS;
 import static rest.constants.UserRestConstants.ERR_USER_DOES_NOT_EXIST;
 
-// models
-// rest exceptions
-// public String constants
-
-
+/**
+ * class representing the client rest interface to send server requests for users
+ */
 public class UserRestClientImpl implements rest.interfaces.UserRestClient {
 
     private static final String URL = "http://localhost:4434";
@@ -63,7 +65,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     }
 
     /**
-     * send request to iniate updater notify
+     * send request to initate updater notify
      *
      * @return Response
      */
@@ -263,7 +265,7 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     }
 
     /**
-     * send request to remove user by name
+     * send request to remove user by id
      *
      * @param userId user to remove
      */
@@ -324,6 +326,12 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
         return makeUserFromJSON(respJson);
     }
 
+    /**
+     * send request to get a user with given name
+     *
+     * @param name - username to look for
+     * @return User - found user
+     */
     @Override
     public User getTheUserByName(String name) {
         try {
@@ -393,10 +401,11 @@ public class UserRestClientImpl implements rest.interfaces.UserRestClient {
     }
 
     /**
-     * send request to get all groups of user
+     * send request to authenticate a user with user id and password
      *
-     * @param userId user to get groups from
-     * @return ArrayList of group ids
+     * @param userId
+     * @param passwd
+     * @return boolean do or do not authenticate
      */
     public boolean authenticateUser(final String userId, final String passwd) {
         try {
