@@ -9,10 +9,8 @@ import java.util.ArrayList;
 public class GroupImpl implements Group{
     private int groupId;
     private String groupName;
-    private ArrayList<User> users;
 
-    public GroupImpl(){
-    }
+    public GroupImpl(){}
 
     public GroupImpl(int groupId) {
         this.setGroupId(groupId);
@@ -47,22 +45,4 @@ public class GroupImpl implements Group{
         this.groupName = groupName;
     }
 
-    @Override
-    public void addUser(User aUser){
-        users.add(aUser);
-    }
-
-    @Override
-    public void removeUser(User aUser){
-        if(users.isEmpty()){
-            throw new UserDoesNotExistException("ERR_USER_DOES_NOT_EXIST");
-        }else {
-            users.remove(aUser);
-        }
-    }
-
-    @Override
-    public ArrayList<User> getUsers(){
-        return users;
-    }
 }

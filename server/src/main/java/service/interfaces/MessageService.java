@@ -6,7 +6,7 @@ import rest.exceptions.*;
 import java.util.ArrayList;
 
 public interface MessageService {
-    void addMessage(int groupId, int userId, String content);
+    void addMessage(int groupId, int userId, String content) throws GroupDoesNotExistException, UserDoesNotExistException;
     void removeMessage(long id) throws MessageDoesNotExistException ;
     Message getMessageById(long id) throws MessageDoesNotExistException;
     String getMessageContentById(long id) throws MessageDoesNotExistException;

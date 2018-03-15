@@ -26,9 +26,10 @@ public class GroupServiceImpl implements GroupService {
         userDao = DaoObjectBuilder.getUserDaoObject();
     }
 
-    public void addNewGroup(String name) {
+    public Group addNewGroup(String name) {
         Group group = ModelObjectBuilder.getGroupObject(name);
         groupDao.addNewGroup(group);
+        return groupDao.getGroupByName(name);
     }
 
     public void addUserToGroup(int id, int userId) throws GroupDoesNotExistException, UserDoesNotExistException{
@@ -56,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
         }
         User user = ModelObjectBuilder.getUserObject();
         user.setUsername(userName);
-        user = userDao.getUserByName(user);
+        user = userDao.getUserByName(userName);
         group_userDao.addNewUser(user, group);
     }
 
@@ -120,7 +121,7 @@ public class GroupServiceImpl implements GroupService {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
         ArrayList<User> usersInGroup = getUsersForGroup(id);
-        ArrayList<Integer> userIds = null;
+        ArrayList<Integer> userIds = new ArrayList<>();
         for (User u : usersInGroup) {
             userIds.add(u.getUserId());
         }
@@ -131,7 +132,7 @@ public class GroupServiceImpl implements GroupService {
             throw new GroupDoesNotExistException(ERR_MSG_GROUP_DOES_NOT_EXIST);
         }
         ArrayList<User> usersInGroup = getUsersForGroup(id);
-        ArrayList<String> userNames = null;
+        ArrayList<String> userNames = new ArrayList<>();
         for (User u : usersInGroup) {
             userNames.add(u.getUsername());
         }

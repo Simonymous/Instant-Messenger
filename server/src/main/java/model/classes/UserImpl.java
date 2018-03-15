@@ -19,9 +19,16 @@ public class UserImpl implements User {
         this.setUserId(userId);
     }
 
-    public UserImpl(String username, String password){
+    public UserImpl(String username, String password) {
         this.setUsername(username);
         this.setPassword(password);
+    }
+
+    public UserImpl(int userId, String username, String password, boolean active){
+        this.setUserId(userId);
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setActive(active);
     }
 
     @Override

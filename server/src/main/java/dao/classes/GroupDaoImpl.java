@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import static dao.constants.GlobalConstants.*;
 import static dao.constants.GroupDaoConstants.*;
 import static dao.constants.GroupDaoConstants.*;
+import static dao.constants.Group_UserDaoConstants.COL_GROUP_GROUP_ID;
+import static dao.constants.Group_UserDaoConstants.TABLE_GROUP_USERS;
 
 public class GroupDaoImpl implements GroupDao{
 
@@ -38,6 +40,13 @@ public class GroupDaoImpl implements GroupDao{
     private static final String PS_REMOVE_GROUP = "DELETE FROM " + TABLE_GROUP + " WHERE " + COL_GROUP_ID + " = ?";
 
     /**
+     * DELETE FROM Group_Users
+     * WHERE id = ?
+     */
+    private static final String PS_REMOVE_GROUP_USER = "DELETE FROM " + TABLE_GROUP_USERS + " WHERE "
+            + COL_GROUP_GROUP_ID + " = ?";
+
+    /**
      * SELECT *
      * FROM group
      * WHERE id = ?
@@ -45,6 +54,8 @@ public class GroupDaoImpl implements GroupDao{
     private static final String PS_GET_GROUP_BY_ID = "SELECT * FROM " + TABLE_GROUP + " WHERE "
             + COL_GROUP_ID + " = ?";
 
+    private static final String PS_GET_GROUP_BY_NAME = "SELECT * FROM " + TABLE_GROUP + " WHERE "
+            + COL_GROUP_NAME + " = ?";
     /**
      * SELECT *
      * FROM group
@@ -88,6 +99,7 @@ public class GroupDaoImpl implements GroupDao{
             System.err.println(ERR_MSG_REMOVE_GROUP);
             e.printStackTrace();
         }
+        removeGroupUser(aGroup.getGroupId());
     }
 
 
@@ -144,6 +156,42 @@ public class GroupDaoImpl implements GroupDao{
     @Override
     public void changeGroupName(Group aGroup){
         changeAttribut(ColNameGroup.GroupName, aGroup, aGroup.getGroupName());
+    }
+
+    @Override
+    public Group getGroupByName(String name) {
+        Group aNewGroup = ModelObjectBuilder.getGroupObject();
+        ResultSet rs;
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(PS_GET_GROUP_BY_NAME)) {
+
+            statement.setString(PARAMETER_1, name);
+            rs = statement.executeQuery();
+
+            while(rs.next()) {
+                aNewGroup.setGroupName(rs.getString(COL_GROUP_NAME));
+                aNewGroup.setGroupId(rs.getInt(COL_GROUP_ID));
+            }
+
+        } catch (SQLException e) {
+            System.err.println(ERR_MSG_GET_GROUP_FROM_DB);
+            e.printStackTrace();
+        }
+
+        return aNewGroup;
+    }
+
+    private void removeGroupUser(int id) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(PS_REMOVE_GROUP_USER)) {
+            statement.setInt(PARAMETER_1, id );
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            System.err.println(ERR_MSG_REMOVE_GROUP);
+            e.printStackTrace();
+        }
     }
 
     /**

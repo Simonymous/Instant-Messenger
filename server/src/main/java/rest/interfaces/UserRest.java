@@ -4,64 +4,85 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import model.classes.UserImpl;
+import model.interfaces.User;
+
+/*
+*   UserRest Interface
+* */
 public interface UserRest {
+
+    /*
+    *   Returns User for given Name
+    *   @return User capsuled in Response
+     */
     @GET
-    @Path("doesUserExist")
-    @Consumes("application/json")
+    @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
-    Response doesUserExist(@QueryParam("name") String name);
+    Response getUserByName(@QueryParam("byname") String qu);
 
-    @POST
-    @Path("changeUserName/{newName}/{oldName}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response changeUserName(@PathParam("newName") String newName, @PathParam("oldName") String oldName);
-
-    @POST
-    @Path("changeUserPassword/{name}/{password}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response changeUserPassword(@PathParam("name") String userName, @PathParam("password") String password);
-
+    /*
+    *   Returns User for given Name
+    *   @return User capsuled in Response
+     */
     @GET
-    @Path("validCredentials")
-    @Consumes("application/json")
+    @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
-    Response validCredentials(@QueryParam("name") String userName, @QueryParam("password") String password);
+    Response getTheUserByName(@QueryParam("byname") String qu);
 
+    /*
+     *   Returns User for given Id
+     *   @return User capsuled in Response
+     */
     @GET
-    @Path("getUserId")
-    @Consumes("application/json")
+    @Path("users/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getUserId(@QueryParam("name") String userName);
+    Response getUserById(String username);
 
+    /*
+     *  Init the update for given IP
+     */
     @POST
-    @Path("addUser/{name}/{password}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response addUser(@PathParam("name") String userName, @PathParam("password") String password);
+    @Path("users/init/{ip}")
+    Response initUpdate(@PathParam("ip") String inet);
 
+    /*
+     *  Init the update for given IP
+     */
+    @POST
+    @Path("users/stop/{ip}")
+    Response stopUpdate(@PathParam("ip") String inet);
+
+    /*
+     *   Adds new User
+     *   @return Http-Statuscode capsuled in Response
+     */
+    @POST
+    @Path("users")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response addUser(String user);
+
+    /*
+     *   Updates an existing User
+     *   @return Http-Statuscode capsuled in Response
+     */
+    @POST
+    @Path("users/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response updateUser(@PathParam("id") String id, String user);
+
+    /*
+     *   Removes an existing User
+     *   @return Http-Statuscode capsuled in Response
+     */
     @DELETE
-    @Path("removeUser/{name}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response removeUser(@PathParam("name") String userName);
+    @Path("users/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response removeUser(@PathParam("id") String id);
 
     @GET
-    @Path("getStatusForUser")
-    @Consumes("application/json")
+    @Path("users/{userId}/groups")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getStatusForUser(@QueryParam("name") String userName);
-
-    @POST
-    @Path("setStatusForUser/{name}/{status}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response setStatusForUser(@PathParam("name") String userName, @PathParam("status") Boolean userStatus);
-
-    @GET
-    @Path("getGroupsForUser")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response getGroupsForUser(@QueryParam("name") String userName);
+    public Response getGroupsOfUser(@PathParam("userId") final String userId);
 }

@@ -7,8 +7,8 @@ import model.interfaces.User;
 //TODO Eventuell Content als eigene Klasse
 public class MessageImpl implements Message {
     private long messageId;
-    private Group group;
-    private User user;
+    private int groupId;
+    private int userId;
     private String content;
 
     public MessageImpl() {
@@ -18,7 +18,7 @@ public class MessageImpl implements Message {
         this.setMessageId(messageId);
     }
 
-    public MessageImpl(Group aGroup, User aUser, String content){
+    public MessageImpl(int aGroup, int aUser, String content){
         this.setGroup(aGroup);
         this.setUser(aUser);
         this.setContent(content);
@@ -35,23 +35,23 @@ public class MessageImpl implements Message {
     }
 
     @Override
-    public Group getGroup() {
-        return group;
+    public int getGroup() {
+        return groupId;
     }
 
     @Override
-    public void setGroup(Group aGroup) {
-        this.group = aGroup;
+    public void setGroup(int aGroup) {
+        this.groupId = aGroup;
     }
 
     @Override
-    public User getUser() {
-        return user;
+    public int getUser() {
+        return userId;
     }
 
     @Override
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int user) {
+        this.userId = user;
     }
 
     @Override
