@@ -1,7 +1,7 @@
 package model.validators;
 
 /**
- * interface for User validator
+ * class for User validator
  */
 public class UserValidator {
 }
