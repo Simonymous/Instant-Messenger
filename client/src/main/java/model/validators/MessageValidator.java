@@ -1,7 +1,7 @@
 package model.validators;
 
 /**
- * interface for Message validator
+ * class for Message validator
  */
 public class MessageValidator {
 }
