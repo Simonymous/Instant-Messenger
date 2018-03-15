@@ -22,6 +22,7 @@ public class PushServer {
     public PushServer() throws IOException {
         ServerSocket s = new ServerSocket(0);
         int port = s.getLocalPort();
+        s.close();
         InetAddress address = InetAddress.getLocalHost();
         OwnAddress.getInstance().createAddress(address,port);
         try{
