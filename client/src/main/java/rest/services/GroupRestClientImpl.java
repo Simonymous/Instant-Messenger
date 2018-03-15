@@ -3,15 +3,6 @@ package rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import model.classes.GroupImpl;
-import model.classes.MessageImpl;
-import model.interfaces.Group;
-import model.interfaces.Message;
-import rest.classes.JSONGroup;
-import rest.classes.JSONMessage;
-import rest.exceptions.GroupDoesNotExistException;
-import rest.exceptions.UserOrGroupDoesNotExistException;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -20,15 +11,26 @@ import javax.ws.rs.core.Response;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+// models
+import model.classes.GroupImpl;
+import model.classes.MessageImpl;
+import model.interfaces.Group;
+import model.interfaces.Message;
+import rest.classes.JSONGroup;
+import rest.classes.JSONMessage;
+
+// rest exceptions
+import rest.exceptions.GroupDoesNotExistException;
+import rest.exceptions.UserOrGroupDoesNotExistException;
+
+// public String constants
 import static rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static rest.constants.GroupRestConstants.ERR_GROUP_DOES_NOT_EXIST;
 import static rest.constants.GroupRestConstants.ERR_USER_GROUP_DOES_NOT_EXIST;
 
-// models
-// rest exceptions
-// public String constants
-
-
+/**
+ * class representing the client rest interface to send server requests for groups
+ */
 public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
 
     private static final String URL = "http://localhost:4434";
@@ -236,7 +238,7 @@ public class GroupRestClientImpl implements rest.interfaces.GroupRestClient {
     }
 
     /**
-     * send request to get a group
+     * send request to get a group by id
      *
      * @param groupId id of group to get
      * @return Group object
