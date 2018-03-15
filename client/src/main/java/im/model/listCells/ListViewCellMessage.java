@@ -12,7 +12,7 @@ public class ListViewCellMessage extends ListCell<ClientMessage> {
     /**
      * update an item and show it in ListView
      *
-     * @param cm the clientMessage that is updated
+     * @param cm    the clientMessage that is updated
      * @param empty
      */
     @Override

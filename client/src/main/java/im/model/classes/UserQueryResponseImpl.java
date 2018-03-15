@@ -13,6 +13,7 @@ public class UserQueryResponseImpl implements UserQueryResponse {
 
     /**
      * method to set list of user ids
+     *
      * @param ids (List<String> with user ids)
      */
     @Override
@@ -22,6 +23,7 @@ public class UserQueryResponseImpl implements UserQueryResponse {
 
     /**
      * method to get list of user ids
+     *
      * @return ids (list of user ids)
      */
     @Override

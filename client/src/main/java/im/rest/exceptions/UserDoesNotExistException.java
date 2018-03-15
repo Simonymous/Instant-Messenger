@@ -14,7 +14,7 @@ public class UserDoesNotExistException extends Exception {
     public UserDoesNotExistException() {
         super(UserRestConstants.ERR_USER_DOES_NOT_EXIST);
     }
-    
+
     /**
      * constructor with given error message
      */

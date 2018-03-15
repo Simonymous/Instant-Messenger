@@ -29,7 +29,7 @@ public class OwnAddress {
         }
     }
 
-    public int getPort () {
+    public int getPort() {
         return port;
     }
 

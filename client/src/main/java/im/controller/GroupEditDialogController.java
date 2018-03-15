@@ -4,6 +4,8 @@ import im.InstantMessengerClient;
 import im.core.OwnUser;
 import im.core.Updater;
 import im.model.UserList;
+import im.model.interfaces.Group;
+import im.model.interfaces.User;
 import im.model.listCells.ListViewCellUser;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -12,8 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import im.model.interfaces.Group;
-import im.model.interfaces.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,6 +17,7 @@ public class UserAlreadyExistsException extends Exception {
 
     /**
      * constructor with given error message
+     *
      * @param string
      */
     public UserAlreadyExistsException(String string) {

@@ -4,7 +4,7 @@ package im.model.interfaces;
  * interface for user
  */
 public interface User {
-    
+
     int getUserId();
 
     void setUserId(int id);

@@ -20,6 +20,7 @@ public class UserImpl implements User {
 
     /**
      * constructor with given user id
+     *
      * @param userId
      */
     public UserImpl(int userId) {
@@ -28,6 +29,7 @@ public class UserImpl implements User {
 
     /**
      * constructor with given username and password
+     *
      * @param username
      * @param password
      */
@@ -38,10 +40,11 @@ public class UserImpl implements User {
 
     /**
      * constructor with given user id, username, password and status
+     *
      * @param userId
      * @param username
      * @param password
-     * @param active (status)
+     * @param active   (status)
      */
     public UserImpl(int userId, String username, String password, boolean active) {
         this.setUserId(userId);
@@ -52,6 +55,7 @@ public class UserImpl implements User {
 
     /**
      * method to get user id
+     *
      * @return userId
      */
     @Override
@@ -61,6 +65,7 @@ public class UserImpl implements User {
 
     /**
      * method to set user id
+     *
      * @param id
      */
     @Override
@@ -70,6 +75,7 @@ public class UserImpl implements User {
 
     /**
      * method to get username
+     *
      * @return username
      */
     @Override
@@ -79,6 +85,7 @@ public class UserImpl implements User {
 
     /**
      * method to set username
+     *
      * @param username
      */
     @Override
@@ -88,6 +95,7 @@ public class UserImpl implements User {
 
     /**
      * method to get password
+     *
      * @return password
      */
     @Override
@@ -97,6 +105,7 @@ public class UserImpl implements User {
 
     /**
      * method to set password
+     *
      * @param password
      */
     @Override
@@ -106,6 +115,7 @@ public class UserImpl implements User {
 
     /**
      * method to get get current user status
+     *
      * @return active (status)
      */
     @Override
@@ -115,11 +125,12 @@ public class UserImpl implements User {
 
     /**
      * method to set current user status
+     *
      * @param b
      */
     @Override
     public void setActive(boolean b) {
         this.active = b;
     }
-    
+
 }

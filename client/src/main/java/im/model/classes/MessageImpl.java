@@ -19,6 +19,7 @@ public class MessageImpl implements Message {
 
     /**
      * constructor with given message id
+     *
      * @param messageId
      */
     public MessageImpl(long messageId) {
@@ -27,6 +28,7 @@ public class MessageImpl implements Message {
 
     /**
      * constructor with given user id and message content
+     *
      * @param userId
      * @param content
      */
@@ -37,6 +39,7 @@ public class MessageImpl implements Message {
 
     /**
      * constructor with given group id, user id and message content
+     *
      * @param groupId
      * @param userId
      * @param content
@@ -49,6 +52,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to get message id
+     *
      * @return messageId
      */
     @Override
@@ -58,6 +62,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to set message id
+     *
      * @param messageId
      */
     @Override
@@ -67,6 +72,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to get group id
+     *
      * @return groupId
      */
     @Override
@@ -76,6 +82,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to set group id
+     *
      * @param groupId
      */
     @Override
@@ -85,6 +92,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to get user id
+     *
      * @return userId
      */
     @Override
@@ -94,6 +102,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to set user id
+     *
      * @param userId
      */
     @Override
@@ -103,6 +112,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to get message content
+     *
      * @return content
      */
     @Override
@@ -112,6 +122,7 @@ public class MessageImpl implements Message {
 
     /**
      * method to set message content
+     *
      * @param content
      */
     @Override

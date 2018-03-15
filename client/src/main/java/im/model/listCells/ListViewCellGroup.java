@@ -12,7 +12,7 @@ public class ListViewCellGroup extends ListCell<Chat> {
     /**
      * update an item an show it in ListView
      *
-     * @param chat the chat that is updated
+     * @param chat  the chat that is updated
      * @param empty
      */
     @Override

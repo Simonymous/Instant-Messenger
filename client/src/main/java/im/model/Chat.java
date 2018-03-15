@@ -1,11 +1,11 @@
 package im.model;
 
 import im.core.OwnUser;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import im.model.interfaces.Group;
 import im.model.interfaces.Message;
 import im.model.interfaces.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * represents a Chat that is shown in the ChatList
@@ -13,7 +13,7 @@ import im.model.interfaces.User;
 public class Chat {
     private int id;
     private String name;
-    ObservableList<ClientMessage> messageList = FXCollections.observableArrayList();
+    private final ObservableList<ClientMessage> messageList = FXCollections.observableArrayList();
 
     /**
      * constructor for initializing a chat with Group object

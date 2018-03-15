@@ -6,7 +6,7 @@ import im.model.interfaces.UserQueryResponse;
 import java.util.ArrayList;
 
 /**
- * interface for user implementation of rest client interface 
+ * interface for user implementation of rest client interface
  */
 public interface UserRestClient {
 

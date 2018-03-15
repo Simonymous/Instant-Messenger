@@ -22,12 +22,13 @@ public class MessageDoesNotExistException extends Exception implements Exception
 
     /**
      * custructor with given error message
+     *
      * @param string
      */
     public MessageDoesNotExistException(String string) {
         super(string);
     }
-    
+
     /**
      * method to convert exception to response with status 404
      */

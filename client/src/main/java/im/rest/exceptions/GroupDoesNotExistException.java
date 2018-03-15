@@ -17,6 +17,7 @@ public class GroupDoesNotExistException extends Exception {
 
     /**
      * constructor with given error message
+     *
      * @param string
      */
     public GroupDoesNotExistException(String string) {

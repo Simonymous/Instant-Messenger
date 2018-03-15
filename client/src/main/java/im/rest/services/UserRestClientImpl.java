@@ -3,15 +3,7 @@ package im.rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import im.core.OwnAddress;
-
-//models
 import im.model.classes.UserImpl;
 import im.model.classes.UserQueryResponseImpl;
 import im.model.interfaces.User;
@@ -22,10 +14,18 @@ import im.rest.exceptions.UserAlreadyExistsException;
 import im.rest.exceptions.UserDoesNotExistException;
 import im.rest.interfaces.UserRestClient;
 
-// rest exceptions
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 
-// public String constants
 import static im.rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
+
+//models
+// rest exceptions
+// public String constants
 
 /**
  * class representing the client rest interface to send server requests for users
@@ -71,7 +71,7 @@ public class UserRestClientImpl implements UserRestClient {
     public void initiateUpdate() {
         gSon = new GsonBuilder().create();
         JSONClientAddress address = new JSONClientAddress(OwnAddress.getInstance().getPort(), OwnAddress.getInstance().getAddress());
-        System.out.println("Initiate update-Listener on : "+ OwnAddress.getInstance().getAddress() + ":"+OwnAddress.getInstance().getPort());
+        System.out.println("Initiate update-Listener on : " + OwnAddress.getInstance().getAddress() + ":" + OwnAddress.getInstance().getPort());
 
         String json = gSon.toJson(address);
 
@@ -100,7 +100,7 @@ public class UserRestClientImpl implements UserRestClient {
     public void stopUpdate() {
         gSon = new GsonBuilder().create();
         JSONClientAddress address = new JSONClientAddress(OwnAddress.getInstance().getPort(), OwnAddress.getInstance().getAddress());
-        System.out.println("Shutdown update-Listener on : "+ OwnAddress.getInstance().getAddress() + ":"+OwnAddress.getInstance().getPort());
+        System.out.println("Shutdown update-Listener on : " + OwnAddress.getInstance().getAddress() + ":" + OwnAddress.getInstance().getPort());
 
         String json = gSon.toJson(address);
 
@@ -186,7 +186,7 @@ public class UserRestClientImpl implements UserRestClient {
             return null;
         }
 
-        String json = (String) response.readEntity(String.class);
+        String json = response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, UserQueryResponseImpl.class);
@@ -218,7 +218,7 @@ public class UserRestClientImpl implements UserRestClient {
             e.printStackTrace();
         }
 
-        String json = (String) response.readEntity(String.class);
+        String json = response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, UserQueryResponseImpl.class);
@@ -259,7 +259,7 @@ public class UserRestClientImpl implements UserRestClient {
             return null;
         }
 
-        String respJson = (String) response.readEntity(String.class);
+        String respJson = response.readEntity(String.class);
         return makeUserFromJSON(respJson);
     }
 
@@ -321,7 +321,7 @@ public class UserRestClientImpl implements UserRestClient {
             return null;
         }
 
-        String respJson = (String) response.readEntity(String.class);
+        String respJson = response.readEntity(String.class);
         return makeUserFromJSON(respJson);
     }
 
@@ -357,7 +357,7 @@ public class UserRestClientImpl implements UserRestClient {
             return null;
         }
 
-        String respJson = (String) response.readEntity(String.class);
+        String respJson = response.readEntity(String.class);
 
         return makeUserFromJSON(respJson);
     }
@@ -392,7 +392,7 @@ public class UserRestClientImpl implements UserRestClient {
             return null;
         }
 
-        String json = (String) response.readEntity(String.class);
+        String json = response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>() {
@@ -428,7 +428,7 @@ public class UserRestClientImpl implements UserRestClient {
             e.printStackTrace();
         }
 
-        String json = (String) response.readEntity(String.class);
+        String json = response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, Boolean.class);

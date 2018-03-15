@@ -17,6 +17,7 @@ public class UserOrGroupDoesNotExistException extends Exception {
 
     /**
      * constructor with given error message
+     *
      * @param string
      */
     public UserOrGroupDoesNotExistException(String string) {

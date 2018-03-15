@@ -22,7 +22,7 @@ public class ClientNotify {
     @POST
     @Path("group/update")
     public Response updatedGroup() {
-        Response response = null;
+        Response response;
         try {
             new Updater().updateLocalGroups();
             response = Response.status(200, GROUPS_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();
@@ -42,7 +42,7 @@ public class ClientNotify {
     @POST
     @Path("group/delete/{id}")
     public Response removedGroup(@PathParam("id") final String id) {
-        Response response = null;
+        Response response;
         try {
             new Updater().deleteLocalGroup(id);
             response = Response.status(200, GROUPS_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();
@@ -62,7 +62,7 @@ public class ClientNotify {
     @POST
     @Path("message/{id}")
     public Response newMessage(@PathParam("id") final String id) {
-        Response response = null;
+        Response response;
         try {
             new Updater().updateMessagesForGroup(id);
             response = Response.status(200, MESSAGES_UPDATED).type(MediaType.TEXT_HTML_TYPE).build();

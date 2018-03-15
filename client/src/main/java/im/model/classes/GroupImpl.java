@@ -17,6 +17,7 @@ public class GroupImpl implements Group {
 
     /**
      * constructor with given group id
+     *
      * @param groupId
      */
     public GroupImpl(int groupId) {
@@ -25,6 +26,7 @@ public class GroupImpl implements Group {
 
     /**
      * constructor with given group name
+     *
      * @param groupName
      */
     public GroupImpl(String groupName) {
@@ -33,6 +35,7 @@ public class GroupImpl implements Group {
 
     /**
      * constructor with given group id and group name
+     *
      * @param groupId
      * @param groupName
      */
@@ -43,6 +46,7 @@ public class GroupImpl implements Group {
 
     /**
      * method to get the group id
+     *
      * @return groupId
      */
     @Override
@@ -52,6 +56,7 @@ public class GroupImpl implements Group {
 
     /**
      * method to set group id
+     *
      * @param groupId
      */
     @Override
@@ -61,6 +66,7 @@ public class GroupImpl implements Group {
 
     /**
      * method to get group name
+     *
      * @return groupName
      */
     @Override
@@ -70,6 +76,7 @@ public class GroupImpl implements Group {
 
     /**
      * method to set group name
+     *
      * @param groupName
      */
     @Override

@@ -3,11 +3,11 @@ package im.controller;
 import im.InstantMessengerClient;
 import im.core.Updater;
 import im.model.Chat;
+import im.model.classes.GroupImpl;
+import im.model.interfaces.Group;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import im.model.classes.GroupImpl;
-import im.model.interfaces.Group;
 
 public class RootLayoutController {
 

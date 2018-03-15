@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 /**
  * the mainClass that is run the Messenger
@@ -85,12 +84,12 @@ public class InstantMessengerClient extends Application {
     /**
      * init the Root of Layout with Menu bar
      */
-    public void initRootLayout() {
+    private void initRootLayout() {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -235,11 +234,11 @@ public class InstantMessengerClient extends Application {
     /**
      * shows the list of groups/chats at the left of root
      */
-    public void showChatOverview() {
+    private void showChatOverview() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/ChatOverview.fxml"));
-            AnchorPane chatOverview = (AnchorPane) loader.load();
+            AnchorPane chatOverview = loader.load();
 
             rootLayout.setLeft(chatOverview);
 
@@ -256,11 +255,11 @@ public class InstantMessengerClient extends Application {
     /**
      * shows the list of messages for the selected chat/group
      */
-    public void showChatView() {
+    private void showChatView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(InstantMessengerClient.class.getClassLoader().getResource("fxml/ChatView.fxml"));
-            AnchorPane chatView = (AnchorPane) loader.load();
+            AnchorPane chatView = loader.load();
 
             rootLayout.setCenter(chatView);
 

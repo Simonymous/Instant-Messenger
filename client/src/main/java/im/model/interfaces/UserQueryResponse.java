@@ -7,8 +7,8 @@ import java.util.List;
  */
 public interface UserQueryResponse {
 
-    public void setIds(List<String> ids);
+    void setIds(List<String> ids);
 
-    public List<String> getIds();
+    List<String> getIds();
 
 }

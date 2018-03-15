@@ -6,7 +6,7 @@ import im.model.interfaces.Message;
 import java.util.ArrayList;
 
 /**
- * interface for group implementation of rest client interface 
+ * interface for group implementation of rest client interface
  */
 public interface GroupRestClient {
 

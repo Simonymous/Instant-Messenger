@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
  * Class for authentication of the User
  */
 public class UserAuthenticator {
-    private UserRestClientImpl urci;
+    private final UserRestClientImpl urci;
 
     /**
      * Creates a new UserAuthenticator object

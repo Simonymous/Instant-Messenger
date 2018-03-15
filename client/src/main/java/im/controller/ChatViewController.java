@@ -61,12 +61,11 @@ public class ChatViewController implements EventHandler<KeyEvent> {
      */
     public void setChat(Chat chat) {
         this.chat = chat;
-        if(chat == null) {
+        if (chat == null) {
             setListView(null);
             return;
         }
         setListView(this.chat.getMessageList());
-        //lvMessages.setItems(this.chat.getMessageList());
     }
 
     /**
@@ -74,10 +73,10 @@ public class ChatViewController implements EventHandler<KeyEvent> {
      */
     @FXML
     private void handleSend() {
-        if(mb.getText().isEmpty()) return;
+        if (mb.getText().isEmpty()) return;
         String sendMessage = mb.getText();
         Updater updater = new Updater();
-        updater.postMessage(chat.getStringId(),sendMessage);
+        updater.postMessage(chat.getStringId(), sendMessage);
         updater.updateMessagesForGroup(chat.getStringId());
         mb.clear();
     }

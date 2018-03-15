@@ -3,7 +3,7 @@ package im.rest.classes;
 import java.net.InetAddress;
 
 /**
- *  class to hold port and address of a client (json)
+ * class to hold port and address of a client (json)
  */
 public class JSONClientAddress {
     public int port;
@@ -11,6 +11,7 @@ public class JSONClientAddress {
 
     /**
      * constructor with given port and address
+     *
      * @param p (port)
      * @param a (address)
      */

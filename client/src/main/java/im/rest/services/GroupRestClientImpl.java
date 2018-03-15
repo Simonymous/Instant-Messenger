@@ -3,6 +3,16 @@ package im.rest.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import im.model.classes.GroupImpl;
+import im.model.classes.MessageImpl;
+import im.model.interfaces.Group;
+import im.model.interfaces.Message;
+import im.rest.classes.JSONGroup;
+import im.rest.classes.JSONMessage;
+import im.rest.exceptions.GroupDoesNotExistException;
+import im.rest.exceptions.UserOrGroupDoesNotExistException;
+import im.rest.interfaces.GroupRestClient;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -11,23 +21,13 @@ import javax.ws.rs.core.Response;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-// models
-import im.model.classes.GroupImpl;
-import im.model.classes.MessageImpl;
-import im.model.interfaces.Group;
-import im.model.interfaces.Message;
-import im.rest.classes.JSONGroup;
-import im.rest.classes.JSONMessage;
-import im.rest.exceptions.GroupDoesNotExistException;
-import im.rest.interfaces.GroupRestClient;
-
-// rest exceptions
-import im.rest.exceptions.UserOrGroupDoesNotExistException;
-
-// public String constants
 import static im.rest.constants.GeneralRestConstants.ERR_INTERNAL_SERVER_ERROR;
 import static im.rest.constants.GroupRestConstants.ERR_GROUP_DOES_NOT_EXIST;
 import static im.rest.constants.GroupRestConstants.ERR_USER_GROUP_DOES_NOT_EXIST;
+
+// models
+// rest exceptions
+// public String constants
 
 /**
  * class representing the client rest interface to send server requests for groups
@@ -170,7 +170,7 @@ public class GroupRestClientImpl implements GroupRestClient {
             return null;
         }
 
-        String json = (String) response.readEntity(String.class);
+        String json = response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, new TypeToken<ArrayList<Integer>>() {
@@ -269,7 +269,7 @@ public class GroupRestClientImpl implements GroupRestClient {
             return null;
         }
 
-        String json = (String) response.readEntity(String.class);
+        String json = response.readEntity(String.class);
         gSon = new GsonBuilder().create();
 
         return gSon.fromJson(json, GroupImpl.class);
@@ -340,7 +340,7 @@ public class GroupRestClientImpl implements GroupRestClient {
             return null;
         }
 
-        String respJson = (String) response.readEntity(String.class);
+        String respJson = response.readEntity(String.class);
 
         return makeMessageListFromJSON(respJson);
     }

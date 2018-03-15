@@ -1,12 +1,9 @@
 package im.model;
 
 import im.InstantMessengerClient;
+import im.model.interfaces.Group;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import im.model.interfaces.Group;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * represents all chats in client
@@ -15,7 +12,7 @@ public class ChatList {
     private static ChatList chatListInstance = null;
 
     private InstantMessengerClient mainApp;
-    ObservableList<Chat> chatList = FXCollections.observableArrayList();
+    private final ObservableList<Chat> chatList = FXCollections.observableArrayList();
 
     /**
      * standard constructor

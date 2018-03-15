@@ -16,7 +16,6 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
     @FXML
     private ListView<Chat> lvChats;
 
-    private ChatList chatList;
     private InstantMessengerClient mainApp;
 
     public ChatOverviewController() {
@@ -28,7 +27,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
      */
     @FXML
     private void initialize() {
-        chatList = ChatList.getInstance();
+        ChatList chatList = ChatList.getInstance();
         setListView(chatList.getChatList());
         lvChats.setOnMouseClicked(this);
     }
@@ -62,7 +61,7 @@ public class ChatOverviewController implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        if (lvChats.getSelectionModel().getSelectedItem()!=null) {
+        if (lvChats.getSelectionModel().getSelectedItem() != null) {
             mainApp.getChatViewController().setChat(lvChats.getSelectionModel().getSelectedItem());
         }
     }

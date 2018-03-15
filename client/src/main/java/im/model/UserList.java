@@ -1,9 +1,9 @@
 package im.model;
 
 import im.core.OwnUser;
+import im.model.interfaces.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import im.model.interfaces.User;
 
 /**
  * Class represents all User of the Messenger
@@ -11,7 +11,7 @@ import im.model.interfaces.User;
 public class UserList {
     private static UserList userList = null;
 
-    ObservableList<User> serverUsers = FXCollections.observableArrayList();
+    private final ObservableList<User> serverUsers = FXCollections.observableArrayList();
 
     /**
      * standard constructor

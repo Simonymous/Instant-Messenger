@@ -17,8 +17,8 @@ import java.util.List;
  * Class for updating Changes on the Server or on Client
  */
 public class Updater {
-    private UserRestClientImpl urci;
-    private GroupRestClientImpl grci;
+    private final UserRestClientImpl urci;
+    private final GroupRestClientImpl grci;
 
     public Updater() {
         urci = new UserRestClientImpl();
@@ -36,7 +36,7 @@ public class Updater {
         for (Message m : messages) {
             c.addMessage(m);
         }
-        System.out.println("Local Chat Messages für Gruppe "+id+" geupdatet");
+        System.out.println("Local Chat Messages für Gruppe " + id + " geupdatet");
 
     }
 
@@ -103,7 +103,7 @@ public class Updater {
      * @param message the message that is posted
      */
     public void postMessage(String groupID, String message) {
-        grci.postMessage(groupID,new MessageImpl(OwnUser.getInstance().getUserId(), message));
+        grci.postMessage(groupID, new MessageImpl(OwnUser.getInstance().getUserId(), message));
     }
 
     /**
@@ -111,7 +111,7 @@ public class Updater {
      */
     public void updateLocalUsers() {
         for (String id : urci.getAllUser().getIds()) {
-            if(!UserList.getInstance().containsUser(Integer.parseInt(id))) {
+            if (!UserList.getInstance().containsUser(Integer.parseInt(id))) {
                 UserList.getInstance().addUser(urci.getUserById(id));
             }
         }
