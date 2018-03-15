@@ -1,6 +1,10 @@
 package model.interfaces;
 
+/**
+ * interface for group
+ */
 public interface Group {
+
     int getGroupId();
 
     void setGroupId(int groupId);
@@ -8,4 +12,5 @@ public interface Group {
     String getGroupName();
 
     void setGroupName(String groupName);
+
 }

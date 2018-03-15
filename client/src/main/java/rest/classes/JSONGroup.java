@@ -1,8 +1,8 @@
 package rest.classes;
 
-/*
-*   Class for JSONGroup
-* */
+/**
+* class to hold group name as json
+*/
 public class JSONGroup {
     public String name;
 }

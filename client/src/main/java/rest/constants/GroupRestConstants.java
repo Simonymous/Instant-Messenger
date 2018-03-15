@@ -1,5 +1,8 @@
 package rest.constants;
 
+/**
+ * class to hold string constants needed for group implementation of rest interface
+ */
 public class GroupRestConstants {
     public static final String ERR_GROUP_ALREADY_EXISTS = "The Group already exists\n";
     public static final String ERR_GROUP_DOES_NOT_EXIST = "The Group does not exist\n";

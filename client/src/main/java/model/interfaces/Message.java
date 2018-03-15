@@ -1,6 +1,10 @@
 package model.interfaces;
 
+/**
+ * interface for message
+ */
 public interface Message {
+    
     long getMessageId();
 
     void setMessageId(long messageId);
@@ -16,4 +20,5 @@ public interface Message {
     int getUser();
 
     void setUser(int aUser);
+    
 }

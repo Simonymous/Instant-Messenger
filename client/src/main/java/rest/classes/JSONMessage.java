@@ -1,8 +1,8 @@
 package rest.classes;
 
-/*
- *   Class for JSONMessage
- * */
+/**
+ * class to hold user id and message content (json)
+ */
 public class JSONMessage {
     public int userid;
     public String content;
