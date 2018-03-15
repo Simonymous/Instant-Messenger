@@ -55,6 +55,7 @@ public class ChatList {
         }
         chatList.remove(chat);
         mainApp.getChatOverviewController().setListView(chatList);
+        mainApp.getChatViewController().setChat(null);
     }
 
     public void updateChat(Group group) {
@@ -64,6 +65,7 @@ public class ChatList {
         }
         Chat c = getChatById(group.getGroupId());
         c.setName(group.getGroupName());
+        mainApp.getChatOverviewController().setListView(chatList);
     }
 
     public void addChat(Chat chat) {

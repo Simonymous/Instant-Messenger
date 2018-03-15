@@ -64,6 +64,10 @@ public class ChatViewController implements EventHandler<KeyEvent> {
      */
     public void setChat(Chat chat) {
         this.chat = chat;
+        if(chat == null) {
+            setListView(null);
+            return;
+        }
         setListView(this.chat.getMessageList());
         //lvMessages.setItems(this.chat.getMessageList());
     }
